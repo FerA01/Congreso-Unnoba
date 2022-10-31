@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/test")
 public class UsuarioController {
 
     @Autowired
@@ -19,6 +18,6 @@ public class UsuarioController {
     @GetMapping("/test")
     public String test(Model model){
         model.addAttribute("usuario", new Usuario());
-        return "";
+        return "test";
     }
 }
