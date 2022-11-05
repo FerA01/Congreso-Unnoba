@@ -9,8 +9,12 @@ public class Trabajo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date fecha_hora;
-    @Column(name="usuario")
+
+    @ManyToOne
     private Usuario usuario;
+
+    @ManyToOne
+    private Evento evento;
     private String estado;
 
     public Long getId() { return id; }

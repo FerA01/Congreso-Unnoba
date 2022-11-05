@@ -1,6 +1,7 @@
 package com.ar.unnoba.congresos.Model;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "eventos")
@@ -14,6 +15,11 @@ public class Evento {
     private String modalidad;
     private String descripcion;
 
+    @OneToMany(mappedBy = "eventos")
+    private List<LlamadoPresentacion> llamadosPresentacion;
+
+    @OneToMany(mappedBy = "eventos")
+    private List<Trabajo> trabajos;
 
 
     public Long getId() {
@@ -62,5 +68,21 @@ public class Evento {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<LlamadoPresentacion> getLlamadosPresentacion() {
+        return llamadosPresentacion;
+    }
+
+    public void setLlamadosPresentacion(List<LlamadoPresentacion> llamadosPresentacion) {
+        this.llamadosPresentacion = llamadosPresentacion;
+    }
+
+    public List<Trabajo> getTrabajos() {
+        return trabajos;
+    }
+
+    public void setTrabajos(List<Trabajo> trabajos) {
+        this.trabajos = trabajos;
     }
 }

@@ -1,11 +1,9 @@
 package com.ar.unnoba.congresos.Controller;
-
 import com.ar.unnoba.congresos.Model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class UsuarioController {
@@ -18,6 +16,6 @@ public class UsuarioController {
     @GetMapping("/test")
     public String test(Model model){
         model.addAttribute("usuario", new Usuario());
-        return "test";
+        return "usuarios/test";
     }
 }

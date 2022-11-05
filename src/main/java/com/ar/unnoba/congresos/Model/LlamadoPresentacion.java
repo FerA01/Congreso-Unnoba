@@ -8,6 +8,8 @@ public class LlamadoPresentacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
     private Evento evento;
     private Date fechaHoraDesde;
     private Date fechaHoraHasta;

@@ -1,7 +1,7 @@
 package com.ar.unnoba.congresos.Repository;
+import org.springframework.stereotype.Repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+@Repository
 public class UsuarioRepository {
 
 
