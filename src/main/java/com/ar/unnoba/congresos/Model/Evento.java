@@ -15,10 +15,10 @@ public class Evento {
     private String modalidad;
     private String descripcion;
 
-    @OneToMany(mappedBy = "eventos")
+    @OneToMany(mappedBy = "evento")
     private List<LlamadoPresentacion> llamadosPresentacion;
 
-    @OneToMany(mappedBy = "eventos")
+    @OneToMany(mappedBy = "evento")
     private List<Trabajo> trabajos;
 
 
