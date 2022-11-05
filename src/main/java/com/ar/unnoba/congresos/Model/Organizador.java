@@ -5,21 +5,20 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "organizador")
+@Table(name = "organizadores")
 public class Organizador{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "email", unique = true)
     private String email;
-    @Column(name = "password", nullable = false)
+
     private String password;
-    @Column(name = "nombre")
+
     private String nombre;
 
-    @Column(name = "apellido")
+
     private String apellido;
 
     @ManyToMany()
