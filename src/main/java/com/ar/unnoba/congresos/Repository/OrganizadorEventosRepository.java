@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrganizadorEventosRepository extends JpaRepository<OrganizadorEventos, Long> {
-    public OrganizadorEventos create(OrganizadorEventos organizadorEventos);
+    //public OrganizadorEventos create(OrganizadorEventos organizadorEventos);
 }

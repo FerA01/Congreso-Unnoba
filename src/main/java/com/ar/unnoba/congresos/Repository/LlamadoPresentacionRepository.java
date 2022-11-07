@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LlamadoPresentacionRepository extends JpaRepository<LlamadoPresentacion, Long> {
-    public LlamadoPresentacion create(LlamadoPresentacion llamadoPresentacion);
+    //public LlamadoPresentacion create(LlamadoPresentacion llamadoPresentacion);
 }

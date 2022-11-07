@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrabajoRepository extends JpaRepository<Trabajo, Long> {
-    public Trabajo create(Trabajo trabajo);
+    //public Trabajo create(Trabajo trabajo);
 }
