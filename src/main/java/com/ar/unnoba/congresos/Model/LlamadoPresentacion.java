@@ -11,10 +11,10 @@ public class LlamadoPresentacion {
 
     @ManyToOne
     private Evento evento;
+    @Column(name = "fecha_hora_desde", nullable = false)
     private Date fechaHoraDesde;
+    @Column(name = "fecha_hora_hasta", nullable = false)
     private Date fechaHoraHasta;
-
-
 
     public Long getId() {
         return id;

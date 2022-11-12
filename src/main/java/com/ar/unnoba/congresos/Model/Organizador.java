@@ -1,6 +1,4 @@
 package com.ar.unnoba.congresos.Model;
-
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,18 +10,21 @@ public class Organizador{
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-
+    @Column(name = "apellido", nullable = false)
     private String apellido;
 
     @ManyToMany()
     @JoinTable(name = "organizador_eventos",
-            joinColumns = @JoinColumn(name = "eventos"),
+            joinColumns = @JoinColumn(name = "evento"),
             inverseJoinColumns = @JoinColumn(name="organizadores"))
     private List<Evento> eventos;
 

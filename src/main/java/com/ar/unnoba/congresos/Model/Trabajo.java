@@ -8,14 +8,16 @@ public class Trabajo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "fecha_hora", nullable = false)
     private Date fecha_hora;
-
     @ManyToOne
     private Usuario usuario;
-
     @ManyToOne
     private Evento evento;
+    @Column(name = "estado", nullable = false)
     private String estado;
+    @Column(name = "nombre", nullable = true, length = 100)
+    private String nombre;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -25,4 +27,8 @@ public class Trabajo {
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+    public Evento getEvento() { return evento; }
+    public void setEvento(Evento evento) { this.evento = evento; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 }

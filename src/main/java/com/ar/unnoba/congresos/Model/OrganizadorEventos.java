@@ -7,14 +7,14 @@ import java.util.List;
 public class OrganizadorEventos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idOrganizador;
+    private Long id;
     @OneToOne
     private Evento evento;
     @OneToMany
     private List<Organizador> organizadores;
 
-    public Long getIdOrganizador() { return idOrganizador; }
-    public void setIdOrganizador(Long idOrganizador) { this.idOrganizador = idOrganizador; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Evento getEvento() { return evento; }
     public void setEvento(Evento evento) { this.evento = evento; }
     public List<Organizador> getOrganizadores() { return organizadores; }

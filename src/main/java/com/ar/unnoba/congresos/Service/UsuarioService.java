@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
     @Override
     public Usuario create(Usuario usuario) {
         if (getRepository().findByEmail(usuario.getEmail()) == null){
-            //Setear contraseña
-            usuario = getRepository().save(usuario);
+            usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
+            usuario = repository.save(usuario);
         }
         return usuario;
     }
