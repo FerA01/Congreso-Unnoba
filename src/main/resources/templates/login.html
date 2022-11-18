@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
   <meta charset="UTF-8">
   <title th:text>Hola Mundo!</title>
@@ -11,10 +11,10 @@
 </div>
 <div>
 
-  <form>
-    <label>Email <input type="text" name = "email"/></label>
+  <form  th:action="@{/login}" method="post">
+    <label>Email <input type="email" name = "email"/></label>
     <label>Contraseña <input type="password" name="password"/></label>
-    <button type="submit" value="Iniciar Sesión">Iniciar Sesión</button>
+    <button type="submit">Iniciar Sesión</button>
   </form>
 </div>
 

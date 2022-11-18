@@ -1,7 +1,7 @@
 package com.ar.unnoba.congresos.Model;
 import javax.persistence.*;
 import java.util.List;
-
+/*
 @Entity
 @Table(name = "organizador_eventos")
 public class OrganizadorEventos {
@@ -20,3 +20,5 @@ public class OrganizadorEventos {
     public List<Organizador> getOrganizadores() { return organizadores; }
     public void setOrganizadores(List<Organizador> organizadores) { this.organizadores = organizadores; }
 }
+
+ */

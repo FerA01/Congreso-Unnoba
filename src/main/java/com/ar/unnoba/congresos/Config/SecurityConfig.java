@@ -2,6 +2,7 @@ package com.ar.unnoba.congresos.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,18 +22,39 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http    .authorizeHttpRequests(
-                        (requests) -> requests
-                                .antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
-                                .antMatchers("/").permitAll()
-                                .anyRequest().authenticated()
+        http //.authorizeRequests()
+                //.antMatchers("/","/form/**","/css/**","/users/**").permitAll()
+                //.antMatchers("/new/**").permitAll()
+                //.antMatchers("/register/new/").permitAll()
+                //.antMatchers("/users/**").permitAll()
+                //.antMatchers("/register").permitAll()
+                //.antMatchers("/index").permitAll()
+               // .and()
+                //.formLogin().loginPage("/login")
+                //.permitAll()
+                //.defaultSuccessUrl("/users", true)
+                .authorizeHttpRequests((requests) -> requests
+                        //.antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
+                        .antMatchers("/resources/**").permitAll()
+                        .antMatchers("/","/register","/login").permitAll()
+                        .antMatchers(HttpMethod.POST,"/register/new").permitAll()
+                        .anyRequest().authenticated()
                 )
+                .formLogin().loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/users", true)
+                .and()
+                .logout().permitAll();
+                /*
                 .formLogin(
                         (form) -> form
                                 .loginPage("/login")
                                 .permitAll()
+                                .defaultSuccessUrl("/users", true)
                 )
                 .logout((logout) -> logout.permitAll());
+
+                 */
         return http.build();
     }
 
