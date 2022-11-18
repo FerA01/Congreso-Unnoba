@@ -3,7 +3,6 @@
 <head th:fragment="head">
   <meta charset="UTF-8">
   <title th:text>Hola Mundo!</title>
-  <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
 <div>
@@ -16,6 +15,9 @@
     <label>Contraseña <input type="password" name="password"/></label>
     <button type="submit">Iniciar Sesión</button>
   </form>
+  <div>
+    <a th:href="@{/register}"><p>Registrarse</p></a>
+  </div>
 </div>
 
 </body>

@@ -36,7 +36,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() { //TODO En nuestro caso es email, no nombre de usuario.
-        return getEmail();
+        return this.email;
     }
 
     @Override

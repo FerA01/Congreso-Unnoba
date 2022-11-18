@@ -3,11 +3,16 @@ import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -34,7 +39,15 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return (UserDetails) getRepository().findByEmail(email);
+        Usuario usuario = repository.findByEmail(email);
+        String email2 = usuario.getEmail();
+        if(email2 == null){
+            throw new UsernameNotFoundException("User not authorized.");
+        }
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+        UserDetails userDetails = (UserDetails)new User(email2,
+                usuario.getPassword(), usuario.getAuthorities());
+        return userDetails;
     }
 
     public UsuarioRepository getRepository() { return repository; }
