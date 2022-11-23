@@ -36,19 +36,18 @@ public class SecurityConfig{
                // .and()
                 //.formLogin().loginPage("/login")
                 //.permitAll()
-                //.defaultSuccessUrl("/users", true)
-                .csrf()
-                .disable()
+                //.defaultSuccessUrl("/users", true
                 .authorizeHttpRequests((requests) -> requests
-                        //.antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
+                        .antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
                         .antMatchers("/resources/**").permitAll()
-                        .antMatchers("/","/register","/login", "/users").permitAll()
+                        .antMatchers("/","/login", "/register").permitAll()
                         .antMatchers(HttpMethod.POST,"/register/new").permitAll()
+                        .antMatchers(HttpMethod.POST, "/delete/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin().loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/users", true)
+                .defaultSuccessUrl("/usuarios", true)
                 .and()
                 .logout().permitAll();
                 /*

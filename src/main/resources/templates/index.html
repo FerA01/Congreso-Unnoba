@@ -10,7 +10,6 @@
             <thead>
                 <tr>
                     <td>Email</td>
-                    <td>Contraseña</td>
                     <td>Nombre</td>
                     <td>Apellido</td>
                     <td>Acciones</td>
@@ -19,12 +18,12 @@
             <tbody>
                 <tr th:each="usuario : ${usuarios}">
                     <td th:text="${usuario.email}"></td>
-                    <td th:text="${usuario.password}"></td>
                     <td th:text="${usuario.nombre}"></td>
                     <td th:text="${usuario.apellido}"></td>
                     <td>
                         <button>Editar</button>
-                        <button><a th:href="@{users/delete/}+${usuario.id}">Eliminar</a></button>
+                        <button><a th:href="@{/delete/}+${usuario.id}" methods="post"
+                                   onclick="return confirm('¿Esta seguro que desea eliminar al usuario?');">Eliminar</a></button>
                     </td>
                 </tr>
             </tbody>
