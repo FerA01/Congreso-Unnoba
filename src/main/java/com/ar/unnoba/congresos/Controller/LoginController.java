@@ -1,6 +1,5 @@
 package com.ar.unnoba.congresos.Controller;
 import com.ar.unnoba.congresos.Model.Usuario;
-import com.ar.unnoba.congresos.Service.IUsuarioService;
 import com.ar.unnoba.congresos.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,21 +13,23 @@ public class LoginController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private UsuarioController usuarioController;
+
     @GetMapping("/login")
     public String login(){
         return "/login";
     }
     @GetMapping("/register")
     public String register(Model model){
-        model.addAttribute("usuario", new Usuario());
-        return "usuarios/register";
+        return usuarioController.register(model);
     }
     @PostMapping("/register/new")
     public String create(@ModelAttribute Usuario usuario){
-        getUsuarioService().create(usuario);
-        return "redirect:/usuarios";
+        //usuarioService.create(usuario);
+        //return "redirect:/usuarios";
+        return usuarioController.create(usuario);
     }
 
-    public UsuarioService getUsuarioService() { return usuarioService; }
     public void setUsuarioService(UsuarioService usuarioService) { this.usuarioService = usuarioService; }
 }

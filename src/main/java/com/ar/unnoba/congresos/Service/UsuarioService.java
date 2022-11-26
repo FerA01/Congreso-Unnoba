@@ -22,7 +22,7 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 
     @Override
     public Usuario create(Usuario usuario) {
-        if (getRepository().findByEmail(usuario.getEmail()) == null){
+        if (repository.findByEmail(usuario.getEmail()) == null){
             usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
             usuario = repository.save(usuario);
         }
@@ -30,16 +30,17 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
     }
 
     @Override //Ordenados por nombre y apellido
-    public List<Usuario> getAll() { return getRepository().findAll(Sort.by("nombre").ascending()
-                                                          .and(Sort.by("apellido").ascending())
-    );}
+    public List<Usuario> getAll() { return repository.findAll(Sort.by("nombre").ascending()
+                                                        .and(Sort.by("apellido").ascending())
+                                                      );
+    }
 
     @Override
-    public void delete(Long id) { getRepository().deleteById(id); }
+    public void delete(Long id) { repository.deleteById(id); }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario usuario = repository.findByEmail(email);
+        /*Usuario usuario = repository.findByEmail(email);
         String email2 = usuario.getEmail();
         if(email2 == null){
             throw new UsernameNotFoundException("User not authorized.");
@@ -48,7 +49,8 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
         UserDetails userDetails = (UserDetails)new User(email2,
                 usuario.getPassword(), usuario.getAuthorities());
         return userDetails;
-    }
 
-    public UsuarioRepository getRepository() { return repository; }
+         */
+        return repository.findByEmail(email);
+    }
 }

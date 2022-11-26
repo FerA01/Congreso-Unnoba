@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head th:fragment="head">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -21,9 +21,8 @@
                     <td th:text="${usuario.nombre}"></td>
                     <td th:text="${usuario.apellido}"></td>
                     <td>
-                        <button>Editar</button>
-                        <button><a th:href="@{/delete/}+${usuario.id}" methods="post"
-                                   onclick="return confirm('¿Esta seguro que desea eliminar al usuario?');">Eliminar</a></button>
+                        <button><a th:href="@{/usuarios/edit/}+${usuario.id}">Editar</a></button>
+                        <button><a th:href="@{/usuarios/delete/}+${usuario.id}">Eliminar</a></button>
                     </td>
                 </tr>
             </tbody>
