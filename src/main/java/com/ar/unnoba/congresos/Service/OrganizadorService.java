@@ -2,7 +2,11 @@ package com.ar.unnoba.congresos.Service;
 import com.ar.unnoba.congresos.Model.Organizador;
 import com.ar.unnoba.congresos.Repository.OrganizadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
+
+@Service
 public class OrganizadorService implements IOrganizadorService{
     @Autowired
     private OrganizadorRepository repository;

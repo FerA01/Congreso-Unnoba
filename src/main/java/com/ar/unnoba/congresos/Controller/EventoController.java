@@ -66,7 +66,7 @@ public class EventoController {
     }
     @PostMapping("/eventos/{id}/delete")
     public String delete(@PathVariable("id") Long id){
-        if (id > 0 && !service.hayTrabajo(id)){
+        if (id > 0 ){ //&& !service.hayTrabajos(id)){
             //mensaje seguro quiere eliminar el evento??
             service.delete(id);
             return "redirect:/eventos";
