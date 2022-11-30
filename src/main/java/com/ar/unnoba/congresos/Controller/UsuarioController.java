@@ -24,12 +24,13 @@ public class UsuarioController {
 
     @GetMapping
     public String index(Model model, Authentication auth){
+        Usuario usuario = (Usuario) auth.getPrincipal();
         List<Usuario> usuarios = usuarioService.getAll();
         model.addAttribute("usuarios", usuarios);
         return "index";
     }
 
-    @GetMapping("/usuarios/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash, Authentication auth){
         Usuario usuario = (Usuario) auth.getPrincipal();
         Long idUsuario = usuario.getId();
@@ -51,7 +52,7 @@ public class UsuarioController {
     @PostMapping("/register/new")
     public String create(@ModelAttribute Usuario usuario){
         usuarioService.create(usuario);
-        return "redirect:/usuarios";
+        return "/login";
     }
 
     @GetMapping("/register")

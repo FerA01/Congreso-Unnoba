@@ -29,9 +29,8 @@ public class SecurityConfig{
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
                         .antMatchers("/resources/**").permitAll()
-                        .antMatchers("/login", "/register").permitAll()
-                        .antMatchers(HttpMethod.POST,"/register/new").permitAll()
-                        .antMatchers("/usuarios", "/usuarios/**").permitAll()
+                        .antMatchers( "/usuarios/register").permitAll()
+                        .antMatchers(HttpMethod.POST,"/usuarios/register/new").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin().loginPage("/login")
