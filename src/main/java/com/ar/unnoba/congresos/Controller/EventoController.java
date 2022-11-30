@@ -25,18 +25,18 @@ public class EventoController {
         return "eventos/eventos";
     }
 
-    @GetMapping("/eventos/{id_evento}/presentacion")
+    @GetMapping("/{id_evento}/presentacion")
     public String verPresentacion(@PathVariable("id_evento") Long id){
 
         return "trabajos/presentacion";
     }
-    @GetMapping("/eventos/{id_evento}/presentacion/new")
+    @GetMapping("/{id_evento}/presentacion/new")
     public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model){
         model.addAttribute("presentacion", new Trabajo());
         return "redirect:/eventos/{id_evento}/presentacion";
     }
 
-    @GetMapping("/eventos/new")
+    @GetMapping("/new")
     public String nuevoEvento(Model model){
         model.addAttribute("evento", new Evento());
         return "eventos/nuevoEvento";
