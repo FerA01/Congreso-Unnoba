@@ -1,7 +1,5 @@
 package com.ar.unnoba.congresos.Service;
-
 import com.ar.unnoba.congresos.Model.Usuario;
-
 import java.util.List;
 
 public interface IUsuarioService {
