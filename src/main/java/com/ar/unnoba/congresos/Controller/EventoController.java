@@ -1,12 +1,13 @@
 package com.ar.unnoba.congresos.Controller;
 import com.ar.unnoba.congresos.Model.Evento;
+import com.ar.unnoba.congresos.Model.Trabajo;
 import com.ar.unnoba.congresos.Service.IEventoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/eventos")
@@ -24,6 +25,17 @@ public class EventoController {
         return "eventos/eventos";
     }
 
+    @GetMapping("/eventos/{id_evento}/presentacion")
+    public String verPresentacion(@PathVariable("id_evento") Long id){
+
+        return "trabajos/presentacion";
+    }
+    @GetMapping("/eventos/{id_evento}/presentacion/new")
+    public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model){
+        model.addAttribute("presentacion", new Trabajo());
+        return "redirect:/eventos/{id_evento}/presentacion";
+    }
+
     @GetMapping("/eventos/new")
     public String nuevoEvento(Model model){
         model.addAttribute("evento", new Evento());
@@ -36,8 +48,31 @@ public class EventoController {
         return "redirect:/eventos";
     }
 
+    @GetMapping("/eventos/{id}")
+    public String evento(@PathVariable("id") Long id, Model model){
+        if (id > 0){
+            Evento evento = service.getById(id);
+            model.addAttribute("evento", evento);
+            return "redirect:/eventos/{id}";
+        }
+        return "redirect:/eventos";
+    }
     @GetMapping("/eventos/{id}/edit")
     public String edit(@PathVariable("id") Long id){
-        return "";
+        if (id > 0){
+            Optional<Evento> evento = Optional.ofNullable(service.getById(id));
+        }
+        return "redirect:/eventos/{id}";
+    }
+    @PostMapping("/eventos/{id}/delete")
+    public String delete(@PathVariable("id") Long id){
+        if (id > 0 && !service.hayTrabajo(id)){
+            //mensaje seguro quiere eliminar el evento??
+            service.delete(id);
+            return "redirect:/eventos";
+        }else{
+            //No se puede borrar el evento ya que contiene trabajos de autores.
+            return "redirect:/eventos";
+        }
     }
 }

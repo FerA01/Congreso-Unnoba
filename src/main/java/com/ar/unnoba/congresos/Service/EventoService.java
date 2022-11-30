@@ -27,4 +27,23 @@ public class EventoService implements IEventoService{
     }
     @Override
     public void delete(Long id) { repository.deleteById(id); }
+
+    @Deprecated
+    @Override
+    public Evento getById(Long id) { return (id > 0) ? repository.getById(id) : null; }
+
+
+    /**
+     *  Si existe el evento con el id pasado por parametro
+     *  devuelvo true si el evento tiene trabajos, caso contrario devuelve false
+     * **/
+    @Deprecated
+    @Override
+    public boolean hayTrabajo(Long id ) {
+        Evento evento = getById(id);
+        if (id > 0 && evento != null) {
+            return !evento.getTrabajos().isEmpty();
+        }
+        return false;
+    }
 }

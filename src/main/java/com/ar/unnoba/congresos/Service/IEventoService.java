@@ -7,4 +7,6 @@ public interface IEventoService {
     public Evento create(Evento evento);
     public List<Evento> getAll();
     public void delete(Long id);
+    public Evento getById(Long id);
+    public boolean hayTrabajo(Long id);
 }
