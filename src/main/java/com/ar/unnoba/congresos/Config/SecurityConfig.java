@@ -37,7 +37,10 @@ public class SecurityConfig{
                 .permitAll()
                 .defaultSuccessUrl("/usuarios", true)
                 .and()
-                .logout().permitAll();
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .permitAll();
         return http.build();
     }
 

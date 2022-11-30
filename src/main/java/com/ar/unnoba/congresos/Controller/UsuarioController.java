@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
 @Controller
@@ -17,9 +16,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService){
-        setUsuarioService(usuarioService);
-    }
+    public UsuarioController(UsuarioService usuarioService){ setUsuarioService(usuarioService); }
 
 
     @GetMapping
@@ -33,13 +30,12 @@ public class UsuarioController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash, Authentication auth){
         Usuario usuario = (Usuario) auth.getPrincipal();
-        Long idUsuario = usuario.getId();
         if (usuario.getId().equals(id)){
-            flash.addAttribute("danger", "No puede eliminarse a si mismo.");
+            flash.addFlashAttribute("danger", "No puede eliminarse a si mismo.");
             return "redirect:/usuarios";
         }
         usuarioService.delete(id);
-        flash.addAttribute("success", "Usuario eliminado correctamente");
+        flash.addFlashAttribute("success", "Usuario eliminado correctamente");
         return "redirect:/usuarios";
     }
 
