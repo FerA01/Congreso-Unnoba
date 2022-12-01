@@ -33,7 +33,7 @@ public class EventoController {
     @GetMapping("/{id_evento}/presentacion/new")
     public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model){
         model.addAttribute("presentacion", new Trabajo());
-        return "redirect:/eventos/{id_evento}/presentacion";
+        return "redirect:/eventos";
     }
 
     @GetMapping("/new")
@@ -61,18 +61,20 @@ public class EventoController {
     public String edit(@PathVariable("id") Long id){
         if (id > 0){
             Optional<Evento> evento = Optional.ofNullable(service.getById(id));
+            return "redirect:/eventos";
         }
-        return "redirect:/eventos/{id}";
+        return "redirect:/eventos";
     }
     @PostMapping("/eventos/{id}/delete")
     public String delete(@PathVariable("id") Long id){
-        if (id > 0 ){ //&& !service.hayTrabajos(id)){
+        Evento evento = service.getById(id);
+
+        if (id > 0 && evento.getTrabajos().isEmpty()){
             //mensaje seguro quiere eliminar el evento??
             service.delete(id);
             return "redirect:/eventos";
-        }else{
-            //No se puede borrar el evento ya que contiene trabajos de autores.
-            return "redirect:/eventos";
         }
+        //No se puede borrar el evento ya que contiene trabajos de autores.
+        return "redirect:/eventos";
     }
 }

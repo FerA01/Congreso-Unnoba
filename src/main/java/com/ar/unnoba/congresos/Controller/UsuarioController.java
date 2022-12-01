@@ -1,4 +1,5 @@
 package com.ar.unnoba.congresos.Controller;
+import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService){ setUsuarioService(usuarioService); }
+    public UsuarioController(UsuarioService usuarioService, EventoController evento){
+        setUsuarioService(usuarioService);
+    }
 
 
     @GetMapping
@@ -56,7 +59,5 @@ public class UsuarioController {
         model.addAttribute("usuario", new Usuario());
         return "usuarios/register";
     }
-
-
     public void setUsuarioService(UsuarioService usuarioService) { this.usuarioService = usuarioService; }
 }
