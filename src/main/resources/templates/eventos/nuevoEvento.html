@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+      <div>
+          <form action="#" method="post" th:action="@{/eventos}" th:method="post" th:object="${evento}">
+              <label>Nombre <input required type="text" name="nombre" th:field="*{nombre}"></label>
+              <label>Descrpción <input required type="text" name="descripción" th:field="*{descripcion}"></label>
+              <label>Modalidad <input required type="text" name="modalidad" th:field="*{modalidad}"></label>
+              <label>Fecha y hora de inicio <input required type="datetime-local" name="fechaHoraDesde" th:field="*{fechaHoraDesde}"></label>
+              <label>Fecha y hora de fin <input required type="datetime-local" name="fechaHoraHasta" th:field="*{fechaHoraHasta}"></label>
+              <button type="submit">Crear Evento</button>
+          </form>
+      </div>
 </body>
 </html>

@@ -15,9 +15,7 @@ public class EventoService implements IEventoService{
 
     @Override
     public Evento create(Evento evento) {
-        if (!repository.existsById(evento.getId())){
-
-
+        if (evento.getId() == null){
             repository.save(evento);
         }
         return evento;
