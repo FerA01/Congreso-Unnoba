@@ -33,6 +33,12 @@ public class EventoController {
         model.addAttribute("eventos", eventos);
         return "eventos/eventosAdmin";
     }
+    @GetMapping("/{id}")
+    public String verMas(@PathVariable("id") Long id,Model model){
+        Evento evento = service.getById(id);
+        model.addAttribute("evento", evento);
+        return "eventos/evento";
+    }
 
     @GetMapping("/{id_evento}/presentacion")
     public String verPresentacion(@PathVariable("id_evento") Long id){
