@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService implements IUsuarioService, UserDetailsService {
@@ -37,6 +38,12 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 
     @Override
     public void delete(Long id) { repository.deleteById(id); }
+
+    @Override
+    public Optional<Usuario> findById(Long id) { return repository.findById(id); }
+
+    @Override
+    public void save2(Usuario usuario) { repository.save(usuario); }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
