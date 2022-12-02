@@ -3,24 +3,24 @@ import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
+@SessionAttributes("usuario")
 @RequestMapping("/usuarios")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService, EventoController evento){
-        setUsuarioService(usuarioService);
-    }
-
+    public UsuarioController(UsuarioService usuarioService, EventoController evento){ setUsuarioService(usuarioService); }
 
     @GetMapping
     public String index(Model model, Authentication auth){
@@ -42,10 +42,27 @@ public class UsuarioController {
         return "redirect:/usuarios";
     }
 
-    @PostMapping("/usuarios/edit/{id}")
-    public String edit(@PathVariable("id") Long id, Authentication auth){
-
-        return "redirect:/";
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model){
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("mensaje", "Editar usuario");
+        return "usuarios/editarUsuario";
+    }
+    @PostMapping("/edit")
+    public String editar(@ModelAttribute Usuario usuario, RedirectAttributes flash, Model model){
+        if (usuario.getId() != null){
+            try {
+                usuarioService.save2(usuario);
+                return "redirect:/usuarios";
+            }catch (Exception e){
+                flash.addFlashAttribute("danger", "El email ya se encuentra en uso");
+                return "redirect:/usuarios/edit/" + usuario.getId();
+            }
+        }else{
+            flash.addFlashAttribute("danger", "El email ya se encuentra en uso");
+            return "redirect:/usuarios/edit/" + usuario.getId();
+        }
     }
 
     @PostMapping("/register/new")

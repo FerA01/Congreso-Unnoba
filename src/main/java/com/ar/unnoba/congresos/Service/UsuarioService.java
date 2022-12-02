@@ -3,16 +3,11 @@ import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +17,13 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
     private UsuarioRepository repository;
 
     @Override
-    public Usuario create(Usuario usuario) {
-        if (repository.findByEmail(usuario.getEmail()) == null){
+    public boolean create(Usuario usuario) {
+        if (repository.findByEmail(usuario.getEmail())==null){ //se va a buscar al usuario por email en la bbdd, si no lo encuentra se va a guardar el usuario, caso contrario retorna false
             usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
-            usuario = repository.save(usuario);
+            repository.save(usuario);
+            return true;
         }
-        return usuario;
+        return false;
     }
 
     @Override //Ordenados por nombre y apellido
