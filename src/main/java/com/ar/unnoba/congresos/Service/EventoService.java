@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventoService implements IEventoService{
@@ -30,10 +31,15 @@ public class EventoService implements IEventoService{
     @Override
     public void delete(Long id) { repository.deleteById(id); }
 
-    @Deprecated
     @Override
-    public Evento getById(Long id) { return (id > 0) ? repository.getById(id) : null; }
+    public Optional<Evento> findById(Long id) { return repository.findById(id); }
 
+    @Override
+    @Deprecated
+    public Evento getById(Long id) { return repository.getById(id); }
+
+    @Override
+    public void save2(Evento evento) { repository.save(evento); }
 
     /**
      *  Si existe el evento con el id pasado por parametro

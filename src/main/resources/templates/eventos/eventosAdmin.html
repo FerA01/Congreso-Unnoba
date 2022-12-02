@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+     <div>
+       <table>
+           <thead>
+               <tr>
+                   <td>Nombre</td>
+                   <td>Fecha de inicio</td>
+                   <td>Fecha de finalización</td>
+                   <td>Modalidad</td>
+                   <td>Acciones</td>
+               </tr>
+           </thead>
+           <tbody>
+               <tr th:each="evento : ${eventos}">
+                   <td th:text="${evento.nombre}"></td>
+                   <td th:text="${evento.fechaHoraDesde}"></td>
+                   <td th:text="${evento.fechaHoraHasta}"></td>
+                   <td th:text="${evento.modalidad}"></td>
+                   <td>
+                       <!-- @{/eventos/{id}/edit(id = ${evento.id}}) -->
+                       <button>
+                             <a>Ver Más</a>
+                       </button>
+                       <button>
+                             <a th:href="@{/eventos/{id}/edit (id = ${evento.id})}">Editar</a>
+                       </button>
+                       <button>
+                             <a >Borrar</a>
+                       </button>
+                   </td>
+               </tr>
+           </tbody>
+       </table>
+     </div>
+</body>
+</html>

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Controller
 @RequestMapping("/eventos")
@@ -23,6 +24,12 @@ public class EventoController {
         List<Evento> eventos = service.getAll();
         model.addAttribute("eventos", eventos);
         return "eventos/eventos";
+    }
+    @GetMapping("/eventosAdmin")
+    public String eventosAdmin(Model model){ //index
+        List<Evento> eventos = service.getAll();
+        model.addAttribute("eventos", eventos);
+        return "eventos/eventosAdmin";
     }
 
     @GetMapping("/{id_evento}/presentacion")
@@ -48,33 +55,54 @@ public class EventoController {
         return "redirect:/eventos";
     }
 
-    @GetMapping("/eventos/{id}")
-    public String evento(@PathVariable("id") Long id, Model model){
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") Long id, Model model){
         if (id > 0){
+            /*
+            Optional<Evento> evento = service.findById(id);
+            AtomicReference<Evento> evento1 = null;
+            evento.ifPresent(accion ->{
+                evento1.set(new Evento());
+                evento1.get().setId(evento.get().getId());
+                evento1.get().setNombre(evento.get().getNombre());
+                evento1.get().setModalidad(evento.get().getModalidad());
+                evento1.get().setFechaHoraDesde(evento.get().getFechaHoraDesde());
+                evento1.get().setFechaHoraHasta(evento.get().getFechaHoraHasta());
+            });
+             */
             Evento evento = service.getById(id);
             model.addAttribute("evento", evento);
-            return "redirect:/eventos/{id}";
+            return "eventos/editarEvento";
         }
-        return "redirect:/eventos";
+        return "eventos/editarEvento";
     }
-    @GetMapping("/eventos/{id}/edit")
-    public String edit(@PathVariable("id") Long id){
-        if (id > 0){
-            Optional<Evento> evento = Optional.ofNullable(service.getById(id));
-            return "redirect:/eventos";
+    @PostMapping("/{id}")
+    public String evento(@PathVariable("id") Long id, @ModelAttribute Evento evento, Model model){
+        if (evento.getId() != null){
+            service.save2(evento);
+            //model.addAttribute("evento", evento);
+            return "redirect:/eventos/eventosAdmin";
         }
-        return "redirect:/eventos";
+        return "redirect:/eventos/eventosAdmin";
     }
-    @PostMapping("/eventos/{id}/delete")
-    public String delete(@PathVariable("id") Long id){
-        Evento evento = service.getById(id);
 
-        if (id > 0 && evento.getTrabajos().isEmpty()){
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable("id") Long id){
+        Optional<Evento> evento = service.findById(id);
+        if (id > 0 && noHayTrabajos(evento)){
             //mensaje seguro quiere eliminar el evento??
             service.delete(id);
-            return "redirect:/eventos";
+            return "redirect:/eventos/eventosAdmin";
         }
         //No se puede borrar el evento ya que contiene trabajos de autores.
-        return "redirect:/eventos";
+        return "redirect:/eventos/eventosAdmin";
+    }
+
+    /**COMPROBAR QUE UN EVENTO NO TENGA TRABAJOS**/
+    private boolean noHayTrabajos(Optional<Evento> evento){
+        if (evento.isPresent()){
+            return evento.get().getTrabajos().isEmpty();
+        }
+        return false;
     }
 }
