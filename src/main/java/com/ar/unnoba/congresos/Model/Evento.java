@@ -64,9 +64,7 @@ public class Evento {
         return llamadosPresentacion;
     }
     public void setLlamadosPresentacion(List<LlamadoPresentacion> llamadosPresentacion) { this.llamadosPresentacion = llamadosPresentacion; }
-    public List<Trabajo> getTrabajos() {
-        return trabajos;
-    }
+    public List<Trabajo> getTrabajos() { return trabajos; }
     public void setTrabajos(List<Trabajo> trabajos) {
         this.trabajos = trabajos;
     }
