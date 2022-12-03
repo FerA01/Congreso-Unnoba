@@ -8,4 +8,5 @@ public interface ITrabajoService {
     public void delete(Long id);
     public Trabajo getById(Long id);
     public void save2(Trabajo trabajo);
+    //public Trabajo obtenerTrabajo(Long idEvento);
 }

@@ -27,7 +27,7 @@
                                     <a method="get" th:href="@{/eventos/}+${evento.id}">Ver evento</a>
                                 </button>
                                 <button>
-                                    <a th:href="@{/eventos/}+${evento.id}+@{/presentacion}">Presentar trabajo</a>
+                                    <a th:href="@{/eventos/{idEvento}/trabajos/new (idEvento = ${evento.id})}">Presentar trabajo</a>
                                 </button>
                             </td>
                         </tr>

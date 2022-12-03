@@ -32,4 +32,7 @@ public class TrabajoService implements ITrabajoService {
 
     @Override
     public void save2(Trabajo trabajo) { repository.save(trabajo);}
+
+    //@Override
+    //public Trabajo obtenerTrabajo(Long idEvento) { return repository.getByIdEvento(idEvento); }
 }

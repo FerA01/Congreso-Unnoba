@@ -5,13 +5,18 @@
     <title>Title</title>
 </head>
 <body>
-     <div>
-         <form action="#" method="post" th:action="@{/trabajos}" th:object="${trabajo}">
-             <label>Nombre<input type="text" name="nombre" th:field="*{nombre}"></label>
-             <label>Estado<input type="text" name="estado" th:field="*{estado}"></label>
-             <input hidden type="datetime-local" name="fecha_hora" th:field="*{fecha_hora}">
-             <button type="submit">Crear</button>
-         </form>
-     </div>
+    <div>
+        <form action="#" method="post" th:action="@{/trabajos}" th:object="${trabajo}">
+            <label>Nombre<input type="text" name="nombre" th:field="*{nombre}"></label>
+            <label>Estado<input type="text" name="estado" th:field="*{estado}"></label>
+            <input hidden type="datetime-local" name="fecha_hora" th:field="*{fecha_hora}">
+            <div>
+                <div><h1>Seleccionar Archivo</h1></div>
+                <label for="myfile">Seleccione un archivo:</label>
+                <input type="file" id="myfile" name="myfile"><br><br>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </body>
 </html>

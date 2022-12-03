@@ -1,8 +1,11 @@
 package com.ar.unnoba.congresos.Controller;
 import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Trabajo;
+import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.IEventoService;
+import com.ar.unnoba.congresos.Service.ITrabajoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +22,16 @@ public class EventoController {
     private IEventoService service;
 
     @Autowired
+    private ITrabajoService trabajoService;
+
+    @Autowired
     public EventoController(IEventoService service){ this.service = service; }
 
     @GetMapping
-    public String eventos(Model model){ //index
+    public String eventos(Model model, Authentication auth){ //index
         List<Evento> eventos = service.getAll();
+        Usuario usuario = (Usuario) auth.getPrincipal();
+        //Trabajo trabajo = trabajoService.obtenerTrabajo(ev);
         model.addAttribute("eventos", eventos);
         return "eventos/eventos";
     }
@@ -40,12 +48,12 @@ public class EventoController {
         return "eventos/evento";
     }
 
-    @GetMapping("/{id_evento}/presentacion")
+    @GetMapping("/{id_evento}/trabajos")
     public String verPresentacion(@PathVariable("id_evento") Long id){
 
         return "trabajos/presentacion";
     }
-    @GetMapping("/{id_evento}/presentacion/new")
+    @GetMapping("/{id_evento}/trabajos/new")
     public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model){
         model.addAttribute("presentacion", new Trabajo());
         return "redirect:/eventos";
