@@ -14,18 +14,17 @@ import java.util.List;
 @Controller
 @RequestMapping("/trabajos")
 public class TrabajoController {
-
-    //@Autowired
+    @Autowired
     private ITrabajoService trabajoService;
 
-    //@Autowired
-    //public TrabajoController(ITrabajoService trabajoService){ this.trabajoService = trabajoService; }
+    @Autowired
+    public TrabajoController(ITrabajoService trabajoService){ this.trabajoService = trabajoService; }
 
     @GetMapping
     public String trabajos(Model model){
         List<Trabajo> trabajos = trabajoService.getAll();
         model.addAttribute("trabajos", trabajos);
-        return "trabajos/trabajos";
+        return "trabajos/presentaciones";
     }
 
     @GetMapping("/new")
@@ -37,11 +36,11 @@ public class TrabajoController {
     @PostMapping
     public String create(@ModelAttribute Trabajo trabajo){
         trabajoService.create(trabajo);
-        return "redirect:/trabajos/{id}";
+        return "redirect:/trabajos";
     }
 
-    @GetMapping("/trabajos/{id}")
-    public String trabajo(@PathVariable("id") Long id, Model model){
+    @GetMapping("/{id}")
+    public String edit(@PathVariable("id") Long id, Model model){
         if (id > 0){
             Trabajo trabajo = trabajoService.getById(id);
             model.addAttribute("trabajo", trabajo);
