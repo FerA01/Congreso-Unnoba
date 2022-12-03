@@ -1,6 +1,8 @@
 package com.ar.unnoba.congresos.Controller;
+import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Trabajo;
 import com.ar.unnoba.congresos.Model.Usuario;
+import com.ar.unnoba.congresos.Service.IEventoService;
 import com.ar.unnoba.congresos.Service.ITrabajoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,7 +20,9 @@ public class TrabajoController {
     private ITrabajoService trabajoService;
 
     @Autowired
-    public TrabajoController(ITrabajoService trabajoService){ this.trabajoService = trabajoService; }
+    public TrabajoController(ITrabajoService trabajoService, IEventoService eventoService){
+        this.trabajoService = trabajoService;
+    }
 
     @GetMapping
     public String trabajos(Model model){
@@ -30,7 +34,8 @@ public class TrabajoController {
     @GetMapping("/new")
     public String nuevoTrabajo(Model model){
         model.addAttribute("trabajo", new Trabajo());
-        return "trabajos/nuevoTrabajo";
+
+        return "trabajos/agregarPresentacion";
     }
 
     @PostMapping

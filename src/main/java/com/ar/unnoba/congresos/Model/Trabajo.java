@@ -1,4 +1,6 @@
 package com.ar.unnoba.congresos.Model;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,6 +10,7 @@ public class Trabajo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "fecha_hora", nullable = false)
     private Date fecha_hora;
     @ManyToOne

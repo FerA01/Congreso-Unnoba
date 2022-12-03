@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+     <div>
+         <form action="#" method="post" th:action="@{/trabajos}" th:object="${trabajo}">
+             <label>Nombre<input type="text" name="nombre" th:field="*{nombre}"></label>
+             <label>Estado<input type="text" name="estado" th:field="*{estado}"></label>
+             <input hidden type="datetime-local" name="fecha_hora" th:field="*{fecha_hora}">
+             <button type="submit">Crear</button>
+         </form>
+     </div>
 </body>
 </html>
