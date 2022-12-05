@@ -25,6 +25,9 @@ public class EventoController {
     private ITrabajoService trabajoService;
 
     @Autowired
+    private TrabajoController trabajoController;
+
+    @Autowired
     public EventoController(IEventoService service){ this.service = service; }
 
     @GetMapping
@@ -55,8 +58,7 @@ public class EventoController {
     }
     @GetMapping("/{id_evento}/trabajos/new")
     public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model){
-        model.addAttribute("presentacion", new Trabajo());
-        return "redirect:/eventos";
+        return trabajoController.nuevoTrabajo(model);
     }
 
     @GetMapping("/new")

@@ -34,7 +34,6 @@ public class TrabajoController {
     @GetMapping("/new")
     public String nuevoTrabajo(Model model){
         model.addAttribute("trabajo", new Trabajo());
-
         return "trabajos/agregarPresentacion";
     }
 
