@@ -7,6 +7,7 @@ import com.ar.unnoba.congresos.Service.ITrabajoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,8 +58,14 @@ public class EventoController {
         return "trabajos/presentacion";
     }
     @GetMapping("/{id_evento}/trabajos/new")
-    public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model){
-        return trabajoController.nuevoTrabajo(model);
+    public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model, Authentication auth){
+        //return trabajoController.nuevoTrabajo(model);
+        Usuario usuario = (Usuario) auth.getPrincipal();
+        Evento evento = service.getById(id);
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("evento", evento);
+        model.addAttribute("trabajo", new Trabajo());
+        return "trabajos/agregarPresentacion";
     }
 
     @GetMapping("/new")
@@ -76,18 +83,6 @@ public class EventoController {
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") Long id, Model model){
         if (id > 0){
-            /*
-            Optional<Evento> evento = service.findById(id);
-            AtomicReference<Evento> evento1 = null;
-            evento.ifPresent(accion ->{
-                evento1.set(new Evento());
-                evento1.get().setId(evento.get().getId());
-                evento1.get().setNombre(evento.get().getNombre());
-                evento1.get().setModalidad(evento.get().getModalidad());
-                evento1.get().setFechaHoraDesde(evento.get().getFechaHoraDesde());
-                evento1.get().setFechaHoraHasta(evento.get().getFechaHoraHasta());
-            });
-             */
             Evento evento = service.getById(id);
             model.addAttribute("evento", evento);
             return "eventos/editarEvento";
@@ -104,24 +99,30 @@ public class EventoController {
         return "redirect:/eventos/eventosAdmin";
     }
 
+    @Transactional
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash){
-        Optional<Evento> evento = service.findById(id);
-        if (id > 0 && noHayTrabajos(evento)){
-            //mensaje seguro quiere eliminar el evento??
-            service.delete(id);
-            flash.addFlashAttribute("succes", "Evento eliminado correctamente");
+        try{
+            Optional<Evento> evento = service.findById(id);
+            if (id > 0 && !hayTrabajos(evento.get())){
+                //mensaje seguro quiere eliminar el evento??
+                service.delete(id);
+                flash.addFlashAttribute("success", "Evento eliminado correctamente");
+                return "redirect:/eventos/eventosAdmin";
+            }
+            //No se puede borrar el evento ya que contiene trabajos de autores.
+            flash.addFlashAttribute("danger", "No se puede eliminar el evento ya que tiene trabajos");
             return "redirect:/eventos/eventosAdmin";
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
-        //No se puede borrar el evento ya que contiene trabajos de autores.
-        flash.addFlashAttribute("danger", "No se puede eliminar el evento ya que tiene trabajos");
         return "redirect:/eventos/eventosAdmin";
     }
 
     /**COMPROBAR QUE UN EVENTO NO TENGA TRABAJOS**/
-    private boolean noHayTrabajos(Optional<Evento> evento){
-        if (evento.isPresent()){
-            return evento.get().getTrabajos().isEmpty();
+    private boolean hayTrabajos(Evento evento){
+        if (evento.getId() != null){
+            return evento.getTrabajos().isEmpty();
         }
         return false;
     }

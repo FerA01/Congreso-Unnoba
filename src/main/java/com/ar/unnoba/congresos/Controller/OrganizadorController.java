@@ -59,8 +59,6 @@ public class OrganizadorController {
     /**Eventos**/
     @GetMapping("/eventos")
     public String index(Model model, Authentication auth){
-        Organizador organizador = (Organizador) auth.getPrincipal();
-
         return evento.eventosAdmin(model);
     }
 

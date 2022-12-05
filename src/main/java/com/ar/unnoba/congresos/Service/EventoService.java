@@ -40,21 +40,4 @@ public class EventoService implements IEventoService{
 
     @Override
     public void save2(Evento evento) { repository.save(evento); }
-
-    /**
-     *  Si existe el evento con el id pasado por parametro
-     *  devuelvo true si el evento tiene trabajos, caso contrario devuelve false
-     * **/
-    /*
-    @Deprecated
-    @Override
-    public boolean hayTrabajos(Long id ) {
-        Evento evento = getById(id);
-        if (id > 0 && evento != null) {
-            return !evento.getTrabajos().isEmpty();
-        }
-        return false;
-    }
-
-     */
 }
