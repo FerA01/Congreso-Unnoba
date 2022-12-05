@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
+@SessionAttributes("admin")
 @RequestMapping("/admin")
 public class OrganizadorController {
     @Autowired
@@ -27,11 +28,39 @@ public class OrganizadorController {
         this.evento = evento;
     }
 
+    @GetMapping("/register")
+    public String registrar(Model model){
+        model.addAttribute("organizador", new Organizador());
+        return "organizador/register";
+    }
+    @PostMapping("/register/new")
+    public String registrarPost(@ModelAttribute Organizador organizador){
+        if (organizador.getId() == null){
+            organizadorService.create(organizador);
+            return "redirect:/admin/eventos";
+        }
+        return "redirect:/admin/eventos";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id, RedirectAttributes flash, Authentication auth){
+        Organizador usuario = (Organizador) auth.getPrincipal();
+        if (usuario.getId().equals(id)){
+            flash.addFlashAttribute("danger", "No puede eliminarse a si mismo.");
+            return "redirect:/admin/eventos";
+        }
+        organizadorService.delete(id);
+        flash.addFlashAttribute("success", "Admin eliminado correctamente");
+        return "redirect:/admin/eventos";
+    }
+
+
+
+    /**Eventos**/
     @GetMapping("/eventos")
     public String index(Model model, Authentication auth){
         Organizador organizador = (Organizador) auth.getPrincipal();
 
-        //model.addAttribute("", );
         return evento.eventosAdmin(model);
     }
 

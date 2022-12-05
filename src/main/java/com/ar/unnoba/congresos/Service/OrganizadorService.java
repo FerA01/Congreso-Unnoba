@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +16,13 @@ public class OrganizadorService implements IOrganizadorService, UserDetailsServi
     private OrganizadorRepository repository;
 
     @Override
-    public Organizador create(Organizador organizador) {
-        if (repository.findByEmail(organizador.getEmail()) == null){
-
+    public boolean create(Organizador organizador) {
+        if (repository.findByEmail(organizador.getEmail())==null){ //se va a buscar al usuario por email en la bbdd, si no lo encuentra se va a guardar el usuario, caso contrario retorna false
+            organizador.setPassword(new BCryptPasswordEncoder().encode(organizador.getPassword()));
+            repository.save(organizador);
+            return true;
         }
-        return organizador;
+        return false;
     }
 
     @Override

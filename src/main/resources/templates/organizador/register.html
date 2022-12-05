@@ -6,7 +6,7 @@
 </head>
 <body>
     <div>
-        <form  action="#" method="post" th:action="@{/admin/register/new}" th:object = "${usuario}">
+        <form  action="#" method="post" th:action="@{/admin/register/new}" th:object = "${organizador}">
             <label>Email <input type="email" name="email" th:field = "*{email}"></label>
             <label>Contraseña <input type="password" name="password" th:field = "*{password}"></label>
             <label>Nombre <input type="text" name="nombre" th:field = "*{nombre}"></label>

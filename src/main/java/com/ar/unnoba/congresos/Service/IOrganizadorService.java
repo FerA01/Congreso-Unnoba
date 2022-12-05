@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface IOrganizadorService {
-    public Organizador create(Organizador organizador);
+    public boolean create(Organizador organizador);
     public List<Organizador> getAll();
     public void delete(Long id);
 }

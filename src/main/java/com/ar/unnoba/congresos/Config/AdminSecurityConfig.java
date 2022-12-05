@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,11 +38,9 @@ public class AdminSecurityConfig {
         http    .userDetailsService((UserDetailsService) organizadorService)
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
-                        .antMatchers("/resources/**").permitAll()
-                        //.antMatchers( "/admin/register").permitAll()
-                        //.antMatchers(HttpMethod.POST,"/admin/register/new").permitAll()
+                        .antMatchers( "/admin/register").permitAll()
+                        .antMatchers(HttpMethod.POST,"/admin/register/new").permitAll()
                         .antMatchers("/admin/eventos").hasRole("ROLE_ADMIN")
-                        .antMatchers("/admin/register").hasRole("ROLE_ADMIN")
                         .antMatchers("/admin/eventos/new").hasRole("ROLE_ADMIN")
                         .antMatchers("/admin/eventos/**").hasRole("ROLE_ADMIN")
                         .anyRequest().authenticated()
