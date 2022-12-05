@@ -12,6 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -58,14 +61,19 @@ public class EventoController {
         return "trabajos/presentacion";
     }
     @GetMapping("/{id_evento}/trabajos/new")
-    public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model, Authentication auth){
+    public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model, RedirectAttributes flash, Authentication auth){
         //return trabajoController.nuevoTrabajo(model);
         Usuario usuario = (Usuario) auth.getPrincipal();
         Evento evento = service.getById(id);
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("evento", evento);
-        model.addAttribute("trabajo", new Trabajo());
-        return "trabajos/agregarPresentacion";
+        LocalDateTime hoy =  LocalDateTime.now();
+        if (hoy.isBefore(evento.getFechaHoraDesde())){
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("evento", evento);
+            model.addAttribute("trabajo", new Trabajo());
+            return "trabajos/agregarPresentacion";
+        }
+        flash.addFlashAttribute("info", "Ya paso la fecha de entregar de trabajos");
+        return "redirect:/eventos";
     }
 
     @GetMapping("/new")

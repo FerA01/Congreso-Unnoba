@@ -6,6 +6,9 @@
 </head>
 <body>
     <div>
+        <div th:if="${info != null}">
+            <p th:text="${info}"></p>
+        </div>
         <table>
                 <thead>
                         <tr>
