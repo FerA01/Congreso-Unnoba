@@ -24,7 +24,7 @@ public class UsuarioController {
 
     @GetMapping
     public String index(Model model, Authentication auth){
-        Usuario usuario = (Usuario) auth.getPrincipal();
+        //Usuario usuario = (Usuario) auth.getPrincipal();
         List<Usuario> usuarios = usuarioService.getAll();
         model.addAttribute("usuarios", usuarios);
         return "index";
@@ -32,11 +32,14 @@ public class UsuarioController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash, Authentication auth){
+        /*
         Usuario usuario = (Usuario) auth.getPrincipal();
         if (usuario.getId().equals(id)){
             flash.addFlashAttribute("danger", "No puede eliminarse a si mismo.");
             return "redirect:/usuarios";
         }
+
+         */
         usuarioService.delete(id);
         flash.addFlashAttribute("success", "Usuario eliminado correctamente");
         return "redirect:/usuarios";

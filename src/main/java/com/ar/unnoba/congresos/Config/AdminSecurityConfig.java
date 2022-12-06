@@ -1,6 +1,7 @@
 package com.ar.unnoba.congresos.Config;
 
 import com.ar.unnoba.congresos.Service.OrganizadorService;
+import com.ar.unnoba.congresos.Service.ServiceLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -20,18 +21,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Primary
 public class AdminSecurityConfig {
     @Autowired
-    private OrganizadorService organizadorService;
+    private ServiceLogin organizadorService;
 
     @Autowired
-    public AdminSecurityConfig( OrganizadorService organizadorService){
+    public AdminSecurityConfig( ServiceLogin organizadorService){
         this.organizadorService = organizadorService;
     }
 
-
-    @Bean
-    public OrganizadorService userDetailService(){
-        return new OrganizadorService();
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -43,11 +39,12 @@ public class AdminSecurityConfig {
                         .antMatchers("/admin/eventos").hasAuthority("ROLE_ADMIN")
                         .antMatchers("/admin/eventos/new").hasRole("ROLE_ADMIN")
                         .antMatchers("/admin/eventos/**").hasRole("ROLE_ADMIN")
+                        .antMatchers("/usuarios/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin().loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/login", true)
+                .defaultSuccessUrl("/eventos/eventosAdmin", true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")

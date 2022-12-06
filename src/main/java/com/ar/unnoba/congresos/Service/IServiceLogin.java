@@ -1,5 +1,5 @@
 package com.ar.unnoba.congresos.Service;
 
-public interface IService {
+public interface IServiceLogin {
 
 }

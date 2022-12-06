@@ -1,4 +1,5 @@
 package com.ar.unnoba.congresos.Config;
+import com.ar.unnoba.congresos.Service.ServiceLogin;
 import com.ar.unnoba.congresos.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +18,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig{
     @Autowired
     //@Qualifier("UsuarioService")
-    private UsuarioService userDetailsService;
+    private ServiceLogin userDetailsService;
 
     @Autowired
-    public SecurityConfig(UsuarioService userDetailsService){
-        setUserDetailsService(userDetailsService);
+    public SecurityConfig(ServiceLogin userDetailsService){
+        this.userDetailsService = userDetailsService;
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -30,12 +31,13 @@ public class SecurityConfig{
                         .antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
                         .antMatchers("/resources/**").permitAll()
                         .antMatchers( "/usuarios/register").permitAll()
+                        .antMatchers("/usuarios/**").permitAll()
                         .antMatchers(HttpMethod.POST,"/usuarios/register/new").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin().loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/usuarios", true)
+                .defaultSuccessUrl("/eventos", true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -61,6 +63,4 @@ public class SecurityConfig{
 
         return authProvider;
     }
-
-    public void setUserDetailsService(UsuarioService userDetailsService) { this.userDetailsService = userDetailsService; }
 }

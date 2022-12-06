@@ -37,7 +37,7 @@ public class EventoController {
     @GetMapping
     public String eventos(Model model, Authentication auth){ //index
         List<Evento> eventos = service.getAll();
-        Usuario usuario = (Usuario) auth.getPrincipal();
+       // Usuario usuario = (Usuario) auth.getPrincipal();
         //Trabajo trabajo = trabajoService.obtenerTrabajo(ev);
         model.addAttribute("eventos", eventos);
         return "eventos/eventos";

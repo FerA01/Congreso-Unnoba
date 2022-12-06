@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body sec:authorize="hasRole('ROLE_ADMIN')">
+    <div th:if="${info != null}">
+        <p th:text="${info}"></p>
+    </div>
      <div>
        <table>
            <thead>
@@ -38,5 +41,8 @@
            </tbody>
        </table>
      </div>
+    <div>
+        <button><a th:href="@{/admin/eventos/new}">Crear Evento</a></button>
+    </div>
 </body>
 </html>

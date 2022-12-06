@@ -6,8 +6,8 @@
 </head>
 <body>
     <div>
-        <div th:if="${info != null}">
-            <p th:text="${info}"></p>
+        <div th:if="${danger != null}">
+            <p th:text="${danger}"></p>
         </div>
         <table>
                 <thead>
@@ -36,9 +36,6 @@
                         </tr>
                 </tbody>
         </table>
-        <div>
-            <button><a th:href="@{/eventos/new}">Crear Evento</a></button>
-        </div>
     </div>
 </body>
 </html>
