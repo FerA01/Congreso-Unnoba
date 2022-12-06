@@ -6,6 +6,7 @@ import com.ar.unnoba.congresos.Service.IEventoService;
 import com.ar.unnoba.congresos.Service.ITrabajoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/eventos")
+@EnableGlobalMethodSecurity(securedEnabled=true)
 public class EventoController {
     @Autowired
     private IEventoService service;

@@ -3,7 +3,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Entity
 @Table(name = "eventos")
 public class Evento {
