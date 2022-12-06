@@ -5,6 +5,7 @@ import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.IEventoService;
 import com.ar.unnoba.congresos.Service.IOrganizadorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,11 @@ public class OrganizadorController {
     @Autowired
     public OrganizadorController(EventoController evento){
         this.evento = evento;
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "organizador/login";
     }
 
     @GetMapping("/register")
@@ -57,6 +63,7 @@ public class OrganizadorController {
 
 
     /**Eventos**/
+    @Secured("ROLE_ADMIN")
     @GetMapping("/eventos")
     public String index(Model model, Authentication auth){
         return evento.eventosAdmin(model);

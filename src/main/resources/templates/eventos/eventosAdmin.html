@@ -44,5 +44,10 @@
     <div>
         <button><a th:href="@{/admin/eventos/new}">Crear Evento</a></button>
     </div>
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Salir"/>
+        </form>
+    </div>
 </body>
 </html>

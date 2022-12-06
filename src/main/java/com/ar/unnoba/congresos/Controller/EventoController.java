@@ -5,19 +5,16 @@ import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.IEventoService;
 import com.ar.unnoba.congresos.Service.ITrabajoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Controller
 @RequestMapping("/eventos")
@@ -42,6 +39,7 @@ public class EventoController {
         model.addAttribute("eventos", eventos);
         return "eventos/eventos";
     }
+    @Secured("ROLE_ADMIN")
     @GetMapping("/eventosAdmin")
     public String eventosAdmin(Model model){ //index
         List<Evento> eventos = service.getAll();
@@ -76,18 +74,20 @@ public class EventoController {
         return "redirect:/eventos";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/new")
     public String nuevoEvento(Model model){
         model.addAttribute("evento", new Evento());
         return "eventos/nuevoEvento";
     }
-
+    @Secured("ROLE_ADMIN")
     @PostMapping
     public String create(@ModelAttribute Evento evento){
         service.create(evento);
         return "redirect:/eventos";
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") Long id, Model model){
         if (id > 0){
@@ -97,6 +97,7 @@ public class EventoController {
         }
         return "eventos/editarEvento";
     }
+    @Secured("ROLE_ADMIN")
     @PostMapping("/{id}")
     public String evento(@PathVariable("id") Long id, @ModelAttribute Evento evento, Model model){
         if (evento.getId() != null){
@@ -108,6 +109,7 @@ public class EventoController {
     }
 
     @Transactional
+    @Secured("ROLE_ADMIN")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash){
         try{

@@ -1,24 +1,17 @@
 package com.ar.unnoba.congresos.Config;
-
-import com.ar.unnoba.congresos.Service.OrganizadorService;
 import com.ar.unnoba.congresos.Service.ServiceLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableWebSecurity
-@EnableTransactionManagement
-@EnableAutoConfiguration
-@Primary
+@Order(1)
 public class AdminSecurityConfig {
     @Autowired
     private ServiceLogin organizadorService;
@@ -32,7 +25,9 @@ public class AdminSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http    .userDetailsService((UserDetailsService) organizadorService)
+                .antMatcher("/admin/**")
                 .authorizeHttpRequests((requests) -> requests
+                        /*
                         .antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
                         .antMatchers( "/admin/register").permitAll()
                         .antMatchers(HttpMethod.POST,"/admin/register/new").permitAll()
@@ -40,15 +35,17 @@ public class AdminSecurityConfig {
                         .antMatchers("/admin/eventos/new").hasRole("ROLE_ADMIN")
                         .antMatchers("/admin/eventos/**").hasRole("ROLE_ADMIN")
                         .antMatchers("/usuarios/**").permitAll()
-                        .anyRequest().authenticated()
+                         */
+                        .anyRequest().hasAuthority("ROLE_ADMIN")
                 )
-                .formLogin().loginPage("/login")
+                .formLogin().loginPage("organizador/login")
+                .loginProcessingUrl("/admin/login")
                 .permitAll()
-                .defaultSuccessUrl("/eventos/eventosAdmin", true)
+                .defaultSuccessUrl("/admin/eventos", true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/admin/login")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll();

@@ -1,9 +1,9 @@
 package com.ar.unnoba.congresos.Config;
 import com.ar.unnoba.congresos.Service.ServiceLogin;
-import com.ar.unnoba.congresos.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@Order(2)
 public class SecurityConfig{
     @Autowired
     //@Qualifier("UsuarioService")
@@ -33,6 +34,7 @@ public class SecurityConfig{
                         .antMatchers( "/usuarios/register").permitAll()
                         .antMatchers("/usuarios/**").permitAll()
                         .antMatchers(HttpMethod.POST,"/usuarios/register/new").permitAll()
+                        .antMatchers("/admin/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin().loginPage("/login")
