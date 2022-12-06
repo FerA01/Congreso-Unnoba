@@ -67,6 +67,7 @@ public class OrganizadorController {
         return evento.eventosAdmin(model);
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/eventos/new")
     public String newEvento(Model model){
         return evento.nuevoEvento(model);
@@ -75,10 +76,12 @@ public class OrganizadorController {
     public String crearEvento(@ModelAttribute Evento evento){
         return this.evento.create(evento);
     }
+    @Secured("ROLE_ADMIN")
     @GetMapping("/eventos/{id}/edit")
-    public String editarEvento(@PathVariable("id") Long id, Model model){
-        return evento.edit(id, model);
+    public String editarEvento(@PathVariable("id") Long id, Model model, RedirectAttributes flash){
+        return evento.edit(id, model, flash);
     }
+    @Secured("ROLE_ADMIN")
     @PostMapping("/eventos/{id}")
     public String editarPost(@PathVariable("id") Long id, @ModelAttribute Evento evento, Model model){
         return this.evento.evento(id, evento, model);
@@ -87,6 +90,7 @@ public class OrganizadorController {
     public String listarEventos(@PathVariable("id") Long id,Model model){
         return evento.verMas(id, model);
     }
+    @Secured("ROLE_ADMIN")
     @PostMapping("/eventos/{id}/delete")
     public String eliminarEvento(@PathVariable("id") Long id, RedirectAttributes flash){
         return evento.delete(id, flash);

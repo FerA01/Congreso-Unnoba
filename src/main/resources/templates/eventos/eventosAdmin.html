@@ -5,8 +5,17 @@
     <title>Title</title>
 </head>
 <body sec:authorize="hasRole('ROLE_ADMIN')">
-    <div th:if="${info != null}">
-        <p th:text="${info}"></p>
+
+    <div>
+        <div th:if="${info != null}">
+            <p th:text="${info}"></p>
+        </div>
+        <div th:if="${danger != null}">
+            <p th:text="${danger}"></p>
+        </div>
+        <div th:if="${success != null}">
+            <p th:text="${success}"></p>
+        </div>
     </div>
      <div>
        <table>
@@ -28,7 +37,7 @@
                    <td>
                        <!-- @{/eventos/{id}/edit(id = ${evento.id}}) -->
                        <button>
-                             <a th:href="@{/eventos/}">Ver Más</a>
+                             <a th:href="@{/admin/eventos/}+${evento.id}">Ver Más</a>
                        </button>
                        <button>
                              <a th:href="@{/eventos/{id}/edit (id = ${evento.id})}">Editar</a>

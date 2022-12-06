@@ -91,10 +91,11 @@ public class EventoController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") Long id, Model model){
+    public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes flash){
         if (id > 0){
             Evento evento = service.getById(id);
             model.addAttribute("evento", evento);
+            flash.addFlashAttribute("success", "Evento editado correctamente");
             return "eventos/editarEvento";
         }
         return "eventos/editarEvento";
@@ -105,9 +106,9 @@ public class EventoController {
         if (evento.getId() != null){
             service.save2(evento);
             //model.addAttribute("evento", evento);
-            return "redirect:/eventos/eventosAdmin";
+            return "redirect:/admin/eventos";
         }
-        return "redirect:/eventos/eventosAdmin";
+        return "redirect:/admin/eventos";
     }
 
     @Transactional
@@ -116,19 +117,19 @@ public class EventoController {
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash){
         try{
             Optional<Evento> evento = service.findById(id);
-            if (id > 0 && !hayTrabajos(evento.get())){
+            if (id < 0 || hayTrabajos(evento.get())){
                 //mensaje seguro quiere eliminar el evento??
                 service.delete(id);
                 flash.addFlashAttribute("success", "Evento eliminado correctamente");
-                return "redirect:/eventos/eventosAdmin";
+                return "redirect:/admin/eventos";
             }
             //No se puede borrar el evento ya que contiene trabajos de autores.
             flash.addFlashAttribute("danger", "No se puede eliminar el evento ya que tiene trabajos");
-            return "redirect:/eventos/eventosAdmin";
+            return "redirect:/admin/eventos";
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return "redirect:/eventos/eventosAdmin";
+        return "redirect:/admin/eventos";
     }
 
     /**COMPROBAR QUE UN EVENTO NO TENGA TRABAJOS**/

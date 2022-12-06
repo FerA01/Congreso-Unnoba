@@ -1,9 +1,7 @@
 package com.ar.unnoba.congresos.Controller;
-import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,14 +30,6 @@ public class UsuarioController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash, Authentication auth){
-        /*
-        Usuario usuario = (Usuario) auth.getPrincipal();
-        if (usuario.getId().equals(id)){
-            flash.addFlashAttribute("danger", "No puede eliminarse a si mismo.");
-            return "redirect:/usuarios";
-        }
-
-         */
         usuarioService.delete(id);
         flash.addFlashAttribute("success", "Usuario eliminado correctamente");
         return "redirect:/usuarios";
