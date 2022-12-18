@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar</title>
+</head>
+<body>
+    <div>
+        <form action="#" method="post" th:action="@{/eventos/}+${evento.id}" th:method="post" th:object="${evento}">
+            <label>Nombre <input required type="text" name="nombre" th:field="*{nombre}"></label>
+            <label>Descripción <input required type="text" name="descripcion" th:field="*{descripcion}"></label>
+            <!--<label>Modalidad <input required type="" name="modalidad" th:field="*{modalidad}"></label>-->
+            <label>Modalidad <select id="modalidad" name="modalidad" required th:field="*{modalidad}" >
+                <option value="Presencial">Presencial</option>
+                <option value="Virtual">Virtual</option>
+                <option value="Hibrido">Hibrido</option>
+            </select>
+            </label>
+            <label>Fecha y hora de inicio <input required type="datetime-local" name="fechaHoraDesde" th:field="*{fechaHoraDesde}"></label>
+            <label>Fecha y hora de fin <input required type="datetime-local" name="fechaHoraHasta" th:field="*{fechaHoraHasta}"></label>
+            <button type="submit">Editar Evento</button>
+        </form>
+    </div>
+</body>
+</html>

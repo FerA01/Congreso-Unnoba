@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body sec:authorize="hasRole('ROLE_ADMIN')">
+
+    <div>
+        <div th:if="${info != null}">
+            <p th:text="${info}"></p>
+        </div>
+        <div th:if="${danger != null}">
+            <p th:text="${danger}"></p>
+        </div>
+        <div th:if="${success != null}">
+            <p th:text="${success}"></p>
+        </div>
+    </div>
+     <div>
+       <table>
+           <thead>
+               <tr>
+                   <td>Nombre</td>
+                   <td>Fecha de inicio</td>
+                   <td>Fecha de finalización</td>
+                   <td>Modalidad</td>
+                   <td>Acciones</td>
+               </tr>
+           </thead>
+           <tbody>
+               <tr th:each="evento : ${eventos}">
+                   <td th:text="${evento.nombre}"></td>
+                   <td th:text="${evento.fechaHoraDesde}"></td>
+                   <td th:text="${evento.fechaHoraHasta}"></td>
+                   <td th:text="${evento.modalidad}"></td>
+                   <td>
+                       <!-- @{/eventos/{id}/edit(id = ${evento.id}}) -->
+                       <button>
+                             <a th:href="@{/admin/eventos/}+${evento.id}">Ver Más</a>
+                       </button>
+                       <button>
+                             <a th:href="@{/eventos/{id}/edit (id = ${evento.id})}">Editar</a>
+                       </button>
+                       <button>
+                             <a th:href="@{/eventos/{id}/delete (id = ${evento.id})}">Borrar</a>
+                       </button>
+                   </td>
+               </tr>
+           </tbody>
+       </table>
+     </div>
+    <div>
+        <button><a th:href="@{/admin/eventos/new}">Crear Evento</a></button>
+    </div>
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Salir"/>
+        </form>
+    </div>
+</body>
+</html>

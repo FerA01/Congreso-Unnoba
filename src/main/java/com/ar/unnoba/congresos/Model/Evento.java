@@ -1,8 +1,8 @@
 package com.ar.unnoba.congresos.Model;
+import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-
 @Entity
 @Table(name = "eventos")
 public class Evento {
@@ -11,10 +11,14 @@ public class Evento {
     private Long id;
     @Column(name = "nombre", nullable = false)
     private String nombre;
+    //@Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "fecha_hora_desde", nullable = false)
-    private Date fechaHoraDesde;
+    private LocalDateTime fechaHoraDesde;
+    //@Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "fecha_hora_hasta", nullable = false)
-    private Date fechaHoraHasta;
+    private LocalDateTime fechaHoraHasta;
     @Column(name = "modalidad", nullable = false)
     private String modalidad;
     @Column(name = "descripcion")
@@ -33,16 +37,14 @@ public class Evento {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public Date getFechaHoraDesde() {
+    public LocalDateTime getFechaHoraDesde() {
         return fechaHoraDesde;
     }
-    public void setFechaHoraDesde(Date fechaHoraDesde) {
-        this.fechaHoraDesde = fechaHoraDesde;
-    }
-    public Date getFechaHoraHasta() {
+    public void setFechaHoraDesde(LocalDateTime fechaHoraDesde) { this.fechaHoraDesde = fechaHoraDesde; }
+    public LocalDateTime getFechaHoraHasta() {
         return fechaHoraHasta;
     }
-    public void setFechaHoraHasta(Date fechaHoraHasta) {
+    public void setFechaHoraHasta(LocalDateTime fechaHoraHasta) {
         this.fechaHoraHasta = fechaHoraHasta;
     }
     public String getModalidad() {
@@ -61,9 +63,7 @@ public class Evento {
         return llamadosPresentacion;
     }
     public void setLlamadosPresentacion(List<LlamadoPresentacion> llamadosPresentacion) { this.llamadosPresentacion = llamadosPresentacion; }
-    public List<Trabajo> getTrabajos() {
-        return trabajos;
-    }
+    public List<Trabajo> getTrabajos() { return trabajos; }
     public void setTrabajos(List<Trabajo> trabajos) {
         this.trabajos = trabajos;
     }

@@ -1,8 +1,9 @@
 package com.ar.unnoba.congresos.Config;
-import com.ar.unnoba.congresos.Service.UsuarioService;
+import com.ar.unnoba.congresos.Service.ServiceLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,14 +15,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@Order(2)
 public class SecurityConfig{
     @Autowired
     //@Qualifier("UsuarioService")
-    private UsuarioService userDetailsService;
+    private ServiceLogin userDetailsService;
 
     @Autowired
-    public SecurityConfig(UsuarioService userDetailsService){
-        setUserDetailsService(userDetailsService);
+    public SecurityConfig(ServiceLogin userDetailsService){
+        this.userDetailsService = userDetailsService;
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -29,16 +31,22 @@ public class SecurityConfig{
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
                         .antMatchers("/resources/**").permitAll()
-                        .antMatchers("/login", "/register").permitAll()
-                        .antMatchers(HttpMethod.POST,"/register/new").permitAll()
-                        .antMatchers("/usuarios", "/usuarios/**").permitAll()
+                        .antMatchers( "/usuarios/register").permitAll()
+                        .antMatchers("/usuarios/**").permitAll()
+                        .antMatchers(HttpMethod.POST,"/usuarios/register/new").permitAll()
+                        .antMatchers("/admin/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin().loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/usuarios", true)
+                .defaultSuccessUrl("/eventos", true)
                 .and()
-                .logout().permitAll();
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll();
         return http.build();
     }
 
@@ -57,6 +65,4 @@ public class SecurityConfig{
 
         return authProvider;
     }
-
-    public void setUserDetailsService(UsuarioService userDetailsService) { this.userDetailsService = userDetailsService; }
 }

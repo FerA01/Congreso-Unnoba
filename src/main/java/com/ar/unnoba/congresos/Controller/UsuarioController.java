@@ -7,51 +7,61 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
+import java.util.Optional;
 
 @Controller
+@SessionAttributes("usuario")
 @RequestMapping("/usuarios")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService){
-        setUsuarioService(usuarioService);
-    }
-
+    public UsuarioController(UsuarioService usuarioService, EventoController evento){ setUsuarioService(usuarioService); }
 
     @GetMapping
     public String index(Model model, Authentication auth){
+        //Usuario usuario = (Usuario) auth.getPrincipal();
         List<Usuario> usuarios = usuarioService.getAll();
         model.addAttribute("usuarios", usuarios);
         return "index";
     }
 
-    @GetMapping("/usuarios/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash, Authentication auth){
-        Usuario usuario = (Usuario) auth.getPrincipal();
-        Long idUsuario = usuario.getId();
-        if (usuario.getId().equals(id)){
-            flash.addAttribute("danger", "No puede eliminarse a si mismo.");
-            return "redirect:/usuarios";
-        }
         usuarioService.delete(id);
-        flash.addAttribute("success", "Usuario eliminado correctamente");
+        flash.addFlashAttribute("success", "Usuario eliminado correctamente");
         return "redirect:/usuarios";
     }
 
-    @PostMapping("/usuarios/edit/{id}")
-    public String edit(@PathVariable("id") Long id, Authentication auth){
-
-        return "redirect:/";
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model){
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("mensaje", "Editar usuario");
+        return "usuarios/editarUsuario";
+    }
+    @PostMapping("/edit")
+    public String editar(@ModelAttribute Usuario usuario, RedirectAttributes flash, Model model){
+        if (usuario.getId() != null){
+            try {
+                usuarioService.save2(usuario);
+                return "redirect:/usuarios";
+            }catch (Exception e){
+                flash.addFlashAttribute("danger", "El email ya se encuentra en uso");
+                return "redirect:/usuarios/edit/" + usuario.getId();
+            }
+        }else{
+            flash.addFlashAttribute("danger", "El email ya se encuentra en uso");
+            return "redirect:/usuarios/edit/" + usuario.getId();
+        }
     }
 
     @PostMapping("/register/new")
     public String create(@ModelAttribute Usuario usuario){
         usuarioService.create(usuario);
-        return "redirect:/usuarios";
+        return "/login";
     }
 
     @GetMapping("/register")
@@ -59,7 +69,5 @@ public class UsuarioController {
         model.addAttribute("usuario", new Usuario());
         return "usuarios/register";
     }
-
-
     public void setUsuarioService(UsuarioService usuarioService) { this.usuarioService = usuarioService; }
 }

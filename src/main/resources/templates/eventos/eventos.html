@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <div th:if="${info != null}">
+            <p th:text="${info}"></p>
+        </div>
+        <table>
+                <thead>
+                        <tr>
+                            <td>Nombre</td>
+                            <td>Fecha de inicio</td>
+                            <td>Fecha de finalización</td>
+                            <td>Modalidad</td>
+                            <td>Acciones</td>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr th:each="evento : ${eventos}">
+                            <td th:text="${evento.nombre}"></td>
+                            <td th:text="${evento.fechaHoraDesde}"></td>
+                            <td th:text="${evento.fechaHoraHasta}"></td>
+                            <td th:text="${evento.modalidad}"></td>
+                            <td>
+                                <button>
+                                    <a method="get" th:href="@{/eventos/}+${evento.id}">Ver evento</a>
+                                </button>
+                                <button>
+                                    <a th:href="@{/eventos/{idEvento}/trabajos/new (idEvento = ${evento.id})}">Presentar trabajo</a>
+                                </button>
+                            </td>
+                        </tr>
+                </tbody>
+        </table>
+    </div>
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Salir"/>
+        </form>
+    </div>
+</body>
+</html>

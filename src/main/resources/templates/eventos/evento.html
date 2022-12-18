@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:object="${evento}">
+     <h1 th:text="*{nombre}"></h1>
+     <p th:text="*{descripcion}"></p>
+     <h3 th:text="*{modalidad}"></h3>
+     <p datatype="date" th:text="*{fechaHoraDesde}"></p>
+     <p datatype="date" th:text="*{fechaHoraHasta}"></p>
+</body>
+</html>
