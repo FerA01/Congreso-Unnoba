@@ -9,4 +9,13 @@ html, body {
 }
 #contenedorLogin{
     background-color: #d3cdc6;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+}
+#botonIngresar{
+    margin-left: 40px!important;
+}
+#divRegistrarse{
+    padding-left: 30px !important;
 }

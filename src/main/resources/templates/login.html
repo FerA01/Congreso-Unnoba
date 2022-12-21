@@ -17,8 +17,8 @@
           Email o contraseña invalido</div>
         <div th:if="${param.logout}" class="alert alert-primary" role="alert">Haz cerrado sesión</div>
       </div>
-      <div class="container">
-          <div id="contenedorLogin" class="row">
+      <div id="contenedorLogin" class="container">
+          <div class="d-grid gap-2 mt-4 mb-2">
               <form  th:action="@{/login}" method="post">
                   <div div class="mb-4">
                       <input type="text" name="username" placeholder="Email"/>
@@ -26,14 +26,14 @@
                   <div div class="mb-4">
                       <input type="password" name="password" placeholder="Contraseña"/>
                   </div>
-                  <input class="btn btn-primary mb-3" type="submit" value="Ingresar" />
+                  <input id="botonIngresar" class="btn btn-primary mb-3" type="submit" value="Iniciar Sesión" />
               </form>
+              <div id="divRegistrarse" class="row">
+                  <p>¿No tienes una cuenta?
+                      <a id="aRegistrarse" type="submit" th:href="@{/usuarios/register}" ><b> Registrarse </b></a>
+                  </p>
+              </div>
           </div>
-        <div>
-            <p>¿No tienes una cuenta?
-              <a id="aRegistrarse" type="submit" th:href="@{/usuarios/register}" ><b> Registrarse </b></a>
-            </p>
-        </div>
       </div>
     </div>
 
