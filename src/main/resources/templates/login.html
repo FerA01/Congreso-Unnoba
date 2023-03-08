@@ -18,8 +18,9 @@
         <div th:if="${param.logout}" class="alert alert-primary" role="alert">Haz cerrado sesión</div>
         </div>
       <div class="container" align="center" style="width: max-content">
-          <div class="position-relative py-4 px-5 text-bg-dark border border-dark" style="background-color:#E5E5E5">
-          <div class="row" style="border-top: 50px">
+          <div class="position-absolute top-50 start-50 translate-middle">
+          <div class="position-relative py-5 px-5 text-bg-dark border border-dark" style="background-color:#E5E5E5">
+              <div class="row">
               <form  th:action="@{/login}" method="post">
                   <div div class="mb-4">
                       <input type="text" name="username" placeholder="Email"/>
@@ -38,6 +39,7 @@
           </div>
     </div>
       </div>
+    </div>
     </div>
 </body>
 </html>
