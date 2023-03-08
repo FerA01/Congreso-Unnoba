@@ -11,6 +11,20 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Alef:wght@700&display=swap" rel="stylesheet">
         <style>
+            #header-title{
+              background-color: #fff !important;
+              padding: 0% !important;
+            }
+            #imagen-titulo{
+              padding-left: 0% !important;
+            }
+            #titulo{
+              color: #898989;
+              font-family: 'Alef', sans-serif;
+              font-size: 2.5rem;
+              padding-right: 33%  !important;
+              padding-top: 1.5% !important;
+            }
             .nav-item a{ 
                 color: #fff !important;
                 font-family: 'Alef', sans-serif;
@@ -20,11 +34,22 @@
                 margin-right: 0.5rem;
                 text-align: center;
             }
+            .container-fluid #titulo{
+                text-align: center !important;
+            }
         </style>
     </head>
     <body>
         <header>
         <!--NavBar-->
+        <nav id="header-title" class="navbar bg-body-tertiary">
+          <div class="container-fluid">
+            <a id="imagen-titulo" class="navbar-brand" href="#">
+              <img src="C:\Users\Usuario\Documents\IntelliJ-Proyect\Spring\congresos\src\main\resources\static\images\unnoba_logo.png" alt="Logo UNNOBA" width="165" height="115" class="d-inline-block align-text-top">
+            </a>
+            <h1 id="titulo">Sistema de Congresos</h1>
+          </div>
+        </nav>
           <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary" style="background-color: #6EC1E4 !important; font-size: 1.2rem !important;">
             <div class="container-fluid">
               <div class="collapse navbar-collapse" id="barraNavegacion">
