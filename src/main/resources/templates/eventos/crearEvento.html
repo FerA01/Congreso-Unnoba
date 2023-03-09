@@ -49,15 +49,41 @@
             #title-container h1{
               text-align: center !important;
               color: #898989;
+              margin-top: 3rem;
+              margin-bottom: 3rem;
             }
             #vertical-container{
               display: flex !important;
               justify-content: flex-end !important;
             }
+            #vertical-container h1{
+              font-family: 'Roboto', sans-serif;
+              font-weight: bold;
+              font-size: 7vh;
+            }
             #input-container{
               display: flex !important;
               justify-content: center !important;
-              
+              align-items: center !important;
+            }
+            #input-container label{
+              color: #898989;
+              font-family: 'Roboto', sans-serif;
+              font-weight: bold;
+              font-size: 4vh;
+            }
+            #input-container input{
+              height: 7vh;
+            }
+            #button{
+              font-family: 'Roboto', sans-serif;
+              font-weight: bold;
+              font-size: 3vh;
+              width: 100%;
+            }
+            #button-container{
+              display: flex !important;
+              justify-content: center !important;
             }
         </style>
     </head>
@@ -109,15 +135,29 @@
               <div class="col-md-4">
                 <form action="">
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="email" class="form-control" id="nombre" aria-describedby="nombre">
+                    <!--div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div-->
                   </div>
                   <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <label for="modalidad" class="form-label">Modalidad</label>
+                    <input type="text" class="form-control" id="modalidad">
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <div class="mb-3">
+                    <label for="fechainicio" class="form-label">Fecha de inicio</label>
+                    <input type="datetime-local" class="form-control" id="fechainicio">
+                  </div>
+                  <div class="mb-3">
+                    <label for="fechafinalizacion" class="form-label">Fecha de finalización</label>
+                    <input type="date" class="form-control" id="fechafinalizacion">
+                  </div>
+                  <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="descripcion" rows="3"></textarea>
+                  </div>
+                  <div id="button-container" class="mb-3">
+                    <button id="button" type="submit" class="btn btn-success">Crear Evento</button>
+                  </div>
                 </form>
               </div>
             </div>
