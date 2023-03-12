@@ -64,7 +64,7 @@ public class OrganizadorController {
     @Secured("ROLE_ADMIN")
     @GetMapping("/eventos")
     public String index(Model model, Authentication auth){
-        return evento.eventosAdmin(model);
+        return evento.eventos(1,6,model,auth);
     }
 
     @Secured("ROLE_ADMIN")

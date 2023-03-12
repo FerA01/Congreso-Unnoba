@@ -2,8 +2,13 @@ package com.ar.unnoba.congresos.Service;
 import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,4 +44,18 @@ public class EventoService implements IEventoService{
 
     @Override
     public void save2(Evento evento) { repository.save(evento); }
+
+    @Override
+    public Page<Evento> getEventosActivos(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAllEventosActivos(pageable, LocalDateTime.now());
+    }
+
+    @Override
+    public Page<Evento> getEventos(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findAllEventos(pageable);
+    }
+
+
 }
