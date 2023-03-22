@@ -1,27 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Acceso Denegado</title>
+  <link rel="stylesheet" href="/static/css/error403.css">
 </head>
 <body>
 <div class="text-wrapper">
-  <div class="title" data-content="404">
-    403 - Acceso Denegado
+  <div class="lock"></div>
+  <div class="message">
+    <h1>Acceso Restringido</h1>
+    <p>No tienes los permisos necesarios para acceder.</p>
   </div>
-
-  <div class="subtitle">
-    No tienes los permisos para acceder a esta dirección.
-  </div>
-  <div class="isi">
-
-  </div>
-
   <div class="buttons">
-    <a class="button" href="#">Volver al inicio</a>
+    <a type="button" th:href="@{/eventos}">Volver al inicio</a>
   </div>
 </div>
 </body>
