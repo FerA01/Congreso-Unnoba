@@ -22,7 +22,7 @@ public class Trabajo {
     private String nombre;
     @Column(name = "archivo")
     @Lob
-    private Byte[] archivo;
+    private byte[] archivo;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -36,6 +36,6 @@ public class Trabajo {
     public void setEvento(Evento evento) { this.evento = evento; }
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
-    public Byte[] getArchivo() { return archivo;}
-    public void setArchivo(Byte[] archivo) { this.archivo = archivo; }
+    public byte[] getArchivo() { return archivo;}
+    public void setArchivo(byte[] archivo) { this.archivo = archivo; }
 }

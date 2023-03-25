@@ -2,9 +2,12 @@ package com.ar.unnoba.congresos.Service;
 import com.ar.unnoba.congresos.Model.Trabajo;
 import com.ar.unnoba.congresos.Repository.TrabajoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class TrabajoService implements ITrabajoService {
@@ -12,27 +15,21 @@ public class TrabajoService implements ITrabajoService {
     private TrabajoRepository repository;
 
     @Override
-    public boolean create(Trabajo trabajo) {
-        if (trabajo.getId() == null){
-            repository.save(trabajo);
-            return true;
-        }
-        return false;
+    public Long uploadImage(MultipartFile multipartImage) throws Exception {
+        Trabajo dbImage = new Trabajo();
+        dbImage.setNombre(multipartImage.getName());
+        dbImage.setArchivo(multipartImage.getBytes());
+
+        return repository.save(dbImage)
+                         .getId();
     }
 
     @Override
-    public List<Trabajo> getAll() { return repository.findAll(Sort.by("nombre").ascending()); }
+    public Resource downloadImage(Long imageId) {
+        byte[] image = repository.findById(imageId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
+                .getArchivo();
 
-    @Override
-    public void delete(Long id) { repository.deleteById(id); }
-
-    @Deprecated
-    @Override
-    public Trabajo getById(Long id) { return (id > 0) ? repository.getById(id) : null; }
-
-    @Override
-    public void save2(Trabajo trabajo) { repository.save(trabajo);}
-
-    //@Override
-    //public Trabajo obtenerTrabajo(Long idEvento) { return repository.getByIdEvento(idEvento); }
+        return new ByteArrayResource(image);
+    }
 }

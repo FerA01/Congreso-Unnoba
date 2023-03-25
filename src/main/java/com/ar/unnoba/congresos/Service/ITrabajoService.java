@@ -1,12 +1,10 @@
 package com.ar.unnoba.congresos.Service;
-import com.ar.unnoba.congresos.Model.Trabajo;
-import java.util.List;
+import org.springframework.core.io.Resource;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ITrabajoService {
-    public boolean create(Trabajo trabajo);
-    public List<Trabajo> getAll();
-    public void delete(Long id);
-    public Trabajo getById(Long id);
-    public void save2(Trabajo trabajo);
-    //public Trabajo obtenerTrabajo(Long idEvento);
+    Long uploadImage(@RequestParam MultipartFile multipartImage) throws Exception;
+    Resource downloadImage(@PathVariable Long imageId);
 }

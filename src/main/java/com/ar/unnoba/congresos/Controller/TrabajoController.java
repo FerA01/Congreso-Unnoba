@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
@@ -20,6 +21,16 @@ public class TrabajoController {
         this.trabajoService = trabajoService;
     }
 
+    @PostMapping
+    Long uploadImage(@RequestParam MultipartFile multipartImage) throws Exception {
+        Long image = trabajoService.uploadImage(multipartImage);
+        if (image != null){
+            return image;
+        }
+        return null;
+    }
+
+/*
     @GetMapping
     public String trabajos(Model model){
         List<Trabajo> trabajos = trabajoService.getAll();
@@ -55,4 +66,6 @@ public class TrabajoController {
         flash.addFlashAttribute("success", "Trabajo eliminado correctamente");
         return "redirect:/eventos";
     }
+
+ */
 }
