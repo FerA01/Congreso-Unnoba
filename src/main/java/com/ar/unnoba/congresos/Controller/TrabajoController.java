@@ -3,6 +3,10 @@ import com.ar.unnoba.congresos.Model.Trabajo;
 import com.ar.unnoba.congresos.Service.IEventoService;
 import com.ar.unnoba.congresos.Service.ITrabajoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +25,29 @@ public class TrabajoController {
         this.trabajoService = trabajoService;
     }
 
-    @PostMapping
-    Long uploadImage(@RequestParam MultipartFile multipartImage) throws Exception {
-        Long image = trabajoService.uploadImage(multipartImage);
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @GetMapping("/new")
+    public String nuevoTrabajo(Model model){
+        model.addAttribute("trabajo", new Trabajo());
+        return "trabajos/subirPresentacion";
+    }
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @PostMapping("/new")
+    Long uploadImage(@RequestParam("file") MultipartFile file) throws Exception {
+        Long image = trabajoService.uploadImage(file);
         if (image != null){
             return image;
         }
         return null;
     }
 
+    @GetMapping("/download/{id_file}")
+    public ResponseEntity<?> downloadImage(@PathVariable("id_file") Long id_file){
+        Resource file = trabajoService.downloadImage(id_file);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+    }
 /*
     @GetMapping
     public String trabajos(Model model){

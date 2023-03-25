@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,10 +78,10 @@
         </nav>
     </header>
     <div id="main-container" class="container-fluid">
-        <div id="stroke-container" class="col-md-12">
-            <form action="">
+        <div id="stroke-container" class="col-md-12" th:object="${evento}">
+            <form method="post" th:action="@{/trabajos/new}" enctype="multipart/form-data">
                 <div id="form-container" class="col-md-4"> 
-                    <input class="form-control form-control" type="file">
+                    <input class="form-control form-control" type="file" name="file">
                 </div>
                 <div id="button-container" class="col-md-4">
                     <input class="btn btn-primary mb-3" type="submit" value="SUBIR">

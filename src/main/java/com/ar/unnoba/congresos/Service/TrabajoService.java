@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.Date;
+import java.time.Instant;
+
 @Service
 public class TrabajoService implements ITrabajoService {
     @Autowired
@@ -19,7 +22,8 @@ public class TrabajoService implements ITrabajoService {
         Trabajo dbImage = new Trabajo();
         dbImage.setNombre(multipartImage.getName());
         dbImage.setArchivo(multipartImage.getBytes());
-
+        dbImage.setEstado("PENDIENTE");
+        dbImage.setFecha_hora(Date.from(Instant.now()));
         return repository.save(dbImage)
                          .getId();
     }

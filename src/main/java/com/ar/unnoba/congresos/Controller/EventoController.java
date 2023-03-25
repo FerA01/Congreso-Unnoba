@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -62,28 +63,26 @@ public class EventoController {
         return "eventos/evento";
     }
 
-    @GetMapping("/{id_evento}/trabajos")
-    public String verPresentacion(@PathVariable("id_evento") Long id) {
-
-        return "trabajos/presentacion";
-    }
-
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/{id_evento}/trabajos/new")
     public String nuevaPresentacion(@PathVariable("id_evento") Long id, Model model, RedirectAttributes flash, Authentication auth) {
-        //return trabajoController.nuevoTrabajo(model);
+
         Usuario usuario = (Usuario) auth.getPrincipal();
         Evento evento = service.getById(id);
         LocalDateTime hoy = LocalDateTime.now();
         if (hoy.isBefore(evento.getFechaHoraHasta())) {
             model.addAttribute("usuario", usuario);
             model.addAttribute("evento", evento);
-            model.addAttribute("trabajo", new Trabajo());
-            return "trabajos/subirPresentacion";
+            return trabajoController.nuevoTrabajo(model);
         }
         flash.addFlashAttribute("info", "Ya paso la fecha de entregar de trabajos");
         return "redirect:/eventos";
     }
-
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @PostMapping("/{id_evento}/trabajos/new")
+    public Long upload(@RequestParam("file") MultipartFile multipartImage) throws Exception {
+        return trabajoController.uploadImage(multipartImage);
+    }
     @Secured("ROLE_ADMIN")
     @GetMapping("/new")
     public String nuevoEvento(Model model) {
