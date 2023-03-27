@@ -23,6 +23,8 @@ public class Trabajo {
     @Column(name = "archivo")
     @Lob
     private byte[] archivo;
+    @Column(name = "tipo", nullable = false)
+    private String tipo;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -38,4 +40,6 @@ public class Trabajo {
     public void setNombre(String nombre) { this.nombre = nombre; }
     public byte[] getArchivo() { return archivo;}
     public void setArchivo(byte[] archivo) { this.archivo = archivo; }
+    public String getTipo() { return tipo; }
+    public void setTipo(String tipo) { this.tipo = tipo; }
 }

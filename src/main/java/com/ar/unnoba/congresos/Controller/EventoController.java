@@ -81,7 +81,7 @@ public class EventoController {
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PostMapping("/{id_evento}/trabajos/new")
     public Long upload(@RequestParam("file") MultipartFile multipartImage) throws Exception {
-        return trabajoController.uploadImage(multipartImage);
+        return null; //trabajoController.uploadImage(multipartImage);
     }
     @Secured("ROLE_ADMIN")
     @GetMapping("/new")
