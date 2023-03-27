@@ -79,7 +79,7 @@
     </header>
     <div id="main-container" class="container-fluid">
         <div id="stroke-container" class="col-md-12" th:object="${evento}">
-            <form method="post" th:action="@{/trabajos/new}" enctype="multipart/form-data">
+            <form method="post" th:action="@{/trabajos/upload}" enctype="multipart/form-data">
                 <div id="form-container" class="col-md-4"> 
                     <input class="form-control form-control" type="file" name="file">
                 </div>

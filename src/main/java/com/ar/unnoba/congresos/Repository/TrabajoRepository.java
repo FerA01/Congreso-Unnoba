@@ -7,5 +7,4 @@ import java.util.Optional;
 
 @Repository
 public interface TrabajoRepository extends JpaRepository<Trabajo, Long> {
-    Optional<Trabajo> findById(Long id);
 }
