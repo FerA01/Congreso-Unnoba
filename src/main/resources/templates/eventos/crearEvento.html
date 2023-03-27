@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"> <!--FALTA AGREGAR EL THYMELEAF-->
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crear Evento</title> 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/css/evento.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Alef:wght@700&display=swap" rel="stylesheet">
+        <style>
+            html, body{
+                height: 100% !important;
+                margin: 0 !important;
+            }
+            #header-title{
+              background-color: #fff !important;
+              padding: 0% !important;
+            }
+            #imagen-titulo{
+              padding-left: 0% !important;
+            }
+            #titulo{
+              color: #898989;
+              font-family: 'Alef', sans-serif;
+              font-size: 2.5rem;
+              padding-right: 33%  !important;
+              padding-top: 1.5% !important;
+            }
+            .nav-item a{ 
+                color: #fff !important;
+                font-family: 'Alef', sans-serif;
+            }
+            #cerrar-sesion{
+                margin-left: 7.5rem;
+                margin-right: 0.5rem;
+                text-align: center;
+            }
+            .container-fluid #titulo{
+                text-align: center !important;
+            }
+            #form-container{
+              height: 100% !important;
+            }
+
+            /*BODY*/
+            #title-container h1{
+              text-align: center !important;
+              color: #898989;
+              margin-top: 3rem;
+              margin-bottom: 3rem;
+            }
+            #vertical-container{
+              display: flex !important;
+              justify-content: flex-end !important;
+            }
+            #vertical-container h1{
+              font-family: 'Roboto', sans-serif;
+              font-weight: bold;
+              font-size: 7vh;
+            }
+            #input-container{
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            }
+            #input-container label{
+              color: #898989;
+              font-family: 'Roboto', sans-serif;
+              font-weight: bold;
+              font-size: 4vh;
+            }
+            #input-container input{
+              height: 7vh;
+            }
+            #button{
+              font-family: 'Roboto', sans-serif;
+              font-weight: bold;
+              font-size: 3vh;
+              width: 100%;
+            }
+            #button-container{
+              display: flex !important;
+              justify-content: center !important;
+            }
+        </style>
+    </head>
+    <body>
+        <!--No tocar el header-->
+        <header>
+        <!--NavBar-->
+        <nav id="header-title" class="navbar bg-body-tertiary">
+          <div class="container-fluid">
+            <a id="imagen-titulo" class="navbar-brand" href="#">
+              <img src="C:\Users\Usuario\Documents\IntelliJ-Proyect\Spring\congresos\src\main\resources\static\images\unnoba_logo.png" alt="Logo UNNOBA" width="165" height="115" class="d-inline-block align-text-top">
+            </a>
+            <h1 id="titulo">Sistema de Congresos</h1>
+          </div>
+        </nav>
+          <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary" style="background-color: #6EC1E4 !important; font-size: 1.2rem !important;">
+            <div class="container-fluid">
+              <div class="collapse navbar-collapse" id="barraNavegacion">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">INICIO</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">EVENTOS</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">ACERCA DE</a>
+                  </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="#">USUARIOS</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">MI PERFIL</a>
+                    </li>
+                    <li class="nav-item" id="cerrar-sesion">
+                      <a class="nav-link" href="#">CERRAR SESION</a>
+                    </li>
+                  </ul>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <div id="form-container" class="container-fluid">
+          <div id="vertical-container" class="row">
+            <div id="title-container" class="col-md-12"><h1>Crear Evento</h1></div>
+            <div id="input-container" class="col-md-12">
+              <div class="col-md-4">
+                <form action="">
+                  <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="email" class="form-control" id="nombre" aria-describedby="nombre">
+                    <!--div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div-->
+                  </div>
+                  <div class="mb-3">
+                    <label for="modalidad" class="form-label">Modalidad</label>
+                    <input type="text" class="form-control" id="modalidad">
+                  </div>
+                  <div class="mb-3">
+                    <label for="fechainicio" class="form-label">Fecha de inicio</label>
+                    <input type="datetime-local" class="form-control" id="fechainicio">
+                  </div>
+                  <div class="mb-3">
+                    <label for="fechafinalizacion" class="form-label">Fecha de finalización</label>
+                    <input type="date" class="form-control" id="fechafinalizacion">
+                  </div>
+                  <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="descripcion" rows="3"></textarea>
+                  </div>
+                  <div id="button-container" class="mb-3">
+                    <button id="button" type="submit" class="btn btn-success">Crear Evento</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>  
+        </div>
+
+
+
+        <!--Scripts-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    </body>
+</html>

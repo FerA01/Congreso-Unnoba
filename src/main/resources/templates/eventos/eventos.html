@@ -1,46 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <div>
-        <div th:if="${info != null}">
-            <p th:text="${info}"></p>
+<header th:insert="header.html"></header>
+<div>
+    <div th:if="${info != null}">
+        <p th:text="${info}"></p>
+    </div>
+    <div class="px-2 my-2 border-bottom pb-1">
+        EVENTOS DISPONIBLES
+    </div>
+    <div class="container my-4">
+        <div class="row row row-cols-1 row-cols-md-3 g-4">
+            <div class="col" th:each="evento : ${eventos}">
+                <div class="card h-100 text-center">
+                    <div class="card-header" style="background-color: white;">
+                        <h5 th:text="${evento.nombre}" style="color: #6EC1E4;">
+                        </h5>
+                        <span th:if="${evento.fechaHoraDesde &lt; #temporals.createNow() && evento.fechaHoraHasta &gt; #temporals.createNow()}" style="color: green">En Proceso</span>
+                        <span th:if="${evento.fechaHoraDesde &gt; #temporals.createNow()}" style="color: blue">Proximamente</span>
+                    </div>
+                    <div class="card-body" style="background-color: white;">
+                        <p class="card-text" th:text="${evento.descripcion}" style="color: #7A7A7A"></p>
+                    </div>
+                    <div class="card-footer text-center" style="background-color: white;">
+                        <a th:method="get" th:href="@{/eventos/}+${evento.id}" class="btn btn-primary">Ver Mas</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <table>
-                <thead>
-                        <tr>
-                            <td>Nombre</td>
-                            <td>Fecha de inicio</td>
-                            <td>Fecha de finalización</td>
-                            <td>Modalidad</td>
-                            <td>Acciones</td>
-                        </tr>
-                </thead>
-                <tbody>
-                        <tr th:each="evento : ${eventos}">
-                            <td th:text="${evento.nombre}"></td>
-                            <td th:text="${evento.fechaHoraDesde}"></td>
-                            <td th:text="${evento.fechaHoraHasta}"></td>
-                            <td th:text="${evento.modalidad}"></td>
-                            <td>
-                                <button>
-                                    <a method="get" th:href="@{/eventos/}+${evento.id}">Ver evento</a>
-                                </button>
-                                <button>
-                                    <a th:href="@{/eventos/{idEvento}/trabajos/new (idEvento = ${evento.id})}">Presentar trabajo</a>
-                                </button>
-                            </td>
-                        </tr>
-                </tbody>
-        </table>
     </div>
-    <div>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Salir"/>
-        </form>
+    <div class="row align-items-end my-2 py-2 border-top ">
+        <div class="col-12">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:if="${currentPage != 1}">
+                        <a aria-label="Previous" class="page-link" th:href="@{'eventos?page=' + ${currentPage - 1}}">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <th:block th:each="page,stat: ${pages}">
+                        <li class="page-item" th:switch="${page == currentPage}">
+                            <a class="page-link disabled" th:case="${true}" th:text="${page}"></a>
+                            <a class="page-link" th:case="${false}" th:href="@{'eventos?page=' + ${page}}"
+                               th:text="${page}"></a>
+                        </li>
+                        <li th:if="${stat.last && (page < totalPages)}">
+                            <a class="page-link" th:href="@{'eventos?page=' + ${page + 1}}">...</a>
+                        </li>
+                    </th:block>
+                    <li class="page-item" th:if="${(totalPages > 1) && (currentPage != totalPages) }">
+                        <a aria-label="Next" class="page-link" th:href="@{'eventos?page=' + ${currentPage + 1}}">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
+</div>
 </body>
 </html>
+
+<!--<p class="card-text" th:text="${'Desde: ' + #temporals.format(evento.fechaHoraDesde, 'dd-MM-yyyy HH:mm')}"></p>-->
+<!--<p class="card-text" th:text="${'Hasta: ' + #temporals.format(evento.fechaHoraHasta, 'dd-MM-yyyy HH:mm')}"></p>-->
+<!--<p class="card-text" th:text="${evento.modalidad}"></p>-->
