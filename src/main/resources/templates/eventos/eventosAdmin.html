@@ -29,7 +29,7 @@
                         <p class="card-text" th:text="${evento.descripcion}" style="color: #7A7A7A"></p>
                     </div>
                     <div class="card-footer text-center" style="background-color: white;">
-                        <a href="#" class="btn btn-primary">Ver Mas</a>
+                        <a th:href="@{/eventos/}+${evento.id}" class="btn btn-primary">Ver Mas</a>
                     </div>
                 </div>
             </div>

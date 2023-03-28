@@ -25,7 +25,7 @@ public class UsuarioController {
         //Usuario usuario = (Usuario) auth.getPrincipal();
         List<Usuario> usuarios = usuarioService.getAll();
         model.addAttribute("usuarios", usuarios);
-        return "index";
+        return "usuarios/listaUsuarios";
     }
 
     @GetMapping("/delete/{id}")
