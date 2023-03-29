@@ -30,9 +30,14 @@ public class UsuarioController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash, Authentication auth){
-        usuarioService.delete(id);
-        flash.addFlashAttribute("success", "Usuario eliminado correctamente");
-        return "redirect:/usuarios";
+        try{
+            usuarioService.delete(id);
+            flash.addFlashAttribute("success","Usuario borrado correctamente.");
+            return "redirect:/usuarios";
+        }catch (Exception e){
+            flash.addFlashAttribute("fail","Error al intentar borrar un usuario");
+            return "redirect:/usuarios";
+        }
     }
 
     @GetMapping("/edit/{id}")
