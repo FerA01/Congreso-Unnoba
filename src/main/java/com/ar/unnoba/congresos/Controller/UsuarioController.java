@@ -25,6 +25,7 @@ public class UsuarioController {
         //Usuario usuario = (Usuario) auth.getPrincipal();
         List<Usuario> usuarios = usuarioService.getAll();
         model.addAttribute("usuarios", usuarios);
+        model.addAttribute("usuarioRegistro", new Usuario());
         return "usuarios/listaUsuarios";
     }
 
@@ -64,9 +65,15 @@ public class UsuarioController {
     }
 
     @PostMapping("/register/new")
-    public String create(@ModelAttribute Usuario usuario){
-        usuarioService.create(usuario);
-        return "/login";
+    public String create(@ModelAttribute("usuarioRegistro") Usuario usuarioRegistro, RedirectAttributes flash){
+        try{
+            usuarioService.create(usuarioRegistro);
+            flash.addFlashAttribute("success", "Usuario registrado correctamente");
+            return "redirect:/usuarios";
+        }catch (Exception exception){
+            flash.addFlashAttribute("fail", "Error al intentar registrar un usuario");
+            return "redirect:/usuarios";
+        }
     }
 
     @GetMapping("/register")
