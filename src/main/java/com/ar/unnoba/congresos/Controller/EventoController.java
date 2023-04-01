@@ -87,7 +87,7 @@ public class EventoController {
     @GetMapping("/new")
     public String nuevoEvento(Model model) {
         model.addAttribute("evento", new Evento());
-        return "eventos/nuevoEvento";
+        return "eventos/crearEvento";
     }
 
     @Secured("ROLE_ADMIN")
