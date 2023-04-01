@@ -1,3 +1,107 @@
-#titulo-contaner h2{
-    color: red !important;
+body{
+    margin: 0;
+    padding: 0;
+}
+#titulo-container{
+    margin: 0;
+    padding: 0;
+}
+#titulo-container h2{
+    margin-left: 9vw;
+    margin-top: 2vh;
+    color: #8B8585;
+    font-size: 2.3em;
+    font-family: 'Roboto', sans-serif;
+}
+#boton-container{
+    margin: 0 !important;
+    padding: 0;
+    width: 100% !important;
+    display: inline;
+}
+#parent-cols{
+    margin: 0 !important;
+    padding: 0;
+    width: 100% !important;
+    display: flex;
+    justify-content: end;
+}
+#user-register-container button{
+    margin-left: 8.5vw;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    height: 7vh;
+}
+#search-button-container button, input{
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    height: 7vh;
+}
+#search-button-container button{
+    color: #005AE0;
+    border-color: #005AE0;
+}
+#search-button-container button:hover{
+    background-color: #005AE0 !important;
+    border-color: #005AE0 !important;
+    color: #fff;
+}
+#search-button-container input{
+    width: 20vw;
+}
+#alerta{
+    display: flex;
+}
+#tabla-container{
+    height: 100vh !important;
+    margin-left: 7.3vw;
+}
+#tabla thead th{
+   text-align: center !important;
+   color: #FFFFFF;
+   background-color: #6EC1E4;
+}
+#tabla tbody td{
+    text-align: center !important;
+    color: #8B8585;
+    font-weight: bold;
+}
+#tabla tbody tr:nth-child(even){
+    background-color: #B6D7E5 !important;
+}
+#tabla tbody tr:nth-child(odd){
+    background-color: #FFFFFF !important;
+}
+#td-operations{
+    text-align: center;
+}
+#td-operations button{
+    background-color: #D9D9D9 !important;
+    color: #8B8585 !important;
+    border-color: #D9D9D9 !important;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    height: 6vh;
+    width: 10vw;
+}
+#td-operations button p{
+    padding-top: 0.3vh;
+    font-size: 1em;
+}
+#td-operations button:hover{
+    background-color: #8B8585 !important;
+    border-color: #D9D9D9 !important;
+    color: #fff !important;
+}
+#td-operations button:hover #icono{
+    opacity: 80%;
+}
+
+#modal-submit-button{
+    display: flex;
+    justify-content: center;
+    padding-top: 5vh;
+}
+.modal-header{
+    display: flex;
 }

@@ -11,112 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alef:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body{
-            margin: 0;
-            padding: 0;
-        }
-        #titulo-container{
-            margin: 0;
-            padding: 0;
-        }
-        #titulo-container h2{
-            margin-left: 9vw;
-            margin-top: 2vh;
-            color: #8B8585;
-            font-size: 2.3em;
-            font-family: 'Roboto', sans-serif;
-        }
-        #boton-container{
-            margin: 0 !important;
-            padding: 0;
-            width: 100% !important;
-            display: inline;
-        }
-        #parent-cols{
-            margin: 0 !important;
-            padding: 0;
-            width: 100% !important;
-            display: flex;
-            justify-content: end;
-        }
-        #user-register-container button{
-            margin-left: 8.5vw;
-            font-weight: bold;
-            font-family: 'Roboto', sans-serif;
-            height: 7vh;
-        }
-        #search-button-container button, input{
-            font-weight: bold;
-            font-family: 'Roboto', sans-serif;
-            height: 7vh;
-        }
-        #search-button-container button{
-            color: #005AE0;
-            border-color: #005AE0;
-        }
-        #search-button-container button:hover{
-            background-color: #005AE0 !important;
-            border-color: #005AE0 !important;
-            color: #fff;
-        }
-        #search-button-container input{
-            width: 20vw;
-        }
-        #tabla-container{
-            height: 100vh !important;
-            margin-left: 7.3vw;
-        }
-        #tabla thead th{
-           text-align: center !important;
-           color: #FFFFFF;
-           background-color: #6EC1E4;
-        }
-        #tabla tbody td{
-            text-align: center !important;
-            color: #8B8585;
-            font-weight: bold;
-        }
-        #tabla tbody tr:nth-child(even){
-            background-color: #B6D7E5 !important;
-        }
-        #tabla tbody tr:nth-child(odd){
-            background-color: #FFFFFF !important;
-        }
-        #td-operations{
-            text-align: center;
-        }
-        #td-operations button{
-            background-color: #D9D9D9 !important;
-            color: #8B8585 !important;
-            border-color: #D9D9D9 !important;
-            font-family: 'Roboto', sans-serif;
-            font-weight: bold;
-            height: 6vh;
-            width: 10vw;
-        }
-        #td-operations button p{
-            padding-top: 0.3vh;
-            font-size: 1em;
-        }
-        #td-operations button:hover{
-            background-color: #8B8585 !important;
-            border-color: #D9D9D9 !important;
-            color: #fff !important;
-        }
-        #td-operations button:hover #icono{
-            opacity: 80%;
-        }
-
-        #modal-submit-button{
-            display: flex;
-            justify-content: center;
-            padding-top: 5vh;
-        }
-        .modal-header{
-            display: flex;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/static/css/listaUsuarios.css}">
 </head>
 <body>
     <header th:insert="header.html"></header>
@@ -140,15 +35,13 @@
     <hr>
     <div id="tabla-container" class="container">
         <div class="container">
-            <div class="alert alert-success" role="alert" th:if="${success != null}">
-                <p th:text="${success}">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </p>
+            <div id="alerta" class="alert alert-success" role="alert" th:if="${success != null}">
+                <p th:text="${success}"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <div class="alert alert-danger" role="alert" th:if="${fail != null}">
-                <p th:text="${fail}">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </p>         
+            <div id="alerta" class="alert alert-danger" role="alert" th:if="${fail != null}">
+                <p th:text="${fail}"></p>      
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>   
             </div>
             <table id="tabla" class="table table-striped">
                 <thead>
@@ -160,49 +53,21 @@
                 </thead>
                 <tbody>
                     <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.id}">1</td>
-                        <td th:text="${usuario.nombre}">Fernando</td>
-                        <td th:text="${usuario.apellido}">Andana</td>
-                        <td th:text="${usuario.email}">fer@gmail.com</td>
+                        <td th:text="${usuario.id}"></td>
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.apellido}"></td>
+                        <td th:text="${usuario.email}"></td>
                         <td id="td-operations">
                             <button class="btn btn-primary">
-                                <p><img id="icono" src="C:\Users\Usuario\Documents\IntelliJ-Proyect\Spring\congresos\src\main\resources\static\images\seach_icon.png" width="20" height="20">
-                                     Ver Perfil</p>
+                                <p><img id="icono" src="images/seach_icon.png" width="20" height="20">
+                                    Ver Perfil
+                                </p>
                             </button>
                             <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">
-                                <p><img id="icono" src="C:\Users\Usuario\Documents\IntelliJ-Proyect\Spring\congresos\src\main\resources\static\images\trash.png" width="20" height="20">
-                                     Borrar</p>
+                                <p><img id="icono" src="/images/trash.png" width="20" height="20">
+                                    Borrar
+                                </p>
                             </button>
-                        </td>
-                    </tr>
-                    <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.id}">2</td>
-                        <td th:text="${usuario.nombre}">Fernando</td>
-                        <td th:text="${usuario.apellido}">Andana</td>
-                        <td th:text="${usuario.email}">fer@gmail.com</td>
-                        <td id="td-operations">
-                            <button class="btn btn-primary">Ver Perfil</button>
-                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">Borrar</button>
-                        </td>
-                    </tr>
-                    <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.id}">1</td>
-                        <td th:text="${usuario.nombre}">Fernando</td>
-                        <td th:text="${usuario.apellido}">Andana</td>
-                        <td th:text="${usuario.email}">fer@gmail.com</td>
-                        <td id="td-operations">
-                            <button class="btn btn-primary">Ver Perfil</button>
-                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">Borrar</button>
-                        </td>
-                    </tr>
-                    <tr th:each="usuario : ${usuarios}">
-                        <td th:text="${usuario.id}">2</td>
-                        <td th:text="${usuario.nombre}">Fernando</td>
-                        <td th:text="${usuario.apellido}">Andana</td>
-                        <td th:text="${usuario.email}">fer@gmail.com</td>
-                        <td id="td-operations">
-                            <button class="btn btn-primary">Ver Perfil</button>
-                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">Borrar</button>
                         </td>
                     </tr>
                 </tbody>
