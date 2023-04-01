@@ -3,7 +3,13 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Eventos</title>
+    <style>
+        #button-container{
+            display: inline-flex;
+            flex-direction: row;
+        }
+    </style>
 </head>
 <body>
 <header th:insert="header.html"></header>
@@ -11,8 +17,11 @@
     <div th:if="${info != null}">
         <p th:text="${info}"></p>
     </div>
-    <div class="px-2 my-2 border-bottom pb-1">
-        EVENTOS DISPONIBLES
+    <div id="button-container" class="px-2 my-2 border-bottom pb-1">
+        <h4>EVENTOS DISPONIBLES</h4>
+        <div>
+            <button th:onclick="|window.location.href='@{/eventos/new}'|">Crear evento</button>
+        </div>
     </div>
     <div class="container my-4">
         <div class="row row row-cols-1 row-cols-md-3 g-4">
@@ -42,7 +51,7 @@
                     <li class="page-item" th:if="${currentPage != 1}">
                         <a aria-label="Previous" class="page-link" th:href="@{'eventos?page=' + ${currentPage - 1}}">
                             <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
+                            <span class="sr-only">Anterior</span>
                         </a>
                     </li>
                     <th:block th:each="page,stat: ${pages}">
@@ -58,7 +67,7 @@
                     <li class="page-item" th:if="${(totalPages > 1) && (currentPage != totalPages) }">
                         <a aria-label="Next" class="page-link" th:href="@{'eventos?page=' + ${currentPage + 1}}">
                             <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
+                            <span class="sr-only">Siguiente</span>
                         </a>
                     </li>
                 </ul>

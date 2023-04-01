@@ -41,7 +41,7 @@
                     <li class="page-item" th:if="${currentPage != 1}">
                         <a aria-label="Previous" class="page-link" th:href="@{'eventos?page=' + ${currentPage - 1}}">
                             <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
+                            <span class="sr-only">Anterior</span>
                         </a>
                     </li>
                     <th:block th:each="page,stat: ${pages}">
@@ -57,7 +57,7 @@
                     <li class="page-item" th:if="${(totalPages > 1) && (currentPage != totalPages) }">
                         <a aria-label="Next" class="page-link" th:href="@{'eventos?page=' + ${currentPage + 1}}">
                             <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
+                            <span class="sr-only">Siguiente</span>
                         </a>
                     </li>
                 </ul>
