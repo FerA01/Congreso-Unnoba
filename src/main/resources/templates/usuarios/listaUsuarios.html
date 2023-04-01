@@ -77,14 +77,44 @@
             color: #8B8585;
             font-weight: bold;
         }
-        .tbody td:nth-child(even){
-            background-color: red !important;
+        #tabla tbody tr:nth-child(even){
+            background-color: #B6D7E5 !important;
         }
-        .tbody td:nth-child(odd){
-            background-color: black !important;
+        #tabla tbody tr:nth-child(odd){
+            background-color: #FFFFFF !important;
         }
         #td-operations{
             text-align: center;
+        }
+        #td-operations button{
+            background-color: #D9D9D9 !important;
+            color: #8B8585 !important;
+            border-color: #D9D9D9 !important;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            height: 6vh;
+            width: 10vw;
+        }
+        #td-operations button p{
+            padding-top: 0.3vh;
+            font-size: 1em;
+        }
+        #td-operations button:hover{
+            background-color: #8B8585 !important;
+            border-color: #D9D9D9 !important;
+            color: #fff !important;
+        }
+        #td-operations button:hover #icono{
+            opacity: 80%;
+        }
+
+        #modal-submit-button{
+            display: flex;
+            justify-content: center;
+            padding-top: 5vh;
+        }
+        .modal-header{
+            display: flex;
         }
     </style>
 </head>
@@ -111,18 +141,16 @@
     <div id="tabla-container" class="container">
         <div class="container">
             <div class="alert alert-success" role="alert" th:if="${success != null}">
-                <p th:text="${success}"></p>
-                <button type="button" class="close" data-bs-dismiss="alert" aria-bs-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <p th:text="${success}">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </p>
             </div>
             <div class="alert alert-danger" role="alert" th:if="${fail != null}">
-                <p th:text="${fail}"></p>
-                <button type="button" class="close" data-bs-dismiss="alert" aria-bs-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <p th:text="${fail}">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </p>         
             </div>
-            <table id="tabla" class="table table-dark table-striped">
+            <table id="tabla" class="table table-striped">
                 <thead>
                     <th>#</th>
                     <th>Nombre</th>
@@ -133,6 +161,42 @@
                 <tbody>
                     <tr th:each="usuario : ${usuarios}">
                         <td th:text="${usuario.id}">1</td>
+                        <td th:text="${usuario.nombre}">Fernando</td>
+                        <td th:text="${usuario.apellido}">Andana</td>
+                        <td th:text="${usuario.email}">fer@gmail.com</td>
+                        <td id="td-operations">
+                            <button class="btn btn-primary">
+                                <p><img id="icono" src="C:\Users\Usuario\Documents\IntelliJ-Proyect\Spring\congresos\src\main\resources\static\images\seach_icon.png" width="20" height="20">
+                                     Ver Perfil</p>
+                            </button>
+                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">
+                                <p><img id="icono" src="C:\Users\Usuario\Documents\IntelliJ-Proyect\Spring\congresos\src\main\resources\static\images\trash.png" width="20" height="20">
+                                     Borrar</p>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.id}">2</td>
+                        <td th:text="${usuario.nombre}">Fernando</td>
+                        <td th:text="${usuario.apellido}">Andana</td>
+                        <td th:text="${usuario.email}">fer@gmail.com</td>
+                        <td id="td-operations">
+                            <button class="btn btn-primary">Ver Perfil</button>
+                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">Borrar</button>
+                        </td>
+                    </tr>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.id}">1</td>
+                        <td th:text="${usuario.nombre}">Fernando</td>
+                        <td th:text="${usuario.apellido}">Andana</td>
+                        <td th:text="${usuario.email}">fer@gmail.com</td>
+                        <td id="td-operations">
+                            <button class="btn btn-primary">Ver Perfil</button>
+                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">Borrar</button>
+                        </td>
+                    </tr>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.id}">2</td>
                         <td th:text="${usuario.nombre}">Fernando</td>
                         <td th:text="${usuario.apellido}">Andana</td>
                         <td th:text="${usuario.email}">fer@gmail.com</td>
@@ -149,7 +213,8 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Registrar Usuario <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></h4>
+              <h4 class="modal-title">Registrar Usuario</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form th:action="@{/usuarios/register/new}" method="post" th:object="${usuarioRegistro}">
@@ -169,7 +234,7 @@
                     <label>Apellido</label>
                     <input th:field="*{apellido}" type="text" class="form-control" name="apellido" required="1"></input>
                 </div>
-                <div class="form-group">
+                <div id="modal-submit-button" class="form-group">
                   <button class="btn btn-success" type="submit">Registrar</button>
                 </div>
               </form>
