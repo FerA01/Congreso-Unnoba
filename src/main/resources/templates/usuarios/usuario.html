@@ -107,9 +107,40 @@
                     </p>
                 </button>
             </div>
-
         </div>
     </div>
-    
+    <div id="createUserModal" class= "modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar Usuario</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/usuarios/register/new}" method="post" th:object="${usuarioRegistro}">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input th:field="*{email}" type="email" class="form-control" name="email" required="1"></input>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input th:field="*{password}" type="password" class="form-control" name="contrasena" required="1"></input>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input th:field="*{nombre}" type="text" class="form-control" name="nombre" required="1"></input>
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input th:field="*{apellido}" type="text" class="form-control" name="apellido" required="1"></input>
+                        </div>
+                        <div id="modal-submit-button" class="form-group">
+                            <button class="btn btn-success" type="submit">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
