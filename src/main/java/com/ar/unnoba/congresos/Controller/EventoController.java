@@ -50,8 +50,10 @@ public class EventoController {
                           Model model, Authentication auth) { //index
 
         if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            model.addAttribute("role", "ROLE_ADMIN");
             return mostrarEventosAdmin(page,size,model);
         } else {
+            model.addAttribute("role", "ROLE_USER");
             return mostrarEventosUsuario(page, size, model);
         }
     }
@@ -176,7 +178,6 @@ public class EventoController {
         List<Integer> paginas = IPagingService.getPagingRange(page, paginasTotales, 5);
         model.addAttribute("pages", paginas);
         model.addAttribute("currentPage", page);
-
         return "eventos/eventosAdmin";
     }
 }

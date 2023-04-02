@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"> <!--FALTA AGREGAR EL THYMELEAF-->
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,6 +18,7 @@
             #header-title{
               background-color: #fff !important;
               padding: 0% !important;
+              height: 20vh !important;
             }
             #imagen-titulo{
               padding-left: 0% !important;
@@ -28,22 +28,20 @@
               height: 100% !important;
             }
             #head-component{
-              width: 100% !important;
+              width: 100vw !important;
             }
             #titulo{
               color: #898989;
               font-family: 'Alef', sans-serif;
               font-size: 2.5rem;
-              padding-right: 33%  !important;
-              padding-top: 1.5% !important;
             }
             .nav-item a{ 
                 color: #fff !important;
                 font-family: 'Alef', sans-serif;
             }
             #cerrar-sesion{
-                margin-left: 7.5rem;
-                margin-right: 0.5rem;
+                margin-left: 3.5vw;
+                margin-right: 0.5vw;
                 text-align: center;
                 display: flex !important;
                 align-items: center !important;
@@ -57,53 +55,89 @@
               height: 100% !important;
             }
             #titulo{
-                margin-top: 3vh !important;
-                margin-left: 10vw !important;
+                margin-top: 4.5vh !important;
+                margin-bottom: 3vh !important;
+                margin-right: 20vw !important;
                 text-align: center !important;
             }
             #form-container{
               height: 100% !important;
             }
+            #nav-botones{
+                height: 9vh !important;
+                background-color: #6EC1E4 !important;
+            }
+            @media (max-width: 770px) {
+              #header-title{
+                background-color: #fff !important;
+                padding: 0% !important;
+                height: 10vh !important;
+              }
+              #titulo{
+                font-family: 'Alef', sans-serif;
+                font-size: 2em;
+                padding-right: 7vw  !important;
+              }
+              #title-container{
+                height: 8vh !important;
+              }
+              #logo{
+                width: 110;
+                height: 60;
+              }
+              #nav-botones{
+                height: 5vh !important;
+                background-color: #6EC1E4 !important;
+              }
+              #barraNavegacion{
+                height: 5vh !important;
+              }
+              #barraNavegacion .ul{
+                height: 5vh !important;
+              }
+            }
+
         </style>
     </head>
     <body>
         <!--No tocar el header-->
-        <header>
+        <header th:object="${usuario}">
         <!--NavBar-->
         <nav id="header-title" class="navbar bg-body-tertiary">
           <div id="parent-head-component" class="container-fluid">
             <div id="head-component" class="row">
               <div class="col-2">
                 <a id="imagen-titulo" class="navbar-brand" th:href="@{/eventos}">
-                  <img src="images/unnoba_logo.png" alt="Logo UNNOBA" width="165" height="115" class="d-inline-block align-text-top">
+                  <img id="logo" src="images/unnoba_logo.png" alt="Logo UNNOBA" width="165" height="115" class="d-inline-block align-text-top">
                 </a>
               </div>
-              <div class="col-10">
+              <div id="title-container" class="col-10">
                 <h1 id="titulo">Sistema de Congresos</h1>
               </div>
             </div>
           </div>
         </nav>
-          <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary" style="background-color: #6EC1E4 !important; font-size: 1.2rem !important;">
-            <div class="container-fluid">
+          <nav id="nav-botones" class="navbar sticky-top navbar-expand-md bg-body-tertiary">
               <div class="collapse navbar-collapse" id="barraNavegacion">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" th:href="@{/eventos}">INICIO</a>
+                    <a class="nav-link active" aria-current="page" href="#" th:href="@{/eventos}">INICIO</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" th:href="@{/eventos}">EVENTOS</a>
+                    <a class="nav-link" href="#"   th:href="@{/eventos}">EVENTOS</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">ACERCA DE</a>
                   </li>
                 </ul>
-                <ul class="navbar-nav">
+                <ul id="right-container" class="navbar-nav">
+                    <th:block th:if="${role == 'ROLE_ADMIN'}">
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#" th:href="@{/usuarios}">USUARIOS</a>
+                      </li>
+                    </th:block>
                     <li class="nav-item">
-                      <a class="nav-link" aria-current="page" th:href="@{/usuarios}">USUARIOS</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">MI PERFIL</a>
+                      <a class="nav-link" href="#" th:href="@{/usuario/edit/{id} (id = ${usuario.id})}">MI PERFIL</a>
                     </li>
                     <li class="nav-item" id="cerrar-sesion">
                         <form th:action="@{/logout}" method="post">
@@ -112,7 +146,6 @@
                     </li>
                   </ul>
               </div>
-            </div>
           </nav>
         </header>
 
