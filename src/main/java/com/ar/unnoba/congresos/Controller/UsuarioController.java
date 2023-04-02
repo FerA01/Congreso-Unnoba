@@ -43,10 +43,14 @@ public class UsuarioController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model){
-        Optional<Usuario> usuario = usuarioService.findById(id);
-        model.addAttribute("usuario", usuario);
+        Optional<Usuario> usuario =  usuarioService.findById(id);
+        if (usuario.isPresent()){
+            model.addAttribute("usuario", usuario.get());
+            return "usuarios/usuario";
+        }
+        //No se encontro al usuario
         model.addAttribute("mensaje", "Editar usuario");
-        return "usuarios/editarUsuario";
+        return "redirect:/usuarios";
     }
     @PostMapping("/edit")
     public String editar(@ModelAttribute Usuario usuario, RedirectAttributes flash, Model model){
