@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            height: 100vh !important;
+        }
+        .container-xxl{
+            margin: 0;
+            padding: 0;
+            height: 100vh !important;
+            width: 100vw !important;
+        }
+        .d-flex{
+            width: 100vw;
+        }
+        #main-container{
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        #data-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 4em;
+            border-color: red !important;
+            border-radius: 7px !important;
+            background-color: beige;
+            width: 40vw;
+            height: 35vh;
+        }
+        .form-group{
+            display: flex;
+            align-items: center;
+            padding-right: 1em;
+            width: 100%;
+        }
+        .form-group label{
+            margin-right: 5vw;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            font-size: 1.35rem;
+            color: #7A7A7A;
+        }
+        .form-group p{
+            padding-top: 1rem;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #3F3A3A;
+        }
+        #button-container{
+            margin-left: 3vw;
+        }
+        #button-container button{
+            height: 6.5vh;
+            background-color: #D9D9D9 !important;
+            color: #8B8585 !important;
+            border-color: #D9D9D9 !important;
+            font-family: 'Roboto', sans-serif;
+        }
+        #button-container button:hover{
+            background-color: #8B8585 !important;
+            color: #fff !important;
+            border-color: #D9D9D9 !important;
+            opacity: 80%;
+        }
+        #icono{
+            margin-left: 0.9vw;
+        }
+    </style>
+</head>
+<body>
+    <header th:insert="header.html"></header>
+    <div class="container-xxxl">
+        <div class="d-flex">Usuario</div>
+        <div id="main-container" class="container">
+            <div id="data-container">
+                <div class="form-group">
+                    <label>Email</label>
+                    <p type="email" name="email" th:field = "*{email}">fernando_andana@email.com</p>
+                </div>
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <p type="text" name="nombre" th:field = "*{nombre}">Fernando</p>
+                </div>
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <p type="text" name="apellido" th:field = "*{apellido}">Andana</p>
+                </div>
+            </div>
+            <div id="button-container">
+                <button class="btn btn-secondary">
+                    <p>Editar Perfil<img id="icono" src="C:\Users\Usuario\Documents\IntelliJ-Proyect\Spring\congresos\src\main\resources\static\images\pencil.png" width="20" height="20">
+                        
+                    </p>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+</html>
