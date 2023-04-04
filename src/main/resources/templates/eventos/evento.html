@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="~{header :: common_head(~{::title}, ~{::link})}">
     <title>Evento</title>
-    <link rel="stylesheet" href="/static/css/evento.css">
+    <link rel="stylesheet" th:href="@{/css/evento.css}">
 </head>
 <body th:object="${evento}">
 <header th:replace="~{header :: common_header}"></header>
@@ -17,5 +17,19 @@
         <button class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/edit (id = ${evento.id})}'|">Editar Evento</button>
     </div>
 </div>
+<th:block th:switch="${role}">
+    <th:block th:case="'ROLE_USER'">
+        <div th:if="${subioTrabajos} == true">
+            <button>Descargar Trabajo</button>
+            <button>Borrar Trabajo</button>
+        </div>
+        <div th:if="${subioTrabajos} == false">
+            <button>Subir Trabajo</button>
+        </div>
+    </th:block>
+    <th:block th:case="'ROLE_ADMIN'">
+        <button>Ver trabajos</button>
+    </th:block>
+</th:block>
 </body>
 </html>

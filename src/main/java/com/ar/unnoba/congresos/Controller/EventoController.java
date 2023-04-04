@@ -2,10 +2,12 @@ package com.ar.unnoba.congresos.Controller;
 
 import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Trabajo;
+import com.ar.unnoba.congresos.Model.User;
 import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.IEventoService;
 import com.ar.unnoba.congresos.Service.ITrabajoService;
 import com.ar.unnoba.congresos.Service.IPagingService;
+import com.ar.unnoba.congresos.Service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
@@ -29,6 +31,8 @@ import java.util.Optional;
 public class EventoController {
     @Autowired
     private IEventoService service;
+    @Autowired
+    private IUsuarioService usuarioService;
 
     @Autowired
     private ITrabajoService trabajoService;
@@ -59,9 +63,20 @@ public class EventoController {
     }
 
     @GetMapping("/{id}")
-    public String verMas(@PathVariable("id") Long id, Model model) {
+    public String verMas(@PathVariable("id") Long id, Model model, Authentication auth) {
         Evento evento = service.getById(id);
         model.addAttribute("evento", evento);
+        boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        if (isAdmin){
+            model.addAttribute("role","ROLE_ADMIN");
+            return "eventos/evento";
+        }
+        User usuario = (Usuario) auth.getPrincipal();
+        Optional<Usuario> usuario1 = usuarioService.findById(usuario.getId());
+        Long hayTrabajos = trabajoService.countByUsuario(usuario1.get().getId());
+        boolean subioTrabajos = hayTrabajos > 0;
+        model.addAttribute("subioTrabajos", subioTrabajos);
+        model.addAttribute("role","ROLE_USER");
         return "eventos/evento";
     }
 

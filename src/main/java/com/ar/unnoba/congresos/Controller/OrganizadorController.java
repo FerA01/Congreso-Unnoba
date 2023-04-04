@@ -87,8 +87,8 @@ public class OrganizadorController {
         return this.evento.evento(id, evento, model);
     }
     @GetMapping("/eventos/{id}")
-    public String listarEventos(@PathVariable("id") Long id,Model model){
-        return evento.verMas(id, model);
+    public String listarEventos(@PathVariable("id") Long id,Model model, Authentication auth){
+        return evento.verMas(id, model, auth);
     }
     @Secured("ROLE_ADMIN")
     @PostMapping("/eventos/{id}/delete")

@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface TrabajoRepository extends JpaRepository<Trabajo, Long> {
     List<Trabajo> findAllByUsuario(Usuario usuario);
-    @Query("SELECT COUNT(id) FROM trabajos WHERE usuario_id = ?1")
+    @Query(value = "SELECT COUNT(id) FROM trabajos WHERE usuario_id = ?1", nativeQuery = true)
     Long countByUsuario(@Param("id") Long id);
 }
