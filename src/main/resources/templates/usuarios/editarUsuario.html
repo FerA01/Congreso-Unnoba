@@ -1,30 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:fragment="head">
-    <meta charset="UTF-8">
-    <title th:text>Editar</title>
+<head th:replace="~{header :: common_head(~{::title},~{})}">
+    <title>Editar Usuario</title>
 </head>
 <body>
-      <!-- Descomentar al integrar bootstrap
-      <div>
-          <div th:if="${success != null}" class="alert alert-success alert-dismissible fade show">
-            <button class="close" data-dismiss="alert"><span>&times;</span></button>
-            <div th:text="${success}"></div>
-          </div>
-          <div th:if="${warning != null}" class="alert alert-warning alert-dismissible fade show">
-            <button class="close" data-dismiss="alert"><span>&times;</span></button>
-            <div th:text="${warning}"></div>
-          </div>
-          <div  th:if="${danger != null}" class="alert alert-danger alert-dismissible fade show">
-            <button class="close" data-dismiss="alert"><span>&times;</span></button>
-            <div th:text="${danger}"></div>
-          </div>
-          <div  th:if="${info != null}" class="alert alert-info alert-dismissible fade show">
-            <button class="close" data-dismiss="alert"><span>&times;</span></button>
-            <div th:text="${info}"></div>
-          </div>
-      </div>
-      -->
       <div>
           <form action="#" method="post" th:action="@{/usuarios/edit}" th:object="${usuario}">
               <label> Email <input type="email" name="email" th:field = "*{email}"></label>

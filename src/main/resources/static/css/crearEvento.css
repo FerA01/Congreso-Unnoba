@@ -1,0 +1,74 @@
+html, body{
+    height: 100% !important;
+    margin: 0 !important;
+}
+#header-title{
+  background-color: #fff !important;
+  padding: 0% !important;
+}
+#imagen-titulo{
+  padding-left: 0% !important;
+}
+#titulo{
+  color: #898989;
+  font-family: 'Alef', sans-serif;
+  font-size: 2.5rem;
+  padding-right: 33%  !important;
+  padding-top: 1.5% !important;
+}
+.nav-item a{ 
+    color: #fff !important;
+    font-family: 'Alef', sans-serif;
+}
+#cerrar-sesion{
+    margin-left: 7.5rem;
+    margin-right: 0.5rem;
+    text-align: center;
+}
+.container-fluid #titulo{
+    text-align: center !important;
+}
+#form-container{
+  height: 100% !important;
+}
+
+/*BODY*/
+#title-container h1{
+  text-align: center !important;
+  color: #898989;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+#vertical-container{
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+#vertical-container h1{
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 7vh;
+}
+#input-container{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+#input-container label{
+  color: #898989;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 4vh;
+}
+#input-container input{
+  height: 7vh;
+}
+#button{
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 3vh;
+  width: 100%;
+}
+#button-container{
+  display: flex !important;
+  justify-content: center !important;
+}
