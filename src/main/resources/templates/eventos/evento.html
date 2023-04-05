@@ -77,7 +77,7 @@
         }
     </style>
 </head>
-<body th:object="${evento}">
+<body>
 <!--No tocar el header-->
 <header>
     <!--NavBar-->
@@ -125,5 +125,7 @@
 <div id="modalidad"> Modalidad <p th:text="*{modalidad}"></p> </div>
 <p id="descripcion" th:text="*{descripcion}"></p>
 <button class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/edit (id = ${evento.id})}'|">Editar Evento</button>
+    </div>
+</div>
 </body>
 </html>

@@ -105,3 +105,6 @@ body{
 .modal-header{
     display: flex;
 }
+.form-group{
+    margin-bottom: 1vh !important;
+}

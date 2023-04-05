@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<head th:replace="~{header :: common_head(~{::title},~{::link})}">
+    <title>Eventos Disponibles</title>
+    <link rel="stylesheet" th:href="@{/css/eventos.css}">
 </head>
 <body>
-<header th:replace="header.html :: header()"></header>
+<header th:replace="~{header :: common_header}"></header>
 <div>
-    <div th:if="${info != null}">
-        <p th:text="${info}"></p>
+    <div id="buttonContainer" class="container">
+        <h4>EVENTOS DISPONIBLES</h4>    
     </div>
-    <div class="px-2 my-2 border-bottom pb-1">
-        EVENTOS DISPONIBLES
+    <hr>
+    <div id="info-div" th:if="${info != null}">
+        <p th:text="${info}"></p>
     </div>
     <div class="container my-4">
         <div class="row row row-cols-1 row-cols-md-3 g-4">
@@ -21,8 +22,8 @@
                     <div class="card-header" style="background-color: white;">
                         <h5 th:text="${evento.nombre}" style="color: #6EC1E4;">
                         </h5>
-                        <span th:if="${evento.fechaHoraDesde &lt; #temporals.createNow() && evento.fechaHoraHasta &gt; #temporals.createNow()}" style="color: green">En Proceso</span>
-                        <span th:if="${evento.fechaHoraDesde &gt; #temporals.createNow()}" style="color: blue">Proximamente</span>
+                        <span class="text-success" th:if="${evento.fechaHoraDesde &lt; #temporals.createNow() && evento.fechaHoraHasta &gt; #temporals.createNow()}">En Proceso</span>
+                        <span class="text-primary" th:if="${evento.fechaHoraDesde &gt; #temporals.createNow()}">Proximamente</span>
                     </div>
                     <div class="card-body" style="background-color: white;">
                         <p class="card-text" th:text="${evento.descripcion}" style="color: #7A7A7A"></p>
