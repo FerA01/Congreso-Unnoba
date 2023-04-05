@@ -16,5 +16,20 @@
 <button class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/edit (id = ${evento.id})}'|">Editar Evento</button>
     </div>
 </div>
+<th:block th:switch="${role}">
+    <th:block th:case="'ROLE_USER'">
+        <div th:if="${subioTrabajos} == true">
+            <button>Descargar Trabajo</button>
+            <button>Borrar Trabajo</button>
+        </div>
+        <div th:if="${subioTrabajos} == false">
+            <button>Subir Trabajo</button>
+        </div>
+    </th:block>
+    <th:block th:case="'ROLE_ADMIN'">
+        <button class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/edit (id = ${evento.id})}'|">Editar Evento</button>
+        <button>Ver trabajos</button>
+    </th:block>
+</th:block>
 </body>
 </html>
