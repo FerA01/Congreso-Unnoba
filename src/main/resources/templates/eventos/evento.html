@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{header :: common_head(~{::title}, ~{::link})}">
+    <title>Evento</title>
+    <link rel="stylesheet" th:href="@{/css/evento2.css}">
+</head>
+<body th:object="${evento}">
+<!--No tocar el header-->
+<header th:replace="~{header :: common_header}"></header>
+</head>
+<h1 id="nombreEvento" th:text="*{nombre}"></h1>
+<div id="fechainicio"> Fecha de inicio: <p datatype="date" th:text="*{fechaHoraDesde}"></p> </div>
+<div id="fechafinalizacion"> Fecha de finalización: <p datatype="date" th:text="*{fechaHoraHasta}"></p> </div>
+<div id="modalidad"> Modalidad <p th:text="*{modalidad}"></p> </div>
+<p id="descripcion" th:text="*{descripcion}"></p>
+<button class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/edit (id = ${evento.id})}'|">Editar Evento</button>
+    </div>
+</div>
+</body>
+</html>
