@@ -74,7 +74,7 @@ public class EventoController {
         User usuario = (Usuario) auth.getPrincipal();
         Optional<Usuario> usuario1 = usuarioService.findById(usuario.getId());
         Long hayTrabajos = trabajoService.countByUsuario(usuario1.get().getId());
-        boolean subioTrabajos = hayTrabajos > 0;
+        boolean subioTrabajos = trabajoService.existeTrabajoEnEvento(id, usuario1.get().getId());
         model.addAttribute("subioTrabajos", subioTrabajos);
         model.addAttribute("role","ROLE_USER");
         model.addAttribute("id_user", usuario.getId());

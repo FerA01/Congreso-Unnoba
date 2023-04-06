@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/trabajos")
@@ -53,10 +54,10 @@ public class TrabajoController {
         return "trabajos/subirPresentacion";
     }
     @PostMapping("/{id_evento}/{id_user}/upload")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file
-            , @PathVariable("id_evento") Long id_evento
-            , @PathVariable("id_user") Long id_user
-            , Authentication auth) {
+    public ResponseEntity<String> upload( @RequestParam("file") MultipartFile file
+                                        , @PathVariable("id_evento") Long id_evento
+                                        , @PathVariable("id_user") Long id_user
+                                        , Authentication auth) {
 
         try {
             // Verificar si el archivo está vacío
@@ -90,26 +91,32 @@ public class TrabajoController {
     }
 
     @GetMapping("/{id_evento}/{id_user}/download")
-    public ResponseEntity<Resource> download(//@PathVariable Long id
-                                             @PathVariable("id_evento") Long id_evento
-                                            ,@PathVariable("id_user") Long id_user) {
-        // Obtener el archivo desde la base de datos
-        //Trabajo trabajo = trabajoService.findById(id).orElse(null);
-        Long idTrabajo = trabajoService.findByUsuarioAndEvento(id_user, id_evento);
-        Trabajo trabajo = trabajoService.findById(idTrabajo).orElse(null);
-        // Verificar si el archivo existe
-        if (trabajo == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Resource> download(@PathVariable("id_evento") Long id_evento
+                                            ,@PathVariable("id_user") Long id_user
+                                            ,Authentication auth) {
+        try {
+            // Obtener el archivo desde la base de datos
+            //Trabajo trabajo = trabajoService.findById(id).orElse(null);
+            Long idTrabajo = trabajoService.findByUsuarioAndEvento(id_user, id_evento);
+            Trabajo trabajo = trabajoService.findById(idTrabajo).orElse(null);
+            // Verificar si el archivo existe
+            if (trabajo == null) {
+                return ResponseEntity.notFound().build();
+            }
+            if (id_user.equals( ((User) auth.getPrincipal()).getId())){
+                // Devolver el archivo en la respuesta
+                ByteArrayResource resource = new ByteArrayResource(trabajo.getArchivo());
+
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + trabajo.getNombre() + "\"")
+                        .contentType(MediaType.parseMediaType(trabajo.getTipo()))
+                        .contentLength(resource.contentLength())
+                        .body(resource);
+            }
+            return ResponseEntity.status(403).build();
+        }catch (Exception exception){
+            return ResponseEntity.badRequest().build();
         }
-
-        // Devolver el archivo en la respuesta
-        ByteArrayResource resource = new ByteArrayResource(trabajo.getArchivo());
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + trabajo.getNombre() + "\"")
-                .contentType(MediaType.parseMediaType(trabajo.getTipo()))
-                .contentLength(resource.contentLength())
-                .body(resource);
     }
 
     @Transactional
@@ -118,48 +125,15 @@ public class TrabajoController {
                         , @PathVariable("id_user") Long id_user
                         , Authentication auth){
         try {
-
+            Long idTrabajo = trabajoService.findByUsuarioAndEvento(id_user, id_evento);
+            Optional<Trabajo> trabajo = trabajoService.findById(idTrabajo);
+            if (id_user.equals(((User) auth.getPrincipal()).getId()) && trabajo.isPresent()){
+                trabajoService.deleteById(trabajo.get().getId());
+                return "redirect:/eventos/" + id_evento;
+            }
+            return "redirect:/accesso-denegado";
         }catch (Exception exception){
-
+            return "redirect:/eventos/" + id_evento;
         }
-        return "redirect:/eventos/" + id_evento;
     }
-/*
-    @GetMapping
-    public String trabajos(Model model){
-        List<Trabajo> trabajos = trabajoService.getAll();
-        model.addAttribute("trabajos", trabajos);
-        return "trabajos/presentaciones";
-    }
-
-    @GetMapping("/new")
-    public String nuevoTrabajo(Model model){
-        model.addAttribute("trabajo", new Trabajo());
-        return "trabajos/agregarPresentacion";
-    }
-
-    @PostMapping
-    public String create(@ModelAttribute Trabajo trabajo){
-        trabajoService.create(trabajo);
-        return "redirect:/trabajos";
-    }
-
-    @GetMapping("/{id}")
-    public String edit(@PathVariable("id") Long id, Model model){
-        if (id > 0){
-            Trabajo trabajo = trabajoService.getById(id);
-            model.addAttribute("trabajo", trabajo);
-            return "redirect:/trabajos/{id}";
-        }
-        return "redirect:/trabajos";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Long id, RedirectAttributes flash){
-        trabajoService.delete(id);
-        flash.addFlashAttribute("success", "Trabajo eliminado correctamente");
-        return "redirect:/eventos";
-    }
-
- */
 }

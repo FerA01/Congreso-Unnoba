@@ -15,4 +15,6 @@ public interface TrabajoRepository extends JpaRepository<Trabajo, Long> {
     List<Trabajo> findAllByUsuario(Usuario usuario);
     @Query(value = "SELECT COUNT(id) FROM trabajos WHERE usuario_id = ?1", nativeQuery = true)
     Long countByUsuario(@Param("id") Long id);
+    @Query(value = "SELECT COUNT(id) FROM trabajos WHERE evento_id = ?1 AND usuario_id = ?2", nativeQuery = true)
+    Long existeTrabajoEnEvento(@Param("evento_id") Long evento_id, @Param("usuario_id") Long usuario_id);
 }

@@ -18,7 +18,7 @@
     <th:block th:case="'ROLE_USER'">
         <div th:if="${subioTrabajos} == true">
             <button class="btn btn-success" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/download (id_evento = ${evento.id} , id_user = ${id_user})}'|">Descargar Trabajo</button>
-            <button class="btn btn-danger">Borrar Trabajo</button>
+            <button class="btn btn-danger" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/delete (id_evento = ${evento.id} , id_user = ${id_user})}'|">Borrar Trabajo</button>
         </div>
         <div th:if="${subioTrabajos} == false">
             <button class="btn btn-secondary" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/new (id_evento = ${evento.id} , id_user = ${id_user})}'|">Subir Trabajo</button>
