@@ -18,6 +18,22 @@ public class TrabajoService implements ITrabajoService {
         Optional<Trabajo> trabajo = repository.findById(id);
         return (trabajo.isPresent()) ? trabajo : Optional.empty();
     }
+
+    @Override
+    public boolean deleteById(Long id) {
+        try {
+            repository.deleteById(id);
+            return true;
+        }catch (Exception exception){
+            return false;
+        }
+    }
+
+    @Override
+    public Long findByUsuarioAndEvento(Long id_user, Long id_evento) {
+        return repository.findByUsuarioAndEvento(id_user, id_evento);
+    }
+
     @Override
     public Trabajo save2(Trabajo trabajo) {
         return repository.save(trabajo);

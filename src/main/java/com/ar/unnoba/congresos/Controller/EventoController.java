@@ -77,6 +77,7 @@ public class EventoController {
         boolean subioTrabajos = hayTrabajos > 0;
         model.addAttribute("subioTrabajos", subioTrabajos);
         model.addAttribute("role","ROLE_USER");
+        model.addAttribute("id_user", usuario.getId());
         return "eventos/evento";
     }
 
@@ -90,7 +91,8 @@ public class EventoController {
         if (hoy.isBefore(evento.getFechaHoraHasta())) {
             model.addAttribute("usuario", usuario);
             model.addAttribute("evento", evento);
-            return trabajoController.nuevoTrabajo(model);
+            //return trabajoController.nuevoTrabajo(model);
+            return "redirect:/eventos";
         }
         flash.addFlashAttribute("info", "Ya paso la fecha de entregar de trabajos");
         return "redirect:/eventos";
