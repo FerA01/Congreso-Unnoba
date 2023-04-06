@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Presentaciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body{
+            margin: 0 !important;
+            height: 100vh !important;
+            width: 100vw !important;
+        }
+        #main-container{
+            margin: 0 !important;
+            height: 100vh !important;
+            width: 100vw !important;
+        }
+        #title-container{
+            margin: 0 !important;
+            margin-bottom: 0.8vh !important;
+            width: 100vw !important;
+            height: 6vh !important;
+        }
+        #title-container h3{
+            padding-top: 1.8vh !important;
+            padding-bottom: 0.9vh !important;
+        }
+        #body-container{
+            margin: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+    <div id="main-container" class="container-fluid">
+        <div id="title-container" class="container">
+            <h3>Presentaciones</h3>
+        </div>
+        <hr>
+        <div id="body-container" class="container">
+            <table id="tabla" class="table table-striped">
+                <thead>
+                    <th>Evento</th>
+                    <th>Estado</th>
+                    <th>Nombre del archivo</th>
+                    <th>Tipo de archivo</th>
+                    <th>Operación</th>
+                </thead>
+                <tbody>
+                    <tr th:each="trabajo : ${trabajos}">
+                        <td>
+                            <a th:href="@{/eventos/{id} (id = ${trabajo.evento.id})}" th:text="${trabajo.evento.nombre}"></a>
+                        </td>
+                        <td th:text="${trabajo.estado}"></td>
+                        <td th:text="${trabajo.nombre}"></td>
+                        <td th:text="${trabajo.tipo}"></td>
+                        <td id="td-operations">
+                            <button class="btn btn-primary" th:onclick="|window.location.href='@{/usuarios/edit/{id} (id = ${usuario.id})}'|">
+                                <p><img id="icono" src="images/seach_icon.png" width="20" height="20">
+                                    Descargar
+                                </p>
+                            </button>
+                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">
+                                <p><img id="icono" src="/images/trash.png" width="20" height="20">
+                                    Borrar
+                                </p>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--Scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
+</body>
+</html>
