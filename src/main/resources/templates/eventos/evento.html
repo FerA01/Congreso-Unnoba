@@ -9,8 +9,8 @@
 <header th:replace="~{header :: common_header}"></header>
 <div>
     <h1 id="nombreEvento" th:text="*{nombre}"></h1>
-    <div id="fechainicio"> Fecha de inicio: <p datatype="date" th:text="*{fechaHoraDesde}"></p> </div>
-    <div id="fechafinalizacion"> Fecha de finalización: <p datatype="date" th:text="*{fechaHoraHasta}"></p> </div>
+    <div id="fechainicio"> Fecha de inicio: <p th:text="${#temporals.format(evento.fechaHoraDesde, 'dd/MM/yyyy HH:mm')}"></p> </div>
+    <div id="fechafinalizacion"> Fecha de finalización: <p th:text="${#temporals.format(evento.fechaHoraHasta, 'dd/MM/yyyy HH:mm')}"></p> </div>
     <div id="modalidad"> Modalidad <p th:text="*{modalidad}"></p> </div>
     <p id="descripcion" th:text="*{descripcion}"></p>
 </div>
