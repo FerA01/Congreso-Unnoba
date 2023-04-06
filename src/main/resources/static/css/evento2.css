@@ -2,20 +2,7 @@ html, body{
             height: 100% !important;
             margin: 0 !important;
         }
-        #header-title{
-            background-color: #fff !important;
-            padding: 0% !important;
-        }
-        #imagen-titulo{
-            padding-left: 0% !important;
-        }
-        #titulo{
-            color: #898989;
-            font-family: 'Alef', sans-serif;
-            font-size: 2.5rem;
-            padding-right: 33%  !important;
-            padding-top: 1.5% !important;
-        }
+
         #nombreEvento{
             color: #898989;
             font-family: 'Alef', sans-serif;
@@ -28,10 +15,7 @@ html, body{
             align: justify;
             padding-top: 2% !important;
         }
-        .nav-item a{
-            color: #fff !important;
-            font-family: 'Alef', sans-serif;
-        }
+
         #cerrar-sesion{
             margin-left: 7.5rem;
             margin-right: 0.5rem;

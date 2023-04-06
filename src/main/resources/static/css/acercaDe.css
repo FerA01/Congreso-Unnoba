@@ -1,0 +1,44 @@
+#ver-ieee{
+    margin-left: 1.5vw;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    height: 7vh;
+    margin-left: 1vw;
+}
+
+#title-container h1{
+    text-align: center !important;
+    color: #898989;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+#title-container h2{
+    text-align: center !important;
+    color: #898989;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+#proposito{
+    font-family: 'Alef', sans-serif;
+    font-size: 2.0rem;
+    margin-left: 2.0rem;
+    margin-right: 2.0rem;
+    padding-right: 20%;
+    padding-left: 20%;
+    text-align: center;
+    align: justify;
+    padding-top: 2% !important;
+}
+#programadores{
+    font-family: 'Alef', sans-serif;
+    font-size: 2.0rem;
+    margin-left: 2.0rem;
+    margin-right: 2.0rem;
+    padding-right: 20%;
+    padding-left: 20%;
+    text-align: center;
+    align: justify;
+    padding-top: 2% !important;
+}
