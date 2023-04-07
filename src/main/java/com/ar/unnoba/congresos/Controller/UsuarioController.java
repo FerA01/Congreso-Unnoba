@@ -27,8 +27,15 @@ public class UsuarioController {
     @GetMapping
     public String index(Model model, Authentication auth){
         List<Usuario> usuarios = usuarioService.getAll();
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("id_user", user.getId());
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("usuarioRegistro", new Usuario());
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+            model.addAttribute("role", "ROLE_ADMIN");
+        }else{
+            model.addAttribute("role", "ROLE_USER");
+        }
         return "usuarios/listaUsuarios";
     }
     @Secured("ROLE_ADMIN")
@@ -63,6 +70,12 @@ public class UsuarioController {
                )
                 || isAdmin
         ){
+            if (isAdmin){
+                model.addAttribute("role", "ROLE_ADMIN");
+            }else{
+                model.addAttribute("role", "ROLE_USER");
+            }
+            model.addAttribute("id_user", usuario.get().getId());
             model.addAttribute("usuario", usuario.get());
             return "usuarios/usuario";
         }

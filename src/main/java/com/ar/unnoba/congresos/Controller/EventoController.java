@@ -53,6 +53,8 @@ public class EventoController {
                           @RequestParam(value = "size", required = false, defaultValue = "6") int size,
                           Model model, Authentication auth) { //index
 
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("id_user", user.getId());
         if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             model.addAttribute("role", "ROLE_ADMIN");
             return mostrarEventosAdmin(page,size,model);
@@ -69,14 +71,14 @@ public class EventoController {
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
         if (isAdmin){
             model.addAttribute("role","ROLE_ADMIN");
-            return "eventos/evento";
+        }else{
+            model.addAttribute("role","ROLE_USER");
         }
         User usuario = (Usuario) auth.getPrincipal();
         Optional<Usuario> usuario1 = usuarioService.findById(usuario.getId());
         Long hayTrabajos = trabajoService.countByUsuario(usuario1.get().getId());
         boolean subioTrabajos = trabajoService.existeTrabajoEnEvento(id, usuario1.get().getId());
         model.addAttribute("subioTrabajos", subioTrabajos);
-        model.addAttribute("role","ROLE_USER");
         model.addAttribute("id_user", usuario.getId());
         return "eventos/evento";
     }
@@ -104,8 +106,15 @@ public class EventoController {
     }
     @Secured("ROLE_ADMIN")
     @GetMapping("/new")
-    public String nuevoEvento(Model model) {
+    public String nuevoEvento(Model model, Authentication auth) {
         model.addAttribute("evento", new Evento());
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("id_user", user.getId());
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+            model.addAttribute("role", "ROLE_ADMIN");
+            return "eventos/crearEvento";
+        }
+        model.addAttribute("role", "ROLE_USER");
         return "eventos/crearEvento";
     }
 
@@ -118,8 +127,16 @@ public class EventoController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes flash) {
+    public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Authentication auth) {
         if (id > 0) {
+            User user = (User) auth.getPrincipal();
+            model.addAttribute("id_user", user.getId());
+            if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+                model.addAttribute("role", "ROLE_ADMIN");
+            }else{
+                model.addAttribute("role", "ROLE_USER");
+            }
+
             Evento evento = service.getById(id);
             model.addAttribute("evento", evento);
             flash.addFlashAttribute("success", "Evento editado correctamente");

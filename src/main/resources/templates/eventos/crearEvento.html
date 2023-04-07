@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{header :: common_head(~{::title}, ~{::link})}">
+    <head th:replace="~{header :: common_head(~{::title}, ~{::link}, ${id_user}, ${role})}">
         <title>Crear Evento</title>
         <link rel="stylesheet" th:href="@{/css/crearEvento.css}">
     </head>

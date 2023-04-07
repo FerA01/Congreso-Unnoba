@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{header :: common_head(~{::title}, ~{::link})}">
+<head th:replace="~{header :: common_head(~{::title}, ~{::link}, ${usuario.id}, ${role})}">
     <title>Perfil de Usuario</title>
     <link rel="stylesheet" th:href="@{/css/usuarios/usuario.css}">
 </head>

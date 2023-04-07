@@ -67,9 +67,13 @@ public class TrabajoController {
                         trabajo -> trabajos1.add(trabajoService.findById(trabajo.getId()).get())
                 );
                 usuario.setTrabajos(trabajos1);
+                model.addAttribute("role", "ROLE_USER");
+                model.addAttribute("id_user", id_user);
                 model.addAttribute("trabajos", usuario.getTrabajos());
                 return "trabajos/presentacionesUsuario";
             }
+            model.addAttribute("role", "ROLE_ADMIN");
+            model.addAttribute("id_user", id_user);
             return "redirect:/eventos";
         }catch (Exception e){
             return "redirect:/eventos";

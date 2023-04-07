@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:fragment="common_head(title, links)">
+    <head th:fragment="common_head(title, links, id_user, role)">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,11 +51,11 @@
                     </th:block>
                     <th:block th:if="${role == 'ROLE_USER'}">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">MIS PRESENTACIONES</a>
+                            <a class="nav-link" aria-current="page" href="#" th:href="@{/trabajos/{id_user}/mis-presentaciones (id_user = ${id_user})}">MIS PRESENTACIONES</a>
                         </li>
                     </th:block>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">MI PERFIL</a>
+                      <a class="nav-link" href="#" th:href="@{/usuarios/edit/{id} (id = ${id_user})}">MI PERFIL</a>
                     </li>
                     <li class="nav-item" id="cerrar-sesion">
                         <form th:action="@{/logout}" method="post">
