@@ -4,6 +4,7 @@ import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Repository.TrabajoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,13 +50,20 @@ public class TrabajoService implements ITrabajoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Trabajo> findAllByUsuario(Usuario usuario) {
         if (usuario.getId() != null){
-            return repository.findAllByUsuario(usuario);
+            return repository.findAllByUsuario(usuario.getId());
         }
         return null;
     }
-
+    public List<Trabajo> findAll(){
+        try {
+            return repository.findAll();
+        }catch (Exception e){
+            return null;
+        }
+    }
     @Override
     public Long countByUsuario(Long id) {
         if (id > 0){

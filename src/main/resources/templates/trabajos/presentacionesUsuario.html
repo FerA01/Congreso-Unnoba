@@ -35,10 +35,54 @@
             width: 100vw !important;
             height: 100vh !important;
         }
+        #tabla-container{
+    height: 100vh !important;
+    margin-left: 7.3vw;
+}
+#tabla thead th{
+   text-align: center !important;
+   color: #FFFFFF;
+   background-color: #6EC1E4;
+}
+#tabla tbody td{
+    text-align: center !important;
+    color: #8B8585;
+    font-weight: bold;
+}
+#tabla tbody tr:nth-child(even){
+    background-color: #B6D7E5 !important;
+}
+#tabla tbody tr:nth-child(odd){
+    background-color: #FFFFFF !important;
+}
+#td-operations{
+    text-align: center;
+}
+#td-operations button{
+    background-color: #D9D9D9 !important;
+    color: #8B8585 !important;
+    border-color: #D9D9D9 !important;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    height: 6vh;
+    width: 10vw;
+}
+#td-operations button p{
+    padding-top: 0.3vh;
+    font-size: 1em;
+}
+#td-operations button:hover{
+    background-color: #8B8585 !important;
+    border-color: #D9D9D9 !important;
+    color: #fff !important;
+}
+#td-operations button:hover #icono{
+    opacity: 80%;
+}
     </style>
 </head>
 <body>
-    <header></header>
+    <header th:replace="~{header :: common_header}"></header>
     <div id="main-container" class="container-fluid">
         <div id="title-container" class="container">
             <h3>Presentaciones</h3>
@@ -62,12 +106,12 @@
                         <td th:text="${trabajo.nombre}"></td>
                         <td th:text="${trabajo.tipo}"></td>
                         <td id="td-operations">
-                            <button class="btn btn-primary" th:onclick="|window.location.href='@{/usuarios/edit/{id} (id = ${usuario.id})}'|">
+                            <button class="btn btn-primary">
                                 <p><img id="icono" src="images/seach_icon.png" width="20" height="20">
                                     Descargar
                                 </p>
                             </button>
-                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">
+                            <button class="btn btn-danger">
                                 <p><img id="icono" src="/images/trash.png" width="20" height="20">
                                     Borrar
                                 </p>

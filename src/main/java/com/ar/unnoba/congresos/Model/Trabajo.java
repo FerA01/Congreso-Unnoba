@@ -12,7 +12,8 @@ public class Trabajo {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "fecha_hora", nullable = false)
     private Date fecha_hora;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     @ManyToOne
     private Evento evento;

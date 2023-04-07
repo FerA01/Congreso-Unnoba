@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -52,6 +54,26 @@ public class TrabajoController {
         model.addAttribute("id_user", id_user);
         model.addAttribute("trabajo", new Trabajo());
         return "trabajos/subirPresentacion";
+    }
+    @GetMapping("/{id_user}/mis-presentaciones")
+    public String presentaciones(@PathVariable("id_user") Long id_user, Model model, Authentication auth){
+        try{
+            boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            if (!isAdmin && id_user.equals(((Usuario) auth.getPrincipal()).getId())){
+                Usuario usuario = usuarioService.findById(id_user).get();
+                List<Trabajo> trabajos = trabajoService.findAllByUsuario(usuario);
+                List<Trabajo> trabajos1 = new ArrayList<>();
+                trabajos.forEach(
+                        trabajo -> trabajos1.add(trabajoService.findById(trabajo.getId()).get())
+                );
+                usuario.setTrabajos(trabajos1);
+                model.addAttribute("trabajos", usuario.getTrabajos());
+                return "trabajos/presentacionesUsuario";
+            }
+            return "redirect:/eventos";
+        }catch (Exception e){
+            return "redirect:/eventos";
+        }
     }
     @PostMapping("/{id_evento}/{id_user}/upload")
     public ResponseEntity<String> upload( @RequestParam("file") MultipartFile file
