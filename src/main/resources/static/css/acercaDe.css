@@ -1,44 +1,43 @@
+html, body{
+    height: 100% !important;
+    margin: 0 !important;
+}
+
 #ver-ieee{
-    margin-left: 1.5vw;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     height: 7vh;
-    margin-left: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5%;
 }
 
-#title-container h1{
-    text-align: center !important;
+#h1-acercaDe{
     color: #898989;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    font-family: 'Alef', sans-serif;
+    font-size: 2.0px;
+    text-align: center !important;
+    padding-top: 2%;
 }
 
-#title-container h2{
-    text-align: center !important;
+#h2-acercaDe{
     color: #898989;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+    font-family: 'Alef', sans-serif;
+    font-size: 2.0px;
+    text-align: center !important;
+    padding-top: 2%;
 }
 
 #proposito{
-    font-family: 'Alef', sans-serif;
-    font-size: 2.0rem;
     margin-left: 2.0rem;
     margin-right: 2.0rem;
-    padding-right: 20%;
-    padding-left: 20%;
-    text-align: center;
+    text-align: center !important;
     align: justify;
-    padding-top: 2% !important;
 }
 #programadores{
-    font-family: 'Alef', sans-serif;
-    font-size: 2.0rem;
     margin-left: 2.0rem;
     margin-right: 2.0rem;
-    padding-right: 20%;
-    padding-left: 20%;
-    text-align: center;
+    text-align: center !important;
     align: justify;
-    padding-top: 2% !important;
 }
