@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface IOrganizadorService {
@@ -12,4 +13,5 @@ public interface IOrganizadorService {
     public List<Organizador> getAll();
     public void delete(Long id);
     public UserDetails loadUserByUsername(String email);
+    Optional<Organizador> findById(Long id);
 }
