@@ -25,6 +25,7 @@ body{
     height: 100%;
     display: flex;
     flex-direction: row;
+    margin-left: 20vw;
 }
 #data-container{
     display: flex;
