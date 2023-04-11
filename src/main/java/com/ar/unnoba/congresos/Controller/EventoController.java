@@ -1,7 +1,5 @@
 package com.ar.unnoba.congresos.Controller;
-
 import com.ar.unnoba.congresos.Model.Evento;
-import com.ar.unnoba.congresos.Model.Trabajo;
 import com.ar.unnoba.congresos.Model.User;
 import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.IEventoService;
@@ -20,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -76,7 +73,6 @@ public class EventoController {
         }
         User usuario = (Usuario) auth.getPrincipal();
         Optional<Usuario> usuario1 = usuarioService.findById(usuario.getId());
-        Long hayTrabajos = trabajoService.countByUsuario(usuario1.get().getId());
         boolean subioTrabajos = trabajoService.existeTrabajoEnEvento(id, usuario1.get().getId());
         model.addAttribute("subioTrabajos", subioTrabajos);
         model.addAttribute("id_user", usuario.getId());

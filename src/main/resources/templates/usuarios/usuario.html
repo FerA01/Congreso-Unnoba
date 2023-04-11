@@ -7,7 +7,10 @@
 <body th:object="${usuario}">
     <header th:replace="~{header :: common_header}"></header>
     <div class="container-xxxl">
-        <div class="d-flex">Usuario</div>
+        <div id="subtitle-container" class="d-flex">
+            <h4>USUARIO</h4>
+        </div>
+        <hr>
         <div id="main-container" class="container">
             <div id="data-container">
                 <div class="form-group">
@@ -40,7 +43,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/usuarios/edit}" method="post"> <!--th:object="${usuario}">-->
+                    <form th:action="@{/usuarios/edit}" method="post">
                         <div class="form-group">
                             <label>Email</label>
                             <input th:field="*{email}" type="email" class="form-control" name="email" disabled></input>

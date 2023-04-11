@@ -5,7 +5,6 @@
     <link rel="stylesheet" th:href="@{/css/evento2.css}">
 </head>
 <body th:object="${evento}">
-<!--No tocar el header-->
 <header th:replace="~{header :: common_header}"></header>
 <div id="body-container" class="container-fluid">
     <div class="container">
@@ -13,12 +12,12 @@
         <div id="fechainicio"> Fecha de inicio: <p th:text="${#temporals.format(evento.fechaHoraDesde, 'dd/MM/yyyy HH:mm')}"></p> </div>
         <div id="fechafinalizacion"> Fecha de finalización: <p th:text="${#temporals.format(evento.fechaHoraHasta, 'dd/MM/yyyy HH:mm')}"></p> </div>
         <div id="modalidad"> Modalidad <p th:text="*{modalidad}"></p> </div>
-        <div id="descripcion"><p id="descripcion" th:text="*{descripcion}"></p></div>
+        <div id="descripcion"><p th:text="*{descripcion}"></p></div>
     </div>
     <th:block th:switch="${role}">
         <th:block th:case="'ROLE_USER'">
             <div class="container" id="button-container" th:if="${subioTrabajos} == true">
-                <h4>Mi Presentacion</h4>
+                <h4>MI PRESENTACION</h4>
                 <button id="boton" class="btn btn-success" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/download (id_evento = ${evento.id} , id_user = ${id_user})}'|">
                     <p><img id="icono" th:src="@{/images/download-icon.png}" width="20" height="20">
                         Descargar

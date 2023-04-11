@@ -8,19 +8,22 @@ body, html{
     height: 100vh !important;
     width: 100vw !important;
 }
-#title-container{
-    margin: 0 !important;
-    margin-bottom: 0.8vh !important;
+
+#subtitle-container{
+    margin-top: 2vh !important;
+    margin-bottom: 2vh !important;
     width: 100vw !important;
-    height: 6vh !important;
+    
 }
-#title-container h3{
-    padding-top: 1.8vh !important;
-    padding-bottom: 0.9vh !important;
-    color: #898989;
-    font-family: 'Alef', sans-serif;
-    font-weight: bold;
+
+#subtitle-container h4{
+    margin-left: 1vw !important;
+    margin-top: 1.3vh !important;
+    color: #8B8585 !important;
+    font-size: 1.4em !important;
+    font-family: 'Roboto', sans-serif !important;
 }
+
 #body-container{
     margin: 0 !important;
     width: 100vw !important;

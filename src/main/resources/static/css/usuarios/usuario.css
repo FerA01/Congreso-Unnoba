@@ -9,8 +9,17 @@ body{
     height: 100vh !important;
     width: 100vw !important;
 }
-.d-flex{
+#subtitle-container{
     width: 100vw;
+    margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
+}
+#subtitle-container h4{
+    margin-left: 1vw !important;
+    margin-top: 1.3vh !important;
+    color: #8B8585 !important;
+    font-size: 1.4em !important;
+    font-family: 'Roboto', sans-serif !important;
 }
 #main-container{
     height: 100%;

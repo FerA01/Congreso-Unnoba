@@ -1,6 +1,7 @@
 #buttonContainer{
     margin: 0 !important;
-    margin-top: 2vh !important;
+    margin-top: 1.5vh !important;
+    margin-bottom: 1.5vh !important;
     display: flex !important;
     flex-direction: row !important;
 }
