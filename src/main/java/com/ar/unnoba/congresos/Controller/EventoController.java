@@ -1,11 +1,9 @@
 package com.ar.unnoba.congresos.Controller;
 import com.ar.unnoba.congresos.Model.Evento;
+import com.ar.unnoba.congresos.Model.Organizador;
 import com.ar.unnoba.congresos.Model.User;
 import com.ar.unnoba.congresos.Model.Usuario;
-import com.ar.unnoba.congresos.Service.IEventoService;
-import com.ar.unnoba.congresos.Service.ITrabajoService;
-import com.ar.unnoba.congresos.Service.IPagingService;
-import com.ar.unnoba.congresos.Service.IUsuarioService;
+import com.ar.unnoba.congresos.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
@@ -33,6 +31,9 @@ public class EventoController {
 
     @Autowired
     private ITrabajoService trabajoService;
+
+    @Autowired
+    private IOrganizadorService organizadorService;
 
     @Autowired
     private TrabajoController trabajoController;
@@ -66,17 +67,32 @@ public class EventoController {
         Evento evento = service.getById(id);
         model.addAttribute("evento", evento);
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        User user = (User) auth.getPrincipal();
         if (isAdmin){
             model.addAttribute("role","ROLE_ADMIN");
+            Organizador organizador = organizadorService.findById(user.getId()).get();
+            model.addAttribute("id_user", organizador.getId());
+            return "eventos/evento";
         }else{
             model.addAttribute("role","ROLE_USER");
+            Usuario usuario = usuarioService.findById(user.getId()).get();
+            boolean subioTrabajos = trabajoService.existeTrabajoEnEvento(id, usuario.getId());
+            model.addAttribute("subioTrabajos", subioTrabajos);
+            model.addAttribute("id_user", usuario.getId());
+            return "eventos/evento";
         }
+
+
+        /*
         User usuario = (Usuario) auth.getPrincipal();
+        //User user = auth.getPrincipal();
         Optional<Usuario> usuario1 = usuarioService.findById(usuario.getId());
         boolean subioTrabajos = trabajoService.existeTrabajoEnEvento(id, usuario1.get().getId());
         model.addAttribute("subioTrabajos", subioTrabajos);
         model.addAttribute("id_user", usuario.getId());
         return "eventos/evento";
+
+         */
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
