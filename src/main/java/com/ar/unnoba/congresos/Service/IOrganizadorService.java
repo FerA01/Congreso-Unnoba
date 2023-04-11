@@ -14,4 +14,5 @@ public interface IOrganizadorService {
     public void delete(Long id);
     public UserDetails loadUserByUsername(String email);
     Optional<Organizador> findById(Long id);
+    void save2(Organizador organizador);
 }

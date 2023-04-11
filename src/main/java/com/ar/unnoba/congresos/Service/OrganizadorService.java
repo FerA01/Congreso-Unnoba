@@ -28,6 +28,11 @@ public class OrganizadorService implements IOrganizadorService, UserDetailsServi
     }
 
     @Override
+    public void save2(Organizador organizador) {
+        repository.save(organizador);
+    }
+
+    @Override
     public Optional<Organizador> findById(Long id) {
         try {
             return repository.findById(id);
