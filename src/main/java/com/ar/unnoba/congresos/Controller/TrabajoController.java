@@ -62,16 +62,11 @@ public class TrabajoController {
         try{
             boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
             if (!isAdmin && id_user.equals(((Usuario) auth.getPrincipal()).getId())){
-                Usuario usuario = usuarioService.findById(id_user).get();
+                Usuario usuario = (Usuario) auth.getPrincipal();
                 List<Trabajo> trabajos = trabajoService.findAllByUsuario(usuario);
-                List<Trabajo> trabajos1 = new ArrayList<>();
-                trabajos.forEach(
-                        trabajo -> trabajos1.add(trabajoService.findById(trabajo.getId()).get())
-                );
-                usuario.setTrabajos(trabajos1);
                 model.addAttribute("role", "ROLE_USER");
                 model.addAttribute("id_user", id_user);
-                model.addAttribute("trabajos", usuario.getTrabajos());
+                model.addAttribute("trabajos", trabajos);
                 return "trabajos/presentacionesUsuario";
             }
             model.addAttribute("role", "ROLE_ADMIN");
