@@ -17,11 +17,6 @@ html, body{
 #head-component{
   width: 100vw !important;
 }
-#titulo{
-  color: #898989;
-  font-family: 'Alef', sans-serif;
-  font-size: 2.5rem;
-}
 .nav-item a{ 
     color: #fff !important;
     font-family: 'Alef', sans-serif;
@@ -46,6 +41,9 @@ html, body{
     margin-bottom: 3vh !important;
     margin-right: 20vw !important;
     text-align: center !important;
+    color: #898989;
+    font-family: 'Alef', sans-serif;
+    font-size: 2.5rem;
 }
 #form-container{
   height: 100% !important;
