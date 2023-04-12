@@ -21,6 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -80,15 +82,19 @@ public class TrabajoController {
         }
     }
     @PostMapping("/{id_evento}/{id_user}/upload")
-    public ResponseEntity<String> upload( @RequestParam("file") MultipartFile file
+    public String upload(@RequestParam("file") MultipartFile file
                                         , @PathVariable("id_evento") Long id_evento
                                         , @PathVariable("id_user") Long id_user
-                                        , Authentication auth) {
+                                        , Authentication auth
+                                        , Model model , RedirectAttributes flash) {
 
         try {
             // Verificar si el archivo está vacío
             if (file.isEmpty()) {
-                return ResponseEntity.badRequest().body("El archivo está vacío");
+                //return ResponseEntity.badRequest().body("El archivo está vacío");
+                //model.addAttribute("fail", "El archivo esta vacío");
+                flash.addFlashAttribute("fail", "El archivo esta vacío");
+                return "redirect:/eventos/" + id_evento;
             }
 
             boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
@@ -108,11 +114,17 @@ public class TrabajoController {
                 trabajo.setUsuario(usuario);
                 trabajo.setEvento(evento);
                 trabajoService.save2(trabajo);
-                return ResponseEntity.ok().body("Archivo subido correctamente");
+                //return ResponseEntity.ok().body("Archivo subido correctamente");
+                flash.addFlashAttribute("success", "Archivo subido correctamente");
+                return "redirect:/eventos/" + evento.getId();
             }
-            return ResponseEntity.ok().body("Los administradores no pueden subir trabajos.");
+            //return ResponseEntity.ok().body("Los administradores no pueden subir trabajos.");
+            flash.addFlashAttribute("fail", "Los administradores no pueden subir trabajos.");
+            return "redirect:/eventos/" + id_evento;
         } catch (IOException ex) {
-            return ResponseEntity.status(500).body("Ocurrió un error al subir el archivo");
+            //return ResponseEntity.status(500).body("Ocurrió un error al subir el archivo");
+            flash.addFlashAttribute("fail", "Ocurrió un error al subir el archivo");
+            return "redirect:/eventos/" + id_evento;
         }
     }
 
