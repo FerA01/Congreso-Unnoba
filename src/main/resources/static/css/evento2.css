@@ -1,13 +1,6 @@
-html, body{
-            height: 100% !important;
-            margin: 0 !important;
-        }
-        #titulo{
-            color: #898989;
-            font-family: 'Alef', sans-serif;
-            font-size: 2.5rem;
-            padding-right: 33%  !important;
-            padding-top: 1.5% !important;
+        #alert-container{
+            width: 30vw;
+            margin-top: 3vh;
         }
         #nombreEvento{
             color: #898989;
@@ -15,6 +8,7 @@ html, body{
             font-size: 2.5rem;
             margin-left: 2.0rem;
             margin-right: 2.0rem;
+            margin-bottom: 2.5rem;
             padding-right: 20%;
             padding-left: 20%;
             text-align: center;
@@ -26,25 +20,34 @@ html, body{
             text-align: left;
             margin-left: 2.0rem;
             float: left;
+            color: #7A7A7A;
+            font-family: 'Roboto', sans-serif;
         }
 
         #fechafinalizacion
         {
             margin-right: 2.0rem;
-            padding-right: 20%;
+            padding-right: 10%;
             text-align: right;
+            color: #7A7A7A;
+            font-family: 'Roboto', sans-serif;
         }
 
         #modalidad{
             padding-left: 20%;
             text-align: left;
             margin-left: 2.0rem;
+            color: #7A7A7A;
+            font-family: 'Roboto', sans-serif;
         }
 
         #descripcion{
             margin-left: 2.0rem;
             margin-right: 2.0rem;
+            margin-top: 5rem;
             text-align: center;
+            color: #7A7A7A;
+            font-family: 'Roboto', sans-serif;
         }
         #body-container{
             display: flex;

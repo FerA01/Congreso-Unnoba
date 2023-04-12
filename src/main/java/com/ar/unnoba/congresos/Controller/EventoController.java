@@ -68,6 +68,10 @@ public class EventoController {
         model.addAttribute("evento", evento);
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
         User user = (User) auth.getPrincipal();
+        return obtenerUser(id, model, isAdmin, user);
+    }
+
+    private String obtenerUser(Long id, Model model, boolean isAdmin, User user) {
         if (isAdmin){
             model.addAttribute("role","ROLE_ADMIN");
             Organizador organizador = organizadorService.findById(user.getId()).get();
@@ -81,18 +85,6 @@ public class EventoController {
             model.addAttribute("id_user", usuario.getId());
             return "eventos/evento";
         }
-
-
-        /*
-        User usuario = (Usuario) auth.getPrincipal();
-        //User user = auth.getPrincipal();
-        Optional<Usuario> usuario1 = usuarioService.findById(usuario.getId());
-        boolean subioTrabajos = trabajoService.existeTrabajoEnEvento(id, usuario1.get().getId());
-        model.addAttribute("subioTrabajos", subioTrabajos);
-        model.addAttribute("id_user", usuario.getId());
-        return "eventos/evento";
-
-         */
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
