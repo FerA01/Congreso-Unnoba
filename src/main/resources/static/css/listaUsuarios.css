@@ -49,8 +49,9 @@ body{
 #search-button-container input{
     width: 20vw;
 }
-#alerta{
-    display: flex;
+#alert-container{
+    width: 30vw;
+    margin-top: 3vh;
 }
 #tabla-container{
     height: 100vh !important;

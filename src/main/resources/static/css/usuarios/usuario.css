@@ -27,6 +27,10 @@ body{
     flex-direction: row;
     margin-left: 20vw;
 }
+#alert-container{
+    width: 30vw;
+    margin-top: 3vh;
+}
 #data-container{
     display: flex;
     flex-direction: column;

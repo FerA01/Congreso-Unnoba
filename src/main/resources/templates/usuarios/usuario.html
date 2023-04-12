@@ -8,9 +8,19 @@
     <header th:replace="~{header :: common_header}"></header>
     <div class="container-xxxl">
         <div id="subtitle-container" class="d-flex">
-            <h4>USUARIO</h4>
+            <h4 th:text="${role == 'ROLE_USER'}  ? 'USUARIO' : 'ADMINISTRADOR'"></h4>
         </div>
         <hr>
+        <div id="alert-container" class="container">
+            <div th:if="${fail != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <th:block th:text="${fail}"></th:block>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:if="${success != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <th:block th:text="${success}"></th:block>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
         <div id="main-container" class="container">
             <div id="data-container">
                 <div class="form-group">
@@ -43,23 +53,42 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/usuarios/edit}" method="post">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input th:field="*{email}" type="email" class="form-control" name="email" disabled></input>
-                        </div>
-                        <div class="form-group">
-                            <label>Nombre</label>
-                            <input th:field="*{nombre}" type="text" class="form-control" name="nombre" required="1"></input>
-                        </div>
-                        <div class="form-group">
-                            <label>Apellido</label>
-                            <input th:field="*{apellido}" type="text" class="form-control" name="apellido" required="1"></input>
-                        </div>
-                        <div id="modal-submit-button" class="form-group">
-                            <button class="btn btn-success" type="submit">Editar</button>
-                        </div>
-                    </form>
+                    <th:block th:switch="${role}">
+                        <form th:case="'ROLE_USER'"  th:action="@{/usuarios/edit}" method="post">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input th:field="*{email}" type="email" class="form-control" name="email" disabled></input>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input th:field="*{nombre}" type="text" class="form-control" name="nombre" required="1"></input>
+                            </div>
+                            <div class="form-group">
+                                <label>Apellido</label>
+                                <input th:field="*{apellido}" type="text" class="form-control" name="apellido" required="1"></input>
+                            </div>
+                            <div id="modal-submit-button" class="form-group">
+                                <button class="btn btn-success" type="submit">Editar</button>
+                            </div>
+                        </form>
+                        <form th:case="'ROLE_ADMIN'"  th:action="@{/admin/edit}" method="post">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input th:field="*{email}" type="email" class="form-control" name="email" disabled></input>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input th:field="*{nombre}" type="text" class="form-control" name="nombre" required="1"></input>
+                            </div>
+                            <div class="form-group">
+                                <label>Apellido</label>
+                                <input th:field="*{apellido}" type="text" class="form-control" name="apellido" required="1"></input>
+                            </div>
+                            <div id="modal-submit-button" class="form-group">
+                                <button class="btn btn-success" type="submit">Editar</button>
+                            </div>
+                        </form>
+                    </th:block>
                 </div>
             </div>
         </div>
