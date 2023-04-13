@@ -1,0 +1,103 @@
+body, html{
+    margin: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+}
+#main-container{
+    height: 100vh !important;
+    width: 100vw !important;
+}
+
+#subtitle-container{
+    margin-top: 2vh !important;
+    margin-bottom: 2vh !important;
+    width: 100vw !important;
+    
+}
+
+#subtitle-container h4{
+    margin-left: 1vw !important;
+    margin-top: 1.3vh !important;
+    color: #8B8585 !important;
+    font-size: 1.4em !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+h4 a{
+    color: #8B8585 !important;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#body-container{
+    margin: 0 !important;
+    width: 100vw !important;
+    
+    display: flex;
+    justify-content: center;
+}
+#tabla{
+    margin-right: 1vw !important;
+}
+#tabla thead th{
+    text-align: center !important;
+    vertical-align: middle !important;
+    color: #FFFFFF;
+    background-color: #6EC1E4;
+}
+#tabla tbody td{
+    text-align: center !important;
+    color: #8B8585;
+    font-weight: bold;
+    vertical-align: middle !important;
+}
+#tabla tbody tr:nth-child(even){
+    background-color: #B6D7E5 !important;
+}
+#tabla tbody tr:nth-child(odd){
+    background-color: #FFFFFF !important;
+}
+#td-operations{
+    text-align: center;
+    width: 22vw !important;
+}
+#tipo-archivo{
+    width: 10vw !important;
+}
+#nombre-archivo{
+    width: 20vw !important;
+}
+#estado{
+    width: 10vw !important;
+}
+#usuario-id{
+    width: 15vw !important;
+}
+#usuario-id a{
+    color: #8B8585 !important;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+}
+#td-operations button{
+    background-color: #D9D9D9 !important;
+    color: #8B8585 !important;
+    border-color: #D9D9D9 !important;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    height: 6vh;
+    width: 8vw;
+}
+#td-operations button p{
+    padding-top: 0.3vh;
+    font-size: 0.8em;
+}
+#td-operations button:hover{
+    background-color: #8B8585 !important;
+    border-color: #D9D9D9 !important;
+    color: #fff !important;
+}
+#td-operations button:hover #icono{
+    opacity: 80%;
+}

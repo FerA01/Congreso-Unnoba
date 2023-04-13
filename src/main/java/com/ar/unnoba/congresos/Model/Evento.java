@@ -2,6 +2,7 @@ package com.ar.unnoba.congresos.Model;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name = "eventos")
@@ -26,8 +27,9 @@ public class Evento {
 
     @OneToMany(mappedBy = "evento")
     private List<LlamadoPresentacion> llamadosPresentacion;
-    @OneToMany(mappedBy = "evento")
-    private List<Trabajo> trabajos;
+    @Column(name = "trabajos")
+    @OneToMany(mappedBy = "evento", fetch = FetchType.LAZY)
+    private List<Trabajo> trabajos = new ArrayList<>();
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

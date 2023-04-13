@@ -15,7 +15,7 @@ public class Trabajo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Evento evento;
     @Column(name = "estado", nullable = false)
     private String estado;
