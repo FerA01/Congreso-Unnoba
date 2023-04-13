@@ -46,7 +46,7 @@
         <th:block th:case="'ROLE_ADMIN'">
             <div class="container" id="button-container">
                 <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/edit (id = ${evento.id})}'|">Editar Evento</button>
-                <button id="boton" class="btn btn-secondary">Ver trabajos</button>
+                <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/presentaciones (id = ${evento.id})}'|">Ver trabajos</button>
             </div>
         </th:block>
     </th:block>

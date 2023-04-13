@@ -1,7 +1,7 @@
 package com.ar.unnoba.congresos.Service;
+import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Trabajo;
 import com.ar.unnoba.congresos.Model.Usuario;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -12,5 +12,6 @@ public interface ITrabajoService {
     Long findByUsuarioAndEvento(Long id_user, Long id_evento);
     Trabajo save2(Trabajo trabajo);
     List<Trabajo> findAllByUsuario(Usuario usuario);
+    List<Trabajo> findAllByEvento(Evento evento);
     Long countByUsuario(Long id);
 }
