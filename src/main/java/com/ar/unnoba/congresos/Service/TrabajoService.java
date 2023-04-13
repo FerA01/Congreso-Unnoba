@@ -1,10 +1,10 @@
 package com.ar.unnoba.congresos.Service;
+import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Trabajo;
 import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Repository.TrabajoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -14,6 +14,8 @@ import java.util.Optional;
 public class TrabajoService implements ITrabajoService {
     @Autowired
     private TrabajoRepository repository;
+    @Autowired
+    private UsuarioService usuarioService;
     @Autowired
     private EntityManager entityManager;
 
@@ -68,13 +70,21 @@ public class TrabajoService implements ITrabajoService {
 
             return trabajos;
     }
-    public List<Trabajo> findAll(){
-        try {
-            return repository.findAll();
-        }catch (Exception e){
-            return null;
-        }
+
+    @Override
+    public List<Trabajo> findAllByEvento(Evento evento) {
+        EntityManager em = entityManager.getEntityManagerFactory().createEntityManager();
+        em.getTransaction().begin();
+
+        TypedQuery<Trabajo> query = em.createQuery("SELECT t FROM Trabajo AS t WHERE t.evento = :evento", Trabajo.class);
+        query.setParameter("evento", evento);
+        List<Trabajo> trabajos = query.getResultList();
+
+        em.getTransaction().commit();
+        em.close();
+        return trabajos;
     }
+
     @Override
     public Long countByUsuario(Long id) {
         if (id > 0){

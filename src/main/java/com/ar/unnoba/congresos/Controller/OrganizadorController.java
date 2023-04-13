@@ -1,7 +1,6 @@
 package com.ar.unnoba.congresos.Controller;
 import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Organizador;
-import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.IOrganizadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -126,8 +125,8 @@ public class OrganizadorController {
      */
     @Secured("ROLE_ADMIN")
     @PostMapping("/eventos/{id}")
-    public String editarPost(@PathVariable("id") Long id, @ModelAttribute Evento evento, Model model){
-        return this.evento.evento(id, evento, model);
+    public String editarPost(@PathVariable("id") Long id, @ModelAttribute Evento evento, RedirectAttributes flash){
+        return this.evento.evento(id, evento, flash);
     }
     @GetMapping("/eventos/{id}")
     public String listarEventos(@PathVariable("id") Long id,Model model, Authentication auth){

@@ -1,8 +1,5 @@
 package com.ar.unnoba.congresos.Controller;
-import com.ar.unnoba.congresos.Model.Evento;
-import com.ar.unnoba.congresos.Model.Organizador;
-import com.ar.unnoba.congresos.Model.User;
-import com.ar.unnoba.congresos.Model.Usuario;
+import com.ar.unnoba.congresos.Model.*;
 import com.ar.unnoba.congresos.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -70,6 +67,25 @@ public class EventoController {
         User user = (User) auth.getPrincipal();
         return obtenerUser(id, model, isAdmin, user);
     }
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/{id}/presentaciones")
+    public String verPresentaciones(@PathVariable("id") Long id, Model model, Authentication auth) {
+        Evento evento = service.findById(id).get();
+        User user = (User) auth.getPrincipal();
+       // List<Trabajo> trabajos = trabajoService.findAllByEvento(evento);
+
+        List<Trabajo> trabajos = trabajoService.findAllByEvento(evento);
+        trabajos.forEach(
+                trabajo -> trabajo.setUsuario(usuarioService.findById(trabajo.getUsuario().getId()).get())
+        );
+
+        model.addAttribute("evento", evento);
+        model.addAttribute("role", "ROLE_ADMIN");
+        model.addAttribute("id_user", user.getId());
+        model.addAttribute("trabajos", trabajos);
+        //return obtenerUser(id, model, isAdmin, user);
+        return "trabajos/presentacionesUsuarioAdmin";
+    }
 
     private String obtenerUser(Long id, Model model, boolean isAdmin, User user) {
         if (isAdmin){
@@ -134,15 +150,10 @@ public class EventoController {
     public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Authentication auth) {
         if (id > 0) {
             User user = (User) auth.getPrincipal();
-            model.addAttribute("id_user", user.getId());
-            if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
-                model.addAttribute("role", "ROLE_ADMIN");
-            }else{
-                model.addAttribute("role", "ROLE_USER");
-            }
-
             Evento evento = service.getById(id);
+            model.addAttribute("id_user", user.getId());
             model.addAttribute("evento", evento);
+            model.addAttribute("role", "ROLE_ADMIN");
             flash.addFlashAttribute("success", "Evento editado correctamente");
             return "eventos/editarEvento";
         }
@@ -151,13 +162,14 @@ public class EventoController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/{id}")
-    public String evento(@PathVariable("id") Long id, @ModelAttribute Evento evento, Model model) {
+    public String evento(@PathVariable("id") Long id, @ModelAttribute Evento evento, RedirectAttributes flash) {
         if (evento.getId() != null) {
             service.save2(evento);
-            //model.addAttribute("evento", evento);
-            return "redirect:/admin/eventos";
+            flash.addFlashAttribute("success", "Evento editado correctamente");
+            return "redirect:/eventos/" + evento.getId();
         }
-        return "redirect:/admin/eventos";
+        flash.addFlashAttribute("fail", "Ocurrio un error al editar el evento. ¡Por favor! Intente nuevamente");
+        return "redirect:/eventos/" + evento.getId();
     }
 
     @Transactional
