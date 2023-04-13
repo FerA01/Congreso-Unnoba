@@ -20,13 +20,14 @@
             <div class="col" th:each="evento : ${eventos}">
                 <div class="card h-100 text-center">
                     <div class="card-header" style="background-color: white;">
-                        <h5 th:text="${evento.nombre}" style="color: #6EC1E4;">
-                        </h5>
+                        <a th:href="@{/eventos/{id} (id = ${evento.id})}">
+                            <h5 th:text="${evento.nombre}" style="color: #6EC1E4;"></h5>
+                        </a> 
                         <span class="text-success" th:if="${evento.fechaHoraDesde &lt; #temporals.createNow() && evento.fechaHoraHasta &gt; #temporals.createNow()}">En Proceso</span>
                         <span class="text-primary" th:if="${evento.fechaHoraDesde &gt; #temporals.createNow()}">Proximamente</span>
                     </div>
                     <div class="card-body" style="background-color: white;">
-                        <p class="card-text" th:text="${evento.descripcion}" style="color: #7A7A7A"></p>
+                        <p class="card-text text-truncate" th:text="${evento.descripcion}" style="color: #7A7A7A"></p>
                     </div>
                     <div class="card-footer text-center" style="background-color: white;">
                         <a th:method="get" th:href="@{/eventos/}+${evento.id}" class="btn btn-primary">Ver Mas</a>

@@ -10,7 +10,7 @@ public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nombre", nullable = false, length = 255)
+    @Column(name = "nombre", nullable = false, length = 500)
     private String nombre;
     //@Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -22,7 +22,7 @@ public class Evento {
     private LocalDateTime fechaHoraHasta;
     @Column(name = "modalidad", nullable = false)
     private String modalidad;
-    @Column(name = "descripcion", length = 2000)
+    @Column(name = "descripcion", length = 2200)
     private String descripcion;
 
     @OneToMany(mappedBy = "evento")

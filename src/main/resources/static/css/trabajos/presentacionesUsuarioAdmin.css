@@ -21,6 +21,8 @@ body, html{
     color: #8B8585 !important;
     font-size: 1.4em !important;
     font-family: 'Roboto', sans-serif !important;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 h4 a{
