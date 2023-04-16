@@ -1,0 +1,38 @@
+#ver-ieee{
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5%;
+}
+
+#h1-acercaDe{
+    color: #898989;
+    font-family: 'Alef', sans-serif;
+    font-size: 2.0px;
+    text-align: center !important;
+    padding-top: 2%;
+}
+
+#h2-acercaDe{
+    color: #898989;
+    font-family: 'Alef', sans-serif;
+    font-size: 2.0px;
+    text-align: center !important;
+    padding-top: 2%;
+}
+
+#proposito{
+    margin-left: 2.0rem;
+    margin-right: 2.0rem;
+    text-align: center !important;
+    align: justify;
+}
+#programadores{
+    margin-left: 2.0rem;
+    margin-right: 2.0rem;
+    text-align: center !important;
+    align: justify;
+}
