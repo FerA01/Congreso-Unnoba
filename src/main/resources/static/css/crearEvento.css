@@ -1,0 +1,40 @@
+/*BODY*/
+#title-container h1{
+  text-align: center !important;
+  color: #898989;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+#vertical-container{
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+#vertical-container h1{
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 7vh;
+}
+#input-container{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+#input-container label{
+  color: #898989;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 4vh;
+}
+#input-container input{
+  height: 7vh;
+}
+#button{
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 3vh;
+  width: 100%;
+}
+#button-container{
+  display: flex !important;
+  justify-content: center !important;
+}

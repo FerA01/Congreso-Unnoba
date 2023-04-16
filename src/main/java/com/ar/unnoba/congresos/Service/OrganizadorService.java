@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrganizadorService implements IOrganizadorService, UserDetailsService {
@@ -24,6 +25,20 @@ public class OrganizadorService implements IOrganizadorService, UserDetailsServi
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void save2(Organizador organizador) {
+        repository.save(organizador);
+    }
+
+    @Override
+    public Optional<Organizador> findById(Long id) {
+        try {
+            return repository.findById(id);
+        }catch (Exception exception){
+            return Optional.empty();
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.ar.unnoba.congresos.Model;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name = "eventos")
@@ -9,7 +10,7 @@ public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false, length = 500)
     private String nombre;
     //@Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -21,13 +22,14 @@ public class Evento {
     private LocalDateTime fechaHoraHasta;
     @Column(name = "modalidad", nullable = false)
     private String modalidad;
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", length = 2200)
     private String descripcion;
 
     @OneToMany(mappedBy = "evento")
     private List<LlamadoPresentacion> llamadosPresentacion;
-    @OneToMany(mappedBy = "evento")
-    private List<Trabajo> trabajos;
+    @Column(name = "trabajos")
+    @OneToMany(mappedBy = "evento", fetch = FetchType.LAZY)
+    private List<Trabajo> trabajos = new ArrayList<>();
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

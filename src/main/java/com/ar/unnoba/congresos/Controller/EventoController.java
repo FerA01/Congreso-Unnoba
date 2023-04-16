@@ -1,11 +1,6 @@
 package com.ar.unnoba.congresos.Controller;
-
-import com.ar.unnoba.congresos.Model.Evento;
-import com.ar.unnoba.congresos.Model.Trabajo;
-import com.ar.unnoba.congresos.Model.Usuario;
-import com.ar.unnoba.congresos.Service.IEventoService;
-import com.ar.unnoba.congresos.Service.ITrabajoService;
-import com.ar.unnoba.congresos.Service.IPagingService;
+import com.ar.unnoba.congresos.Model.*;
+import com.ar.unnoba.congresos.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
@@ -18,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +23,14 @@ import java.util.Optional;
 public class EventoController {
     @Autowired
     private IEventoService service;
+    @Autowired
+    private IUsuarioService usuarioService;
 
     @Autowired
     private ITrabajoService trabajoService;
+
+    @Autowired
+    private IOrganizadorService organizadorService;
 
     @Autowired
     private TrabajoController trabajoController;
@@ -49,18 +48,59 @@ public class EventoController {
                           @RequestParam(value = "size", required = false, defaultValue = "6") int size,
                           Model model, Authentication auth) { //index
 
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("id_user", user.getId());
         if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            model.addAttribute("role", "ROLE_ADMIN");
             return mostrarEventosAdmin(page,size,model);
         } else {
+            model.addAttribute("role", "ROLE_USER");
             return mostrarEventosUsuario(page, size, model);
         }
     }
 
     @GetMapping("/{id}")
-    public String verMas(@PathVariable("id") Long id, Model model) {
+    public String verMas(@PathVariable("id") Long id, Model model, Authentication auth) {
         Evento evento = service.getById(id);
         model.addAttribute("evento", evento);
-        return "eventos/evento";
+        boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        User user = (User) auth.getPrincipal();
+        return obtenerUser(id, model, isAdmin, user);
+    }
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/{id}/presentaciones")
+    public String verPresentaciones(@PathVariable("id") Long id, Model model, Authentication auth) {
+        Evento evento = service.findById(id).get();
+        User user = (User) auth.getPrincipal();
+       // List<Trabajo> trabajos = trabajoService.findAllByEvento(evento);
+
+        List<Trabajo> trabajos = trabajoService.findAllByEvento(evento);
+        trabajos.forEach(
+                trabajo -> trabajo.setUsuario(usuarioService.findById(trabajo.getUsuario().getId()).get())
+        );
+
+        model.addAttribute("evento", evento);
+        model.addAttribute("role", "ROLE_ADMIN");
+        model.addAttribute("id_user", user.getId());
+        model.addAttribute("trabajos", trabajos);
+        //return obtenerUser(id, model, isAdmin, user);
+        return "trabajos/presentacionesUsuarioAdmin";
+    }
+
+    private String obtenerUser(Long id, Model model, boolean isAdmin, User user) {
+        if (isAdmin){
+            model.addAttribute("role","ROLE_ADMIN");
+            Organizador organizador = organizadorService.findById(user.getId()).get();
+            model.addAttribute("id_user", organizador.getId());
+            return "eventos/evento";
+        }else{
+            model.addAttribute("role","ROLE_USER");
+            Usuario usuario = usuarioService.findById(user.getId()).get();
+            boolean subioTrabajos = trabajoService.existeTrabajoEnEvento(id, usuario.getId());
+            model.addAttribute("subioTrabajos", subioTrabajos);
+            model.addAttribute("id_user", usuario.getId());
+            return "eventos/evento";
+        }
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_USER"})
@@ -73,7 +113,8 @@ public class EventoController {
         if (hoy.isBefore(evento.getFechaHoraHasta())) {
             model.addAttribute("usuario", usuario);
             model.addAttribute("evento", evento);
-            return trabajoController.nuevoTrabajo(model);
+            //return trabajoController.nuevoTrabajo(model);
+            return "redirect:/eventos";
         }
         flash.addFlashAttribute("info", "Ya paso la fecha de entregar de trabajos");
         return "redirect:/eventos";
@@ -85,9 +126,16 @@ public class EventoController {
     }
     @Secured("ROLE_ADMIN")
     @GetMapping("/new")
-    public String nuevoEvento(Model model) {
+    public String nuevoEvento(Model model, Authentication auth) {
         model.addAttribute("evento", new Evento());
-        return "eventos/nuevoEvento";
+        User user = (User) auth.getPrincipal();
+        model.addAttribute("id_user", user.getId());
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+            model.addAttribute("role", "ROLE_ADMIN");
+            return "eventos/crearEvento";
+        }
+        model.addAttribute("role", "ROLE_USER");
+        return "eventos/crearEvento";
     }
 
     @Secured("ROLE_ADMIN")
@@ -99,10 +147,13 @@ public class EventoController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes flash) {
+    public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes flash, Authentication auth) {
         if (id > 0) {
+            User user = (User) auth.getPrincipal();
             Evento evento = service.getById(id);
+            model.addAttribute("id_user", user.getId());
             model.addAttribute("evento", evento);
+            model.addAttribute("role", "ROLE_ADMIN");
             flash.addFlashAttribute("success", "Evento editado correctamente");
             return "eventos/editarEvento";
         }
@@ -111,13 +162,14 @@ public class EventoController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/{id}")
-    public String evento(@PathVariable("id") Long id, @ModelAttribute Evento evento, Model model) {
+    public String evento(@PathVariable("id") Long id, @ModelAttribute Evento evento, RedirectAttributes flash) {
         if (evento.getId() != null) {
             service.save2(evento);
-            //model.addAttribute("evento", evento);
-            return "redirect:/admin/eventos";
+            flash.addFlashAttribute("success", "Evento editado correctamente");
+            return "redirect:/eventos/" + evento.getId();
         }
-        return "redirect:/admin/eventos";
+        flash.addFlashAttribute("fail", "Ocurrio un error al editar el evento. ¡Por favor! Intente nuevamente");
+        return "redirect:/eventos/" + evento.getId();
     }
 
     @Transactional
@@ -176,7 +228,6 @@ public class EventoController {
         List<Integer> paginas = IPagingService.getPagingRange(page, paginasTotales, 5);
         model.addAttribute("pages", paginas);
         model.addAttribute("currentPage", page);
-
         return "eventos/eventosAdmin";
     }
 }

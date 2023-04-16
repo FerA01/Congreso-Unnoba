@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{header :: common_head(~{::title}, ~{::link}, ${id_user}, ${role})}">
+    <title>Usuarios</title>
+    <link rel="stylesheet" th:href="@{/css/listaUsuarios.css}">
+</head>
+<body>
+    <header th:replace="~{header :: common_header}"></header>
+    <div id="titulo-container" class="container">
+        <h2>Usuarios</h2>
+    </div>
+    <hr>
+    <div id="boton-container" class="container">
+        <div id="parent-cols" class="d-flex mb-3">
+            <div id="user-register-container" class="me-auto p-2">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createUserModal">Agregar Usuario</button>
+            </div>
+            <div id="search-button-container" class="p-2">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id="tabla-container" class="container">
+        <div id="alert-container" class="container">
+            <div th:if="${fail != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <th:block th:text="${fail}"></th:block>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:if="${success != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <th:block th:text="${success}"></th:block>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="container">
+            <table id="tabla" class="table table-striped">
+                <thead>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Operación</th>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.id}"></td>
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.apellido}"></td>
+                        <td th:text="${usuario.email}"></td>
+                        <td id="td-operations">
+                            <button class="btn btn-primary" th:onclick="|window.location.href='@{/usuarios/edit/{id} (id = ${usuario.id})}'|">
+                                <p><img id="icono" src="images/seach_icon.png" width="20" height="20">
+                                    Ver Perfil
+                                </p>
+                            </button>
+                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|">
+                                <p><img id="icono" src="/images/trash.png" width="20" height="20">
+                                    Borrar
+                                </p>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="createUserModal" class= "modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Registrar Usuario</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form th:action="@{/usuarios/register/new}" method="post" th:object="${usuarioRegistro}">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input th:field="*{email}" type="email" class="form-control" name="email" required="1"></input>
+                </div>
+                <div class="form-group">
+                  <label>Contraseña</label>
+                  <input th:field="*{password}" type="password" class="form-control" name="contrasena" required="1"></input>
+                </div>
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input th:field="*{nombre}" type="text" class="form-control" name="nombre" required="1"></input>
+                </div>
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <input th:field="*{apellido}" type="text" class="form-control" name="apellido" required="1"></input>
+                </div>
+                <div id="modal-submit-button" class="form-group">
+                  <button class="btn btn-success" type="submit">Registrar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!--Scripts-->
+    <script>
+        function borrarUsuario(){
+          if(confirm("¿Desde eliminar el usuario?")){
+            th:onclick="|window.location.href='@{/usuarios/delete/{id} (id = ${usuario.id})}'|"
+          }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+</body>
+</html>

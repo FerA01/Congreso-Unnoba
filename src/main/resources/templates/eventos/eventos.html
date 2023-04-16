@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<head th:replace="~{header :: common_head(~{::title},~{::link}, ${id_user}, ${role})}">
+    <title>Eventos Disponibles</title>
+    <link rel="stylesheet" th:href="@{/css/eventos.css}">
 </head>
 <body>
-<header th:insert="header.html"></header>
+<header th:replace="~{header :: common_header}"></header>
 <div>
-    <div th:if="${info != null}">
-        <p th:text="${info}"></p>
+    <div id="buttonContainer" class="container">
+        <h4>EVENTOS DISPONIBLES</h4>    
     </div>
-    <div class="px-2 my-2 border-bottom pb-1">
-        EVENTOS DISPONIBLES
+    <hr>
+    <div id="info-div" th:if="${info != null}">
+        <p th:text="${info}"></p>
     </div>
     <div class="container my-4">
         <div class="row row row-cols-1 row-cols-md-3 g-4">
             <div class="col" th:each="evento : ${eventos}">
                 <div class="card h-100 text-center">
                     <div class="card-header" style="background-color: white;">
-                        <h5 th:text="${evento.nombre}" style="color: #6EC1E4;">
-                        </h5>
-                        <span th:if="${evento.fechaHoraDesde &lt; #temporals.createNow() && evento.fechaHoraHasta &gt; #temporals.createNow()}" style="color: green">En Proceso</span>
-                        <span th:if="${evento.fechaHoraDesde &gt; #temporals.createNow()}" style="color: blue">Proximamente</span>
+                        <a th:href="@{/eventos/{id} (id = ${evento.id})}">
+                            <h5 th:text="${evento.nombre}" style="color: #6EC1E4;"></h5>
+                        </a> 
+                        <span class="text-success" th:if="${evento.fechaHoraDesde &lt; #temporals.createNow() && evento.fechaHoraHasta &gt; #temporals.createNow()}">En Proceso</span>
+                        <span class="text-primary" th:if="${evento.fechaHoraDesde &gt; #temporals.createNow()}">Proximamente</span>
                     </div>
                     <div class="card-body" style="background-color: white;">
-                        <p class="card-text" th:text="${evento.descripcion}" style="color: #7A7A7A"></p>
+                        <p class="card-text text-truncate" th:text="${evento.descripcion}" style="color: #7A7A7A"></p>
                     </div>
                     <div class="card-footer text-center" style="background-color: white;">
                         <a th:method="get" th:href="@{/eventos/}+${evento.id}" class="btn btn-primary">Ver Mas</a>
@@ -41,7 +43,7 @@
                     <li class="page-item" th:if="${currentPage != 1}">
                         <a aria-label="Previous" class="page-link" th:href="@{'eventos?page=' + ${currentPage - 1}}">
                             <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
+                            <span class="sr-only">Anterior</span>
                         </a>
                     </li>
                     <th:block th:each="page,stat: ${pages}">
@@ -57,7 +59,7 @@
                     <li class="page-item" th:if="${(totalPages > 1) && (currentPage != totalPages) }">
                         <a aria-label="Next" class="page-link" th:href="@{'eventos?page=' + ${currentPage + 1}}">
                             <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
+                            <span class="sr-only">Siguiente</span>
                         </a>
                     </li>
                 </ul>
