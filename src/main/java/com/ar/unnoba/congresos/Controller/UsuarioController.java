@@ -126,6 +126,17 @@ public class UsuarioController {
             return "redirect:/usuarios";
         }
     }
+    @PostMapping("/register")
+    public String register(@ModelAttribute("usuario") Usuario usuario, RedirectAttributes flash) {
+        try {
+            usuarioService.create(usuario);
+            flash.addFlashAttribute("success", "Usuario registrado correctamente");
+            return "redirect:/login";
+        } catch (Exception exception) {
+            flash.addFlashAttribute("fail", "Error al intentar registrar un usuario");
+            return "redirect:/login";
+        }
+    }
 
     @GetMapping("/register")
     public String register(Model model) {

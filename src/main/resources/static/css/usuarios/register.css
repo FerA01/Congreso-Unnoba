@@ -1,0 +1,37 @@
+html, body{
+    margin: 0;
+}
+#modal-submit-button{
+    display: flex;
+    justify-content: center;
+    padding-top: 5vh;
+}
+.modal-header{
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    background-color:#6EC1E4;
+}
+.modal-body{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+.form-group{
+    margin-bottom: 1vh !important;
+    width: 40vw;
+}
+h4{
+    font-family: 'Alef', sans-serif !important;
+    font-weight: bold;
+    font-size: 2rem;
+    color: #fff;
+}
+.container{
+    width: 50vw;
+    border: groove;
+    border-width: thin;
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
