@@ -35,6 +35,11 @@ public class TrabajoService implements ITrabajoService {
     }
 
     @Override
+    public boolean existeTrabajoEnEvento(Long id_evento) {
+        return repository.existeTrabajoEnEvento(id_evento) > 0L;
+    }
+
+    @Override
     public boolean deleteById(Long id) {
         try {
             repository.deleteById(id);

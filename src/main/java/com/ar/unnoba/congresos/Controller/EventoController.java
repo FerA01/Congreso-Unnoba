@@ -89,9 +89,11 @@ public class EventoController {
 
     private String obtenerUser(Long id, Model model, boolean isAdmin, User user) {
         if (isAdmin){
+            boolean hayTrabajos = trabajoService.existeTrabajoEnEvento(id);
             model.addAttribute("role","ROLE_ADMIN");
             Organizador organizador = organizadorService.findById(user.getId()).get();
             model.addAttribute("id_user", organizador.getId());
+            model.addAttribute("hayTrabajos", hayTrabajos);
             return "eventos/evento";
         }else{
             model.addAttribute("role","ROLE_USER");
