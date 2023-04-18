@@ -4,7 +4,7 @@
     <title>Perfil de Usuario</title>
     <link rel="stylesheet" th:href="@{/css/usuarios/usuario.css}">
 </head>
-<body th:object="${usuario}">
+<body th:object="${organizador}">
     <header th:replace="~{header :: common_header}"></header>
     <div class="container-xxxl">
         <div id="subtitle-container" class="d-flex">
@@ -47,28 +47,11 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Editar Usuario</h4>
+                    <h4 class="modal-title">Editar Perfil</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <th:block th:switch="${role}">
-                        <form th:case="'ROLE_USER'"  th:action="@{/usuarios/edit}" method="post">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input th:field="*{email}" type="email" class="form-control" name="email" disabled></input>
-                            </div>
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input th:field="*{nombre}" type="text" class="form-control" name="nombre" required="1"></input>
-                            </div>
-                            <div class="form-group">
-                                <label>Apellido</label>
-                                <input th:field="*{apellido}" type="text" class="form-control" name="apellido" required="1"></input>
-                            </div>
-                            <div id="modal-submit-button" class="form-group">
-                                <button class="btn btn-success" type="submit">Editar</button>
-                            </div>
-                        </form>
                         <form th:case="'ROLE_ADMIN'"  th:action="@{/admin/edit}" method="post">
                             <div class="form-group">
                                 <label>Email</label>

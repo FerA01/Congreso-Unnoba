@@ -34,11 +34,7 @@ public class OrganizadorService implements IOrganizadorService, UserDetailsServi
 
     @Override
     public Optional<Organizador> findById(Long id) {
-        try {
-            return repository.findById(id);
-        }catch (Exception exception){
-            return Optional.empty();
-        }
+        return repository.findById(id);
     }
 
     @Override

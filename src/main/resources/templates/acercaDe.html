@@ -17,7 +17,8 @@
     <div id="programadores"> Los analistas, diseñadores y programadores de este sistema fueron = Fernando Andana, Facundo Ricagno, Diego Molinero, Matías Acuña y Brenda Martín </div>
         <th:block th:switch="${role}">
             <th:block th:case="'ROLE_ADMIN'">
-                <div id="ver-ieee"> <button class="btn btn-primary mb-3">Ver IEEE 830</button> </div>
+                <div id="ver-ieee"> <button class="btn btn-primary mb-3" onclick="window.open('https://docs.google.com/document/d/1WBdQBh9Y9XjYF_PUUR_NsSgwKDhMNtJl/edit?usp=share_link&ouid=110364331142792691632&rtpof=true&sd=true')">Ver IEEE 830</button> </div>
+                <div id="ver-ieee"> <button class="btn btn-primary mb-3" onclick="window.open('https://drive.google.com/file/d/1TwmrIXvKHiWNYt6oVgGDouDnqO6fO7zp/view?usp=share_link')">Ver Contrato</button> </div>
             </th:block>
         </th:block>
     </div>

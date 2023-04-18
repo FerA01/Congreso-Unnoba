@@ -1,10 +1,10 @@
 package com.ar.unnoba.congresos.Controller;
 import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Organizador;
-import com.ar.unnoba.congresos.Service.IOrganizadorService;
+import com.ar.unnoba.congresos.Model.User;
+import com.ar.unnoba.congresos.Service.OrganizadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@SessionAttributes("admin")
+@SessionAttributes("organizador")
 @RequestMapping("/admin")
-@EnableGlobalMethodSecurity(securedEnabled=true)
 public class OrganizadorController {
     private final String role = "ROLE_ADMIN";
     @Autowired
-    private IOrganizadorService organizadorService;
+    private OrganizadorService organizadorService;
 
     @Autowired
     private EventoController evento;
 
     @Autowired
-    public OrganizadorController(EventoController evento){
+    public OrganizadorController(EventoController evento, OrganizadorService organizadorService){
         this.evento = evento;
+        this.organizadorService = organizadorService;
     }
 
     @GetMapping("/login")
@@ -42,13 +42,12 @@ public class OrganizadorController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model, Authentication auth){
         try {
-            Organizador usuario = (Organizador) auth.getPrincipal();
-            if (id.equals(usuario.getId())){
-                usuario.setId(id);
+            User organizador = (User) auth.getPrincipal();
+            if (id.equals(organizador.getId())){
                 model.addAttribute("role", role);
-                model.addAttribute("usuario", usuario);
-                model.addAttribute("id_user", usuario.getId());
-                return "usuarios/usuario";
+                model.addAttribute("organizador", organizador);
+                model.addAttribute("id_user", organizador.getId());
+                return "organizador/organizador";
             }
             return "redirect:/accesso-denegado";
         }catch (Exception exception){
@@ -58,18 +57,19 @@ public class OrganizadorController {
     }
     @Secured("ROLE_ADMIN")
     @PostMapping("/edit")
-    public String editar(@ModelAttribute("usuario") Organizador usuario, RedirectAttributes flash, Model model){
-        if (usuario.getId() != null){
+    public String editar(@ModelAttribute Organizador organizador, RedirectAttributes flash, Model model){
+        if (organizador.getId() != null){
             try {
-                organizadorService.save2(usuario);
-                return "redirect:/admin/edit/" + usuario.getId();
+                organizadorService.save2(organizador);
+                flash.addFlashAttribute("success", "Administrador editado correctamente");
+                return "redirect:/admin/edit/" + organizador.getId();
             }catch (Exception e){
-                flash.addFlashAttribute("danger", "El email ya se encuentra en uso");
-                return "redirect:/admin/edit/" + usuario.getId();
+                flash.addFlashAttribute("fail", "El email ya se encuentra en uso");
+                return "redirect:/admin/edit/" + organizador.getId();
             }
         }else{
-            flash.addFlashAttribute("danger", "El email ya se encuentra en uso");
-            return "redirect:/admin/edit/" + usuario.getId();
+            flash.addFlashAttribute("fail", "El email ya se encuentra en uso");
+            return "redirect:/usuarios/edit/" + organizador.getId();
         }
     }
 
@@ -102,27 +102,10 @@ public class OrganizadorController {
     public String index(Model model, Authentication auth){
         return evento.eventos(1,6,model,auth);
     }
-
-    /*
-    @Secured("ROLE_ADMIN")
-    @GetMapping("/eventos/new")
-    public String newEvento(Model model){
-        return evento.nuevoEvento(model);
-    }
-
-     */
     @PostMapping("/eventos")
     public String crearEvento(@ModelAttribute Evento evento){
         return this.evento.create(evento);
     }
-    /*
-    @Secured("ROLE_ADMIN")
-    @GetMapping("/eventos/{id}/edit")
-    public String editarEvento(@PathVariable("id") Long id, Model model, RedirectAttributes flash){
-        return evento.edit(id, model, flash);
-    }
-
-     */
     @Secured("ROLE_ADMIN")
     @PostMapping("/eventos/{id}")
     public String editarPost(@PathVariable("id") Long id, @ModelAttribute Evento evento, RedirectAttributes flash){
