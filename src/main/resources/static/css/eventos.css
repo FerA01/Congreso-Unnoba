@@ -27,6 +27,10 @@
 #info-div p{
     margin-right: 40vw !important;
 }
+#alert-container{
+    width: 30vw;
+    margin-top: 3vh;
+}
 .card-header a{
     text-decoration: none;
 }

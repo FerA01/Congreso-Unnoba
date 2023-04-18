@@ -180,19 +180,19 @@ public class EventoController {
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash) {
         try {
             Optional<Evento> evento = service.findById(id);
-            if (id < 0 || hayTrabajos(evento.get())) {
+            if (evento.isPresent()) {
                 //mensaje seguro quiere eliminar el evento??
                 service.delete(id);
                 flash.addFlashAttribute("success", "Evento eliminado correctamente");
                 return "redirect:/admin/eventos";
             }
             //No se puede borrar el evento ya que contiene trabajos de autores.
-            flash.addFlashAttribute("danger", "No se puede eliminar el evento ya que tiene trabajos");
+            flash.addFlashAttribute("fail", "No se puede eliminar el evento ya que tiene trabajos");
             return "redirect:/admin/eventos";
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            flash.addFlashAttribute("fail", "Error al intentar eliminar el evento.");
+            return "redirect:/admin/eventos";
         }
-        return "redirect:/admin/eventos";
     }
 
     /**

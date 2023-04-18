@@ -49,6 +49,9 @@
                 <th:block th:if="${hayTrabajos} == true">
                     <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/presentaciones (id = ${evento.id})}'|">Ver trabajos</button>
                 </th:block>
+                <th:block th:if="${hayTrabajos} == false">
+                    <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/delete (id = ${evento.id})}'|">Eliminar Evento</button>
+                </th:block>
             </div>
         </th:block>
     </th:block>
