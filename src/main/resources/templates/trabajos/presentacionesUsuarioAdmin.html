@@ -23,7 +23,7 @@
                 <tbody>
                     <tr th:each="trabajo : ${trabajos}">
                         <td id="usuario-id">
-                            <a th:href="@{/admin/usuarios/{id} (id = ${trabajo.usuario.id})}" th:text="${trabajo.usuario.email}"></a>
+                            <a th:href="@{/admin/user/edit/{id} (id = ${trabajo.usuario.id})}" th:text="${trabajo.usuario.email}"></a>
                         </td>
                         <td id="estado" th:text="${trabajo.estado}"></td>
                         <td id="nombre" th:text="${trabajo.nombre}"></td>

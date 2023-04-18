@@ -51,7 +51,7 @@
                         <td th:text="${usuario.apellido}"></td>
                         <td th:text="${usuario.email}"></td>
                         <td id="td-operations">
-                            <button class="btn btn-primary" th:onclick="|window.location.href='@{/usuarios/edit/{id} (id = ${usuario.id})}'|">
+                            <button class="btn btn-primary" th:onclick="|window.location.href='@{/admin/user/edit/{id} (id = ${usuario.id})}'|">
                                 <p><img id="icono" src="images/seach_icon.png" width="20" height="20">
                                     Ver Perfil
                                 </p>

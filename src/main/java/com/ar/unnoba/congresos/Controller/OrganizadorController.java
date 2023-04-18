@@ -2,14 +2,19 @@ package com.ar.unnoba.congresos.Controller;
 import com.ar.unnoba.congresos.Model.Evento;
 import com.ar.unnoba.congresos.Model.Organizador;
 import com.ar.unnoba.congresos.Model.User;
+import com.ar.unnoba.congresos.Model.Usuario;
 import com.ar.unnoba.congresos.Service.OrganizadorService;
+import com.ar.unnoba.congresos.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @SessionAttributes("organizador")
@@ -18,14 +23,17 @@ public class OrganizadorController {
     private final String role = "ROLE_ADMIN";
     @Autowired
     private OrganizadorService organizadorService;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Autowired
     private EventoController evento;
 
     @Autowired
-    public OrganizadorController(EventoController evento, OrganizadorService organizadorService){
+    public OrganizadorController(EventoController evento, OrganizadorService organizadorService, UsuarioService usuarioService){
         this.evento = evento;
         this.organizadorService = organizadorService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping("/login")
@@ -70,6 +78,43 @@ public class OrganizadorController {
         }else{
             flash.addFlashAttribute("fail", "El email ya se encuentra en uso");
             return "redirect:/usuarios/edit/" + organizador.getId();
+        }
+    }
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/user/edit/{id}")
+    public String editarUser(   @PathVariable("id") Long id
+                                , Model model
+                                , Authentication auth
+                                , RedirectAttributes flash){
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        if (usuario.isPresent()){
+            model.addAttribute("usuario", usuario.get());
+            model.addAttribute("role", role);
+            model.addAttribute("id_user",  ((Organizador) auth.getPrincipal()).getId());
+            return "usuarios/editarUsuarioAdmin";
+        }
+        flash.addFlashAttribute("fail", "No se encontro el usuario");
+        return "redirect:/usuarios";
+    }
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/user/edit/{id}")
+    public String actualizarUser(@PathVariable("id") Long id
+                                ,@ModelAttribute("usuario") Usuario usuario
+                                , RedirectAttributes flash){
+        try {
+            Optional<Usuario> usuarioBd = usuarioService.findById(id);
+            if (usuarioBd.isPresent()) {
+                usuarioBd.get().setNombre(usuario.getNombre());
+                usuarioBd.get().setApellido(usuario.getApellido());
+                usuarioService.save2(usuarioBd.get());
+                flash.addFlashAttribute("success", "Usuario " + usuarioBd.get().getEmail() + " editado correctamente.");
+                return "redirect:/usuarios";
+            }
+            flash.addFlashAttribute("fail", "Error al intentar editar al usuario.");
+            return "redirect:/usuarios";
+        }catch (Exception exception){
+            flash.addFlashAttribute("fail", "Error al intentar editar al usuario.");
+            return "redirect:/usuarios";
         }
     }
 

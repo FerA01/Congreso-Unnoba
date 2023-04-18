@@ -95,7 +95,26 @@ public class UsuarioController {
             return "redirect:/usuarios/edit/" + usuario.getId();
         }
     }
-
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/user/edit")
+    public String editUserAdmin(  @ModelAttribute("usuario") Usuario usuario
+                                , Model model
+                                , Authentication auth
+                                , RedirectAttributes flash){
+        if (usuario.getId() != null) {
+            try {
+                usuarioService.save2(usuario);
+                flash.addFlashAttribute("success", "Usuario editado correctamente");
+                return "redirect:/usuarios";
+            } catch (Exception e) {
+                flash.addFlashAttribute("fail", "El email ya se encuentra en uso");
+                return "redirect:/usuarios";
+            }
+        } else {
+            flash.addFlashAttribute("fail", "El email ya se encuentra en uso");
+            return "redirect:/usuarios";
+        }
+    }
     @PostMapping("/register/new")
     public String create(@ModelAttribute("usuarioRegistro") Usuario usuarioRegistro, RedirectAttributes flash) {
         try {

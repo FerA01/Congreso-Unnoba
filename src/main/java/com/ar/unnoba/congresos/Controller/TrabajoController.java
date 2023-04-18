@@ -129,11 +129,12 @@ public class TrabajoController {
             //Trabajo trabajo = trabajoService.findById(id).orElse(null);
             Long idTrabajo = trabajoService.findByUsuarioAndEvento(id_user, id_evento);
             Trabajo trabajo = trabajoService.findById(idTrabajo).orElse(null);
+            boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
             // Verificar si el archivo existe
             if (trabajo == null) {
                 return ResponseEntity.notFound().build();
             }
-            if (id_user.equals( ((User) auth.getPrincipal()).getId())){
+            if (isAdmin || id_user.equals( ((User) auth.getPrincipal()).getId())){
                 // Devolver el archivo en la respuesta
                 ByteArrayResource resource = new ByteArrayResource(trabajo.getArchivo());
 
@@ -155,9 +156,11 @@ public class TrabajoController {
                         , @PathVariable("id_user") Long id_user
                         , Authentication auth){
         try {
+            boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
             Long idTrabajo = trabajoService.findByUsuarioAndEvento(id_user, id_evento);
             Optional<Trabajo> trabajo = trabajoService.findById(idTrabajo);
-            if (id_user.equals(((User) auth.getPrincipal()).getId()) && trabajo.isPresent()){
+            if (isAdmin || (   id_user.equals(((User) auth.getPrincipal()).getId())
+                               && trabajo.isPresent())){
                 trabajoService.deleteById(trabajo.get().getId());
                 return "redirect:/eventos/" + id_evento;
             }
