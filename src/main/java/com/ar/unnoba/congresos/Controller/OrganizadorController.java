@@ -43,7 +43,7 @@ public class OrganizadorController {
 
     @GetMapping("/register")
     public String registrar(Model model){
-        model.addAttribute("organizador", new Organizador());
+        model.addAttribute("organizadorRegister", new Organizador());
         return "organizador/register";
     }
     @Secured("ROLE_ADMIN")
@@ -119,12 +119,16 @@ public class OrganizadorController {
     }
 
     @PostMapping("/register/new")
-    public String registrarPost(@ModelAttribute Organizador organizador){
-        if (organizador.getId() == null){
-            organizadorService.create(organizador);
-            return "redirect:/admin/eventos";
+    public String registrarPost(@ModelAttribute("organizadorRegister") Organizador organizadorRegister, RedirectAttributes flash){
+        try {
+            organizadorService.create(organizadorRegister);
+            Organizador organizador = (Organizador) organizadorService.loadUserByUsername(organizadorRegister.getEmail());
+            flash.addFlashAttribute("success", "Administrador registrado correctamente");
+            return "redirect:/usuarios";
+        } catch (Exception exception) {
+            flash.addFlashAttribute("fail", "Error al intentar registrar un usuario");
+            return "redirect:/usuarios";
         }
-        return "redirect:/admin/eventos";
     }
 
     @GetMapping("/delete/{id}")

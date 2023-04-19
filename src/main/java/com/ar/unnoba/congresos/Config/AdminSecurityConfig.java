@@ -31,12 +31,8 @@ public class AdminSecurityConfig {
                         .antMatchers("/webjars/**", "/resources/**", "/css/**").permitAll()
                         .antMatchers( "/admin/register").permitAll()
                         .antMatchers(HttpMethod.POST,"/admin/register/new").permitAll()
-                        .antMatchers("/admin/eventos").hasAuthority("ROLE_ADMIN")
-                        .antMatchers("/admin/eventos/new").hasRole("ROLE_ADMIN")
-                        .antMatchers("/admin/eventos/**").hasRole("ROLE_ADMIN")
-                        .antMatchers("/usuarios/**").permitAll()
                          */
-                        .anyRequest().hasAuthority("ROLE_ADMIN")
+                        .anyRequest().hasRole("ROLE_ADMIN")
                 )
                 .formLogin().loginPage("organizador/login")
                 .loginProcessingUrl("/admin/login")

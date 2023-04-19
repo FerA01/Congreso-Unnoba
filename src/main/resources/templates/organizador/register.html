@@ -1,18 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:fragment="head">
-    <meta charset="UTF-8">
-    <title th:text>Registrarse</title>
+<head th:replace="~{header :: common_head(~{::title}, ~{::link}, _, _)}">
+    <title>Registro</title>
+    <link rel="stylesheet" th:href="@{/css/usuarios/register.css}">
 </head>
 <body>
-    <div>
-        <form  action="#" method="post" th:action="@{/admin/register/new}" th:object = "${organizador}">
-            <label>Email <input type="email" name="email" th:field = "*{email}"></label>
-            <label>Contraseña <input type="password" name="password" th:field = "*{password}"></label>
-            <label>Nombre <input type="text" name="nombre" th:field = "*{nombre}"></label>
-            <label>Apellido <input type="text" name="apellido" th:field = "*{apellido}"></label>
-            <button type="submit">Registrarse</button>
-        </form>
+<div class="container-fluid">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">REGISTRARSE</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form th:action="@{/admin/register/new}" method="post" th:object="${organizadorRegister}">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input th:field="*{email}" type="email" class="form-control" name="email" required="1"></input>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input th:field="*{password}" type="password" class="form-control" name="contrasena" required="1"></input>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input th:field="*{nombre}" type="text" class="form-control" name="nombre" required="1"></input>
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input th:field="*{apellido}" type="text" class="form-control" name="apellido" required="1"></input>
+                        </div>
+                        <div id="modal-submit-button" class="form-group">
+                            <button class="btn btn-success" type="submit">Registrarse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </body>
 </html>

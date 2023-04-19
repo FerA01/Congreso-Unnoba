@@ -109,3 +109,7 @@ body{
 .form-group{
     margin-bottom: 1vh !important;
 }
+.form-select{
+    width: 20vw;
+    height: 8vh;
+}
