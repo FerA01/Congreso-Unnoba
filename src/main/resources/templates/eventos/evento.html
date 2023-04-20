@@ -39,9 +39,11 @@
                     </p>
                 </button>
             </div>
-            <div class="container" id="button-container" th:if="${subioTrabajos} == false">
-                <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/new (id_evento = ${evento.id} , id_user = ${id_user})}'|">Subir Trabajo</button>
-            </div>
+            <th:block th:if="${pasoFechaPresentacion} == false">
+                <div class="container" id="button-container" th:if="${subioTrabajos} == false">
+                    <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/new (id_evento = ${evento.id} , id_user = ${id_user})}'|">Subir Trabajo</button>
+                </div>
+            </th:block>
         </th:block>
         <th:block th:case="'ROLE_ADMIN'">
             <div class="container" id="button-container">

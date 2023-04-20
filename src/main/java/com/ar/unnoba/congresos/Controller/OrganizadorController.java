@@ -7,6 +7,7 @@ import com.ar.unnoba.congresos.Service.OrganizadorService;
 import com.ar.unnoba.congresos.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -41,6 +43,18 @@ public class OrganizadorController {
         return "organizador/login";
     }
 
+    @Secured("ROLE_ADMIN")
+    @GetMapping
+    public String indexAdmin(Model model, Authentication authentication){
+        List<Organizador> organizadores = organizadorService.getAll();
+        model.addAttribute("organizadores", organizadores);
+        model.addAttribute("organizadorRegistro", new Organizador());
+        model.addAttribute("role", role);
+        model.addAttribute("id_user", ((Organizador) authentication.getPrincipal()).getId());
+        return "organizador/listaOrganizadores";
+    }
+
+    @Secured("ROLE_ADMIN")
     @GetMapping("/register")
     public String registrar(Model model){
         model.addAttribute("organizadorRegister", new Organizador());
@@ -118,6 +132,7 @@ public class OrganizadorController {
         }
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/register/new")
     public String registrarPost(@ModelAttribute("organizadorRegister") Organizador organizadorRegister, RedirectAttributes flash){
         try {
@@ -131,6 +146,7 @@ public class OrganizadorController {
         }
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id, RedirectAttributes flash, Authentication auth){
         Organizador usuario = (Organizador) auth.getPrincipal();

@@ -50,6 +50,11 @@
                         <a class="nav-link" aria-current="page" href="#" th:href="@{/usuarios}">USUARIOS</a>
                       </li>
                     </th:block>
+                    <th:block th:if="${role == 'ROLE_ADMIN'}">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#" th:href="@{/admin}">ADMINISTRADORES</a>
+                        </li>
+                    </th:block>
                     <th:block th:if="${role == 'ROLE_USER'}">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#" th:href="@{/trabajos/{id_user}/mis-presentaciones (id_user = ${id_user})}">MIS PRESENTACIONES</a>

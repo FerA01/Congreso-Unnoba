@@ -61,7 +61,11 @@ public class EventoController {
 
     @GetMapping("/{id}")
     public String verMas(@PathVariable("id") Long id, Model model, Authentication auth) {
-        Evento evento = service.getById(id);
+        Evento evento = service.findById(id).get();
+        boolean pasoFechaPresentacion = evento
+                                             .getFechaHoraDesde()
+                                             .isBefore(LocalDateTime.now());
+        model.addAttribute("pasoFechaPresentacion", pasoFechaPresentacion);
         model.addAttribute("evento", evento);
         boolean isAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
         User user = (User) auth.getPrincipal();
