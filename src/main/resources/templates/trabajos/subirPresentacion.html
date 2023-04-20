@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Presentación</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alef:wght@700&display=swap" rel="stylesheet">
+    <style>
+        html, body{
+            height: 100% !important;
+            margin: 0 !important;
+        }
+        #header-title{
+            background-color: #fff !important;
+            padding: 0% !important;
+        }
+        #imagen-titulo{
+            padding-left: 0% !important;
+        }
+        #titulo{
+            color: #898989;
+            font-family: 'Alef', sans-serif;
+            font-size: 2.5rem;
+            font-weight: bold !important;
+            padding-right: 33%  !important;
+            padding-top: 1.5% !important;
+        }
+
+        /*BODY*/
+        #main-container{
+            height: 100%;
+        }
+        #stroke-container{
+            border-top-color: black !important;
+            border: 1vw !important;
+            display: flex;
+            justify-content: center;
+        }
+        #form-container{
+            width: 100% !important;
+            display: flex;
+            justify-content: center !important;
+            margin-top: 25vh;
+        }
+        #form-container input{
+            width: 45vw;
+        }
+        #button-container{
+            width: 100%;
+            display: flex !important;
+            justify-content: center !important;
+
+            margin-top: 5vh;
+        }
+        #button-container input{
+            width: 40vw;
+            font-weight: bold;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!--No tocar el header-->
+    <header>
+        <!--NavBar-->
+        <nav id="header-title" class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <a id="imagen-titulo" class="navbar-brand" href="#">
+                    <img src="/images/unnoba_logo.png" alt="Logo UNNOBA" width="165" height="115" class="d-inline-block align-text-top">
+                </a>
+                <h1 id="titulo">Sistema de Congresos</h1>
+            </div>
+        </nav>
+    </header>
+    <div id="main-container" class="container-fluid">
+        <div id="stroke-container" class="col-md-12" th:object="${evento}">
+            <form method="post" th:action="@{/trabajos/{id_evento}/{id_user}/upload (id_evento = ${id_evento}, id_user = ${id_user})}" enctype="multipart/form-data">
+                <div id="form-container" class="col-md-4"> 
+                    <input class="form-control form-control" type="file" name="file">
+                </div>
+                <div id="button-container" class="col-md-4">
+                    <input class="btn btn-primary mb-3" type="submit" value="SUBIR">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

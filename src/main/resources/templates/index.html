@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Email</td>
+                    <td>Nombre</td>
+                    <td>Apellido</td>
+                    <td>Acciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.email}"></td>
+                    <td th:text="${usuario.nombre}"></td>
+                    <td th:text="${usuario.apellido}"></td>
+                    <td>
+                        <button><a th:href="@{/usuarios/edit/}+${usuario.id}">Editar</a></button>
+                        <button><a th:href="@{/usuarios/delete/}+${usuario.id}">Eliminar</a></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button><a th:href="@{/eventos}">Eventos</a></button>
+    </div>
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Salir"/>
+        </form>
+    </div>
+</body>
+</html>

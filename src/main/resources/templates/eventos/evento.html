@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{header :: common_head(~{::title}, ~{::link}, ${id_user}, ${role})}">
+    <title>Evento</title>
+    <link rel="stylesheet" th:href="@{/css/evento2.css}">
+</head>
+<body th:object="${evento}">
+<header th:replace="~{header :: common_header}"></header>
+<div id="alert-container" class="container">
+    <div th:if="${fail != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <th:block th:text="${fail}"></th:block>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${success != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <th:block th:text="${success}"></th:block>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+<div id="body-container" class="container-fluid">
+    <div id="datos-evento-container" class="container">
+        <h1 id="nombreEvento" th:text="*{nombre}"></h1>
+        <div id="fechainicio"><p th:text="|Fecha de inicio: ${#temporals.format(evento.fechaHoraDesde, 'dd/MM/yyyy HH:mm')}|"></p> </div>
+        <div id="fechafinalizacion"><p th:text="|Fecha de finalizacion: ${#temporals.format(evento.fechaHoraHasta, 'dd/MM/yyyy HH:mm')}|"></p> </div>
+        <div id="modalidad"><p th:text="'Modalidad: ' + *{modalidad}"></p> </div>
+        <div id="descripcion"><p th:text="*{descripcion}"></p></div>
+    </div>
+    <th:block th:switch="${role}">
+        <th:block th:case="'ROLE_USER'">
+            <div class="container" id="button-container" th:if="${subioTrabajos} == true">
+                <h4>MI PRESENTACION</h4>
+                <button id="boton" class="btn btn-success" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/download (id_evento = ${evento.id} , id_user = ${id_user})}'|">
+                    <p><img id="icono" th:src="@{/images/download-icon.png}" width="20" height="20">
+                        Descargar
+                    </p>
+                </button>
+                <button id="boton" class="btn btn-danger" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/delete (id_evento = ${evento.id} , id_user = ${id_user})}'|">
+                    <p><img id="icono" th:src="@{/images/trash.png}" width="20" height="20">
+                        Borrar
+                    </p>
+                </button>
+            </div>
+            <th:block th:if="${pasoFechaPresentacion} == false">
+                <div class="container" id="button-container" th:if="${subioTrabajos} == false">
+                    <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/new (id_evento = ${evento.id} , id_user = ${id_user})}'|">Subir Trabajo</button>
+                </div>
+            </th:block>
+        </th:block>
+        <th:block th:case="'ROLE_ADMIN'">
+            <div class="container" id="button-container">
+                <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/edit (id = ${evento.id})}'|">Editar Evento</button>
+                <th:block th:if="${hayTrabajos} == true">
+                    <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/presentaciones (id = ${evento.id})}'|">Ver trabajos</button>
+                </th:block>
+                <th:block th:if="${hayTrabajos} == false">
+                    <button id="boton" class="btn btn-secondary" th:onclick="|window.location.href='@{/eventos/{id}/delete (id = ${evento.id})}'|">Eliminar Evento</button>
+                </th:block>
+            </div>
+        </th:block>
+    </th:block>
+</div>
+<!--Scripts-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+</body>
+</html>

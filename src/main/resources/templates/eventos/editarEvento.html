@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{header :: common_head(~{::title}, ~{::link}, ${id_user}, ${role})}">
+    <title>Editar Evento</title>
+    <link rel="stylesheet" th:href="@{/css/crearEvento.css}">
+</head>
+<body>
+    <header th:replace="~{header :: common_header}"></header>
+    <div>
+        <div id="form-container" class="container-fluid">
+            <div id="vertical-container" class="row">
+              <div id="title-container" class="col-md-12">
+                <h1>Editar Evento</h1>
+              </div>
+              <div id="input-container" class="col-md-12">
+                <div class="col-md-4">
+                  <form action="#" th:action="@{/eventos/}+${evento.id}" th:method="post" th:object="${evento}">
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="nombre" aria-describedby="nombre" name="nombre" th:field="*{nombre}" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="modalidad" class="form-label">Modalidad</label>
+                      <select class="form-select" aria-label="Default select example" id="modalidad" name="modalidad" required th:field="*{modalidad}">
+                        <option value="Presencial">Presencial</option>
+                        <option value="Virtual">Virtual</option>
+                        <option value="Hibrido">Hibrido</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="fechainicio" class="form-label">Fecha de inicio</label>
+                      <input type="datetime-local" class="form-control" id="fechainicio" name="fechaHoraDesde" th:field="*{fechaHoraDesde}" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="fechafinalizacion" class="form-label">Fecha de finalización</label>
+                      <input type="datetime-local" class="form-control" id="fechafinalizacion" name="fechaHoraHasta" th:field="*{fechaHoraHasta}" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="descripcion" class="form-label">Descripción</label>
+                      <textarea class="form-control" id="descripcion" rows="10" cols="50" name="descripcion" th:field="*{descripcion}" required></textarea>
+                    </div>
+                    <div id="button-container" class="mb-3">
+                      <button id="button" type="submit" class="btn btn-success">Editar Evento</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>  
+          </div>
+    </div>
+</body>
+</html>

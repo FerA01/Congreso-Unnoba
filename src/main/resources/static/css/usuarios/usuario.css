@@ -1,0 +1,104 @@
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh !important;
+}
+.container-xxl{
+    margin: 0;
+    padding: 0;
+    height: 100vh !important;
+    width: 100vw !important;
+}
+#subtitle-container{
+    width: 100vw;
+    margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
+}
+#subtitle-container h4{
+    margin-left: 1vw !important;
+    margin-top: 1.3vh !important;
+    color: #8B8585 !important;
+    font-size: 1.4em !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+#main-container{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 20vw;
+}
+#alert-container{
+    width: 30vw;
+    margin-top: 3vh;
+}
+#data-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 4em;
+    border-color: red !important;
+    border-radius: 7px !important;
+    background-color: beige;
+    width: 40vw;
+    height: 35vh;
+}
+.form-group{
+    display: flex;
+    align-items: center;
+    padding-right: 1em;
+    width: 100%;
+}
+.form-group label{
+    margin-right: 5vw;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 1.35rem;
+    color: #7A7A7A;
+}
+.form-group p{
+    padding-top: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #3F3A3A;
+}
+#button-container{
+    margin-left: 3vw;
+}
+#button-container button{
+    height: 6.5vh;
+    background-color: #D9D9D9 !important;
+    color: #8B8585 !important;
+    border-color: #D9D9D9 !important;
+    font-family: 'Roboto', sans-serif;
+}
+#button-container button:hover{
+    background-color: #8B8585 !important;
+    color: #fff !important;
+    border-color: #D9D9D9 !important;
+    opacity: 80%;
+}
+#icono{
+    margin-left: 0.9vw;
+}
+.modal-body{
+    display: flex;
+    flex-direction: column;
+}
+.modal-body label{
+    width: 8vw !important;
+}
+.modal-body input{
+    width: 20vw !important;
+}
+.modal-body .form-group{
+    margin-bottom: 1em !important;
+}
+#modal-submit-button{
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh !important;
+}
+#modal-submit-button button{
+    width: 20vw !important;
+}

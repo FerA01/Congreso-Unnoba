@@ -1,0 +1,36 @@
+#buttonContainer{
+    margin: 0 !important;
+    margin-top: 1.5vh !important;
+    margin-bottom: 1.5vh !important;
+    display: flex !important;
+    flex-direction: row !important;
+}
+#buttonContainer h4{
+    margin-left: 1vw !important;
+    margin-top: 1.3vh !important;
+    color: #8B8585 !important;
+    font-size: 1.4em !important;
+    font-family: 'Roboto', sans-serif !important;
+}
+#crear-evento-button{
+    margin-left: 1.5vw;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    height: 7vh;
+    margin-left: 1vw;
+}
+#info-div{
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 50vw !important;
+}
+#info-div p{
+    margin-right: 40vw !important;
+}
+#alert-container{
+    width: 30vw;
+    margin-top: 3vh;
+}
+.card-header a{
+    text-decoration: none;
+}

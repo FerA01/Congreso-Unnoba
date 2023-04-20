@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head th:replace="~{header :: common_head(~{::title}, ~{::link}, ${id_user}, ${role})}">
+        <title>Acerca De</title>
+        <link rel="stylesheet" th:href="@{/css/acercaDe.css}">
+    </head>
+    <body>
+    <header th:replace="~{header :: common_header}"></header>
+    <div>
+        <div id="h1-acercaDe">
+    <h1> PROPOSITO DEL SISTEMA </h1>
+    </div>
+    <div id="proposito"> Este sistema está dirigido a las diferentes áreas funcionales de la universidad
+        que deseen gestionar eventos. También usarán el sistema los usuarios que participen en dicho evento los cuales podrán
+        presentar sus trabajos y visualizar los eventos disponibles. </div>
+    <div id="h2-acercaDe"> <h2>Programadores</h2> </div>
+    <div id="programadores"> Los analistas, diseñadores y programadores de este sistema: Fernando Andana, Facundo Ricagno, Diego Molinero, Matías Acuña y Brenda Martín. </div>
+        <th:block th:switch="${role}">
+            <th:block th:case="'ROLE_ADMIN'">
+                <div id="ver-ieee"> <button class="btn btn-primary mb-3" onclick="window.open('https://docs.google.com/document/d/1WBdQBh9Y9XjYF_PUUR_NsSgwKDhMNtJl/edit?usp=share_link&ouid=110364331142792691632&rtpof=true&sd=true')">Ver IEEE 830</button> </div>
+                <div id="ver-ieee"> <button class="btn btn-primary mb-3" onclick="window.open('https://drive.google.com/file/d/1TwmrIXvKHiWNYt6oVgGDouDnqO6fO7zp/view?usp=share_link')">Ver Contrato</button> </div>
+            </th:block>
+        </th:block>
+    </div>
+    </body>
+</html>

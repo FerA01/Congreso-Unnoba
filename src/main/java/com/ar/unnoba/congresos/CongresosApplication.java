@@ -1,5 +1,4 @@
 package com.ar.unnoba.congresos;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

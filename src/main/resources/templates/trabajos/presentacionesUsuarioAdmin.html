@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{header :: common_head(~{::title}, ~{::link}, ${id_user}, ${role})}">
+    <title>Presentaciones de Evento</title>
+    <link rel="stylesheet" th:href="@{/css/trabajos/presentacionesUsuarioAdmin.css}">
+</head>
+<body>
+    <header th:replace="~{header :: common_header}"></header>
+    <div id="main-container" class="container-fluid">
+        <div id="subtitle-container" class="container-xxxl">
+            <h4 ><a th:href="@{/eventos/{id} (id = ${evento.id})}" th:text="|Presentaciones ${evento.nombre}|"></a></h4>
+        </div>
+        <hr>
+        <div id="body-container" class="container-xxxl">
+            <table id="tabla" class="table table-striped">
+                <thead>
+                    <th id="usuario-id">Usuario</th>
+                    <th id="estado">Estado</th>
+                    <th id="nombre-archivo">Nombre del archivo</th>
+                    <th id="tipo-archivo">Tipo de archivo</th>
+                    <th id="td-operations">Operación</th>
+                </thead>
+                <tbody>
+                    <tr th:each="trabajo : ${trabajos}">
+                        <td id="usuario-id">
+                            <a th:href="@{/admin/user/edit/{id} (id = ${trabajo.usuario.id})}" th:text="${trabajo.usuario.email}"></a>
+                        </td>
+                        <td id="estado" th:text="${trabajo.estado}"></td>
+                        <td id="nombre" th:text="${trabajo.nombre}"></td>
+                        <td id="tipo-archivo" th:text="${trabajo.tipo}"></td>
+                        <td id="td-operations">
+                            <button class="btn btn-primary" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/download (id_evento = ${trabajo.evento.id} , id_user = ${trabajo.usuario.id})}'|">
+                                <p><img id="icono" th:src="@{/images/download-icon.png}" width="15" height="15">
+                                    Descargar
+                                </p>
+                            </button>
+                            <button class="btn btn-danger" th:onclick="|window.location.href='@{/trabajos/{id_evento}/{id_user}/delete (id_evento = ${trabajo.evento.id} , id_user = ${trabajo.usuario.id})}'|">
+                                <p><img id="icono" th:src="@{/images/trash.png}" width="15" height="15">
+                                    Borrar
+                                </p>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--Scripts-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
+</body>
+</html>
